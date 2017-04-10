@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cm;
+
+/**
+ *
+ * @author trungvo
+ */
+public enum CourseManagerProp {
+    COURSEINFO_TITLE,
+    SUBJECT_LABEL,
+    NUMBER_LABEL,
+    SEMESTER_LABEL,
+    YEAR_LABEL,
+    TITLE_LABEL,
+    TITLE_PROMPT_TEXT,
+    INSTRUCTOR_NAME_LABEL,
+    INSTRUCTOR_NAME_PROMT_TEXT,
+    INSTRUCTOR_HOME_LABEL,
+    INSTRUCTOR_HOME_PROMT_TEXT,
+    EXPORT_DIR_LABEL,
+    CHANGE_BUTTON,
+    TEMPLATE_TITLE,
+    TEMPLATE_EXPLAIN_TEXT,
+    TEMPLATE_TEMPLATE_BUTTON,
+    TEMPLATE_TABLE_TITLE,
+    TEMPLATE_USE_TABLECOLUMN,
+    TEMPLATE_NAVBAR_TABLECOLUMN,
+    TEMPLATE_FILE_TABLECOLUMN,
+    TEMPLATE_SCRIPT_TABLECOLUMN,
+    STYLE_TITLE,
+    STYLE_BANNERIMAGE_LABEL,
+    STYLE_LEFTIMAGE_LABEL,
+    STYLE_RIGHTIMAGE_LABEL,
+    STYLE_STYLESHEET_LABEL
+}

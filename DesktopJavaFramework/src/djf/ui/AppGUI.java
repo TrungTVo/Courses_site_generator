@@ -23,6 +23,9 @@ import static djf.components.AppStyleComponent.CLASS_FILE_BUTTON;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.HBox;
 
 /**
  * This class provides the basic user interface for this application,
@@ -46,9 +49,11 @@ public class AppGUI {
     // APPLICATION AppGUI. NOTE THAT THE WORKSPACE WILL GO
     // IN THE CENTER REGION OF THE appPane
     protected BorderPane appPane;
+    protected HBox toolBarPane;
     
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
     protected FlowPane fileToolbarPane;
+    protected HBox undoRedoToolbarBox;
 
     // FILE TOOLBAR BUTTONS
     protected Button newButton;
@@ -57,6 +62,16 @@ public class AppGUI {
     protected Button saveAsButton;
     protected Button exportButton;
     protected Button exitButton;
+    protected Button undoButton;
+    protected Button redoButton;
+    protected Button aboutButton;
+    protected TabPane tabPane;
+    protected Tab courseTab;
+    protected Tab taTab;
+    protected Tab recitationTab;
+    protected Tab scheduleTab;
+    protected Tab projectTab;
+    protected Pane bodyBox;
     
     
     // THIS DIALOG IS USED FOR GIVING FEEDBACK TO THE USER
@@ -170,21 +185,28 @@ public class AppGUI {
      */
     private void initFileToolbar(AppTemplate app) {
         fileToolbarPane = new FlowPane();
+        undoRedoToolbarBox = new HBox();
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        newButton = initChildButton(fileToolbarPane,	NEW_ICON.toString(),	    NEW_TOOLTIP.toString(),	false);
-        loadButton = initChildButton(fileToolbarPane,	LOAD_ICON.toString(),	    LOAD_TOOLTIP.toString(),	false);
-        saveButton = initChildButton(fileToolbarPane,	SAVE_ICON.toString(),	    SAVE_TOOLTIP.toString(),	true);
-        saveAsButton = initChildButton(fileToolbarPane, SAVE_AS_ICON.toString(),    SAVE_AS_TOOLTIP.toString(), true);
+        newButton = initChildButton(fileToolbarPane,	NEW_ICON.toString(),	    NEW_TOOLTIP.toString(),	false, null);
+        loadButton = initChildButton(fileToolbarPane,	LOAD_ICON.toString(),	    LOAD_TOOLTIP.toString(),	false, null);
+        saveButton = initChildButton(fileToolbarPane,	SAVE_ICON.toString(),	    SAVE_TOOLTIP.toString(),	true, null);
+        saveAsButton = initChildButton(fileToolbarPane, SAVE_AS_ICON.toString(),    SAVE_AS_TOOLTIP.toString(), true, null);
         if (newed || loaded)
-            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	false);
+            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	false, null);
         else
-            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	true);
-        exitButton = initChildButton(fileToolbarPane,	EXIT_ICON.toString(),	    EXIT_TOOLTIP.toString(),	false);
-
-	// AND NOW SETUP THEIR EVENT HANDLERS
+            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	true, null);
+        exitButton = initChildButton(fileToolbarPane,	EXIT_ICON.toString(),	    EXIT_TOOLTIP.toString(),	false, null);
+        
+        // Now make layout for right portion of toolbar
+        undoButton = initChildButton(undoRedoToolbarBox, null, UNDO_TOOLTIP.toString(), false, UNDO_BUTTON_TEXT.toString());
+        redoButton = initChildButton(undoRedoToolbarBox, null, REDO_TOOLTIP.toString(),	false, REDO_BUTTON_TEXT.toString());
+        aboutButton = initChildButton(undoRedoToolbarBox, null, ABOUT_TOOLTIP.toString(), false, ABOUT_BUTTON_TEXT.toString());
+        
+        // AND NOW SETUP THEIR EVENT HANDLERS
         fileController = new AppFileController(app);
+
         newButton.setOnAction(e -> {
             fileController.handleNewRequest();
         });
@@ -207,7 +229,43 @@ public class AppGUI {
         exitButton.setOnAction(e -> {
             fileController.handleExitRequest();
         });	
+        
+        makeTabPane();
     }
+    
+    private void makeTabPane() {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        tabPane = new TabPane();
+        courseTab = new Tab();
+        taTab = new Tab();
+        recitationTab = new Tab();
+        scheduleTab = new Tab();
+        projectTab = new Tab();
+        
+        courseTab.setClosable(false);
+        taTab.setClosable(false);
+        recitationTab.setClosable(false);
+        scheduleTab.setClosable(false);
+        projectTab.setClosable(false);
+        
+        courseTab.setText(props.getProperty(COURSE_TAB_TEXT.toString()));
+        taTab.setText(props.getProperty(TA_TAB_TEXT.toString()));
+        recitationTab.setText(props.getProperty(REC_TAB_TEXT.toString()));
+        scheduleTab.setText(props.getProperty(SCHEDULE_TAB_TEXT.toString()));
+        projectTab.setText(props.getProperty(PROJECT_TAB_TEXT.toString()));
+        tabPane.getTabs().addAll(courseTab, taTab, recitationTab, scheduleTab, projectTab);
+        bodyBox = new Pane();
+        bodyBox.getChildren().add(tabPane);
+        tabPane.prefWidthProperty().bind(bodyBox.widthProperty());
+        tabPane.setTabMinWidth(bodyBox.getWidth()/5);
+    
+    }
+    
+    public Tab getCourseTab() {return courseTab;}
+    public Tab getTATab() {return taTab;}
+    public Tab getRecTab() {return recitationTab;}
+    public Tab getScheduleTab() {return scheduleTab;}
+    public Tab getProjectTab() {return projectTab;}
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
     // THERE EXCEPT THE WORKSPACE, WHICH WILL BE ADDED THE FIRST
@@ -229,8 +287,11 @@ public class AppGUI {
         // ADD THE TOOLBAR ONLY, NOTE THAT THE WORKSPACE
         // HAS BEEN CONSTRUCTED, BUT WON'T BE ADDED UNTIL
         // THE USER STARTS EDITING A COURSE
+        toolBarPane = new HBox();
+        toolBarPane.getChildren().addAll(fileToolbarPane, undoRedoToolbarBox);
         appPane = new BorderPane();
-        appPane.setTop(fileToolbarPane);
+        appPane.setTop(toolBarPane);
+        appPane.setCenter(bodyBox);
         primaryScene = new Scene(appPane);
         
         // SET THE APP ICON
@@ -258,17 +319,23 @@ public class AppGUI {
      * @return A constructed, fully initialized button placed into its appropriate
      * pane container.
      */
-    public Button initChildButton(Pane toolbar, String icon, String tooltip, boolean disabled) {
+    public Button initChildButton(Pane toolbar, String icon, String tooltip, boolean disabled, String buttonText) {
+        Image buttonImage = null;
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-	
-	// LOAD THE ICON FROM THE PROVIDED FILE
-        String imagePath = FILE_PROTOCOL + PATH_IMAGES + props.getProperty(icon);
-        Image buttonImage = new Image(imagePath);
+        if (buttonText == null) {
+            // LOAD THE ICON FROM THE PROVIDED FILE
+            String imagePath = FILE_PROTOCOL + PATH_IMAGES + props.getProperty(icon);
+            buttonImage = new Image(imagePath);
+        }
 	
 	// NOW MAKE THE BUTTON
         Button button = new Button();
         button.setDisable(disabled);
-        button.setGraphic(new ImageView(buttonImage));
+        if (buttonImage != null)
+            button.setGraphic(new ImageView(buttonImage));
+        else
+            button.setText(props.getProperty(buttonText));
+        
         Tooltip buttonTooltip = new Tooltip(props.getProperty(tooltip));
         button.setTooltip(buttonTooltip);
 	
@@ -285,11 +352,16 @@ public class AppGUI {
      */
     public void initFileToolbarStyle() {
 	fileToolbarPane.getStyleClass().add(CLASS_BORDERED_PANE);
+        undoRedoToolbarBox.getStyleClass().add(CLASS_BORDERED_PANE);
+        toolBarPane.setStyle("-fx-background-color: #7777dd");
 	newButton.getStyleClass().add(CLASS_FILE_BUTTON);
 	loadButton.getStyleClass().add(CLASS_FILE_BUTTON);
 	saveButton.getStyleClass().add(CLASS_FILE_BUTTON);
         saveAsButton.getStyleClass().add(CLASS_FILE_BUTTON);
         exportButton.getStyleClass().add(CLASS_FILE_BUTTON);
 	exitButton.getStyleClass().add(CLASS_FILE_BUTTON);
+        undoButton.getStyleClass().add(CLASS_FILE_BUTTON);
+        redoButton.getStyleClass().add(CLASS_FILE_BUTTON);
+        aboutButton.getStyleClass().add(CLASS_FILE_BUTTON);
     }
 }
