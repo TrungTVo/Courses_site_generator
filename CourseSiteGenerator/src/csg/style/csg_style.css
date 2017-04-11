@@ -151,11 +151,11 @@ and open the template in the editor.
 }
 
 .infoBox, .template_pane, .page_style_vbox {
-    -fx-border-color: black;
+    -fx-border-color: white;
     -fx-border-width: 0.5px;
     -fx-border-style: solid;
     -fx-padding: 8 0 8 0;
-    -fx-background-color: #F0FFFF;
+    -fx-background-color: #E6E6FA;
     
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;

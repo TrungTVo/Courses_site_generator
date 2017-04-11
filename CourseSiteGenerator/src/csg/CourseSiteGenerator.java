@@ -7,6 +7,7 @@ import csg.style.CSGStyle;
 import java.util.Locale;
 import static javafx.application.Application.launch;
 import djf.AppTemplate;
+import rm.RecManagerApp;
 import tam.TAManagerApp;
 
 /**
@@ -16,6 +17,7 @@ import tam.TAManagerApp;
 public class CourseSiteGenerator extends AppTemplate {
     CourseManagerApp courseComponent;
     TAManagerApp taComponent;
+    RecManagerApp recComponent;
     CSGStyle csgStyle;
     CSGWorkspace csgWorkspace;
     
@@ -38,6 +40,11 @@ public class CourseSiteGenerator extends AppTemplate {
         courseComponent = new CourseManagerApp();
         courseComponent.buildAppComponentsHook();
         csgWorkspace.getCourseTab().setContent(courseComponent.getWorkspaceComponent().getWorkspace());
+        
+        // Recitation Data component
+        recComponent = new RecManagerApp();
+        recComponent.buildAppComponentsHook();
+        csgWorkspace.getRecTab().setContent(recComponent.getWorkspaceComponent().getWorkspace());
     }
     
     public static void main(String[] args) {
