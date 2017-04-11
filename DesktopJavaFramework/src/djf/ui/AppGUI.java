@@ -38,7 +38,7 @@ import javafx.scene.layout.HBox;
 public class AppGUI {
     // THIS HANDLES INTERACTIONS WITH FILE-RELATED CONTROLS
     protected AppFileController fileController;
-
+    
     // THIS IS THE APPLICATION WINDOW
     protected Stage primaryStage;
 
@@ -65,14 +65,6 @@ public class AppGUI {
     protected Button undoButton;
     protected Button redoButton;
     protected Button aboutButton;
-    protected TabPane tabPane;
-    protected Tab courseTab;
-    protected Tab taTab;
-    protected Tab recitationTab;
-    protected Tab scheduleTab;
-    protected Tab projectTab;
-    protected Pane bodyBox;
-    
     
     // THIS DIALOG IS USED FOR GIVING FEEDBACK TO THE USER
     protected AppYesNoCancelDialogSingleton yesNoCancelDialog;
@@ -106,6 +98,8 @@ public class AppGUI {
         // AND FINALLY START UP THE WINDOW (WITHOUT THE WORKSPACE)
         initWindow();
     }
+    
+    public Stage getPrimaryStage() {return primaryStage;}
     
     public boolean getNewed(){
         return newed;
@@ -230,42 +224,7 @@ public class AppGUI {
             fileController.handleExitRequest();
         });	
         
-        makeTabPane();
     }
-    
-    private void makeTabPane() {
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        tabPane = new TabPane();
-        courseTab = new Tab();
-        taTab = new Tab();
-        recitationTab = new Tab();
-        scheduleTab = new Tab();
-        projectTab = new Tab();
-        
-        courseTab.setClosable(false);
-        taTab.setClosable(false);
-        recitationTab.setClosable(false);
-        scheduleTab.setClosable(false);
-        projectTab.setClosable(false);
-        
-        courseTab.setText(props.getProperty(COURSE_TAB_TEXT.toString()));
-        taTab.setText(props.getProperty(TA_TAB_TEXT.toString()));
-        recitationTab.setText(props.getProperty(REC_TAB_TEXT.toString()));
-        scheduleTab.setText(props.getProperty(SCHEDULE_TAB_TEXT.toString()));
-        projectTab.setText(props.getProperty(PROJECT_TAB_TEXT.toString()));
-        tabPane.getTabs().addAll(courseTab, taTab, recitationTab, scheduleTab, projectTab);
-        bodyBox = new Pane();
-        bodyBox.getChildren().add(tabPane);
-        tabPane.prefWidthProperty().bind(bodyBox.widthProperty());
-        tabPane.setTabMinWidth(bodyBox.getWidth()/5);
-    
-    }
-    
-    public Tab getCourseTab() {return courseTab;}
-    public Tab getTATab() {return taTab;}
-    public Tab getRecTab() {return recitationTab;}
-    public Tab getScheduleTab() {return scheduleTab;}
-    public Tab getProjectTab() {return projectTab;}
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
     // THERE EXCEPT THE WORKSPACE, WHICH WILL BE ADDED THE FIRST
@@ -291,7 +250,6 @@ public class AppGUI {
         toolBarPane.getChildren().addAll(fileToolbarPane, undoRedoToolbarBox);
         appPane = new BorderPane();
         appPane.setTop(toolBarPane);
-        appPane.setCenter(bodyBox);
         primaryScene = new Scene(appPane);
         
         // SET THE APP ICON

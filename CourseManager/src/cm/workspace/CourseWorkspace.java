@@ -7,9 +7,13 @@ package cm.workspace;
 
 import cm.CourseManagerApp;
 import cm.CourseManagerProp;
+import cm.data.CourseData;
 import cm.data.SitePage;
+import djf.AppTemplate;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
+import static djf.settings.AppStartupConstants.FILE_PROTOCOL;
+import static djf.settings.AppStartupConstants.PATH_IMAGES;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -17,13 +21,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import properties_manager.PropertiesManager;
 
@@ -36,6 +44,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     VBox outerWrap;
     GridPane infoGridPane;
     VBox temPlatePane;
+    ScrollPane scrollPane;
 
     Label infoTitle;
     Label subjectLabel;
@@ -57,10 +66,10 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     Label exportDirLabel;
     Label dirLabel;
     Button courseExportDirChangeButton;
-
-    HBox subjectBox;
-    HBox semesterBox;
-    HBox dirBox;
+    
+    GridPane subjectBox;
+    GridPane semesterBox;
+    BorderPane dirBox;
     BorderPane bpSubject;
     BorderPane bpSemester;
     VBox infoBox;
@@ -77,6 +86,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     TableColumn<SitePage, String> scriptCol;
 
     VBox pageStyleVBox;
+    GridPane styleGridPane;
     Label styleTitle;
     Label bannerImageLabel;
     Image bannerImage;
@@ -91,6 +101,37 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     ComboBox styleCombo;
     Label noteLabel;
     
+    public VBox getOuterWrap() {return outerWrap;}
+    public VBox getInfoBox() {return infoBox;}
+    public GridPane getInfoGridPane() {return infoGridPane;}
+    public VBox getTemplatePane() {return temPlatePane;}
+    public VBox getPageStyleVBox() {return pageStyleVBox;}
+    public Label getInfoTitle() {return infoTitle;}
+    public Label getTemplateTitle() {return templateTitle;}
+    public Label getStyleTitle() {return styleTitle;}
+    
+    public Label getSubjectLabel() {return subjectLabel;}
+    public ComboBox getSubjectCombo() {return subjectCombo;}
+    public Label getNumberLabel() {return numberLabel;}
+    public ComboBox getNumberCombo() {return numberCombo;}
+    public Label getSemesterLabel() {return semesterLabel;}
+    public ComboBox getSemesterCombo() {return semesterCombo;}
+    public Label getYearLabel() {return yearLabel;}
+    public ComboBox getYearCombo() {return yearCombo;}
+    
+    public Label getTitleLabel() {return titleLabel;}
+    public Label getInstructorNameLabel() {return instructorNameLabel;}
+    public Label getInstructorHomeLabel() {return instructorHomeLabel;}
+    public BorderPane getDirBox() {return dirBox;}
+    
+    public GridPane getSubjectBox() {return subjectBox;}
+    public GridPane getSemesterBox() {return semesterBox;}
+    
+    public Label getSiteTitle() {return siteTitle;}
+    public Button getBannerButton() {return bannerChangeButton;}
+    public Button getLeftImageButton() {return leftImageButton;}
+    public Button getRightImageButton() {return rightImageButton;}
+    
     public CourseWorkspace(CourseManagerApp initApp) {
         app = initApp;
         
@@ -98,16 +139,38 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         outerWrap = new VBox();
+        outerWrap.setAlignment(Pos.CENTER);
+        scrollPane = new ScrollPane(outerWrap);
+        //scrollPane.setPrefWidth(500);
+        
         infoGridPane = new GridPane();
         temPlatePane = new VBox();
+        
+        temPlatePane.setAlignment(Pos.CENTER);
+        temPlatePane.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
         pageStyleVBox = new VBox();
+        pageStyleVBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
         
         buildInfoSection(props);
         infoBox = new VBox();
         infoBox.getChildren().addAll(infoTitle, infoGridPane);
+        infoBox.setAlignment(Pos.CENTER);
+        infoBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
+        
+        
+        infoGridPane.setAlignment(Pos.CENTER);
+        //infoGridPane.minWidthProperty().bind(infoBox.widthProperty().multiply(1));
         outerWrap.getChildren().add(infoBox);
+        
+        buildTemplateSection(props);
+        outerWrap.getChildren().add(temPlatePane);
+        
+        buildPageStyleSection(props);
+        outerWrap.getChildren().add(pageStyleVBox);
+        
         workspace = new BorderPane();
-        ((BorderPane)workspace).setCenter(outerWrap);
+        ((BorderPane)workspace).setCenter(scrollPane);
+    
     }
     
     private void buildInfoSection(PropertiesManager props) {
@@ -122,8 +185,11 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         String[] numberList = {"219","308","380","102"};
         numberCombo = new ComboBox(generateComboBoxText(numberList));
         
-        subjectBox = new HBox(numberLabel);
-        subjectBox.getChildren().add(numberCombo);
+        subjectBox = new GridPane();
+        subjectBox.add(numberLabel, 0, 0);
+        subjectBox.add(numberCombo, 1, 0);
+        subjectBox.setHgap(10);
+        subjectBox.setAlignment(Pos.CENTER);
         bpSubject = new BorderPane();
         bpSubject.setRight(subjectBox);
         bpSubject.setLeft(subjectCombo);
@@ -132,12 +198,20 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         semesterLabel = new Label(props.getProperty(CourseManagerProp.SEMESTER_LABEL.toString()));
         String[] semesterList = {"Fall","Spring"};
         semesterCombo = new ComboBox(generateComboBoxText(semesterList));
+        semesterCombo.setMinWidth(25);
         yearLabel = new Label(props.getProperty(CourseManagerProp.YEAR_LABEL.toString()));
         String[] yearList = {"2014","2015","2016","2017"};
         yearCombo = new ComboBox(generateComboBoxText(yearList));
+        yearCombo.setMinWidth(25);
         
-        semesterBox = new HBox(yearLabel);
-        semesterBox.getChildren().add(yearCombo);
+        subjectCombo.setMinWidth(semesterCombo.getWidth());
+        numberCombo.setMinWidth(yearCombo.getWidth());
+        
+        semesterBox = new GridPane();
+        semesterBox.add(yearLabel, 0, 0);
+        semesterBox.add(yearCombo, 1, 0);
+        semesterBox.setHgap(10);
+        semesterBox.setAlignment(Pos.CENTER);
         bpSemester = new BorderPane();
         bpSemester.setRight(semesterBox);
         bpSemester.setLeft(semesterCombo);
@@ -157,8 +231,9 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         exportDirLabel = new Label(props.getProperty(CourseManagerProp.EXPORT_DIR_LABEL.toString()));
         dirLabel = new Label();
         courseExportDirChangeButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
-        dirBox = new HBox(dirLabel);
-        dirBox.getChildren().add(courseExportDirChangeButton);
+        dirBox = new BorderPane();
+        dirBox.setLeft(dirLabel);
+        dirBox.setRight(courseExportDirChangeButton);
         
         // combine to grid
         infoGridPane.add(subjectLabel, 0, 0);
@@ -173,6 +248,9 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         infoGridPane.add(instructorHomeTF, 1, 4);
         infoGridPane.add(exportDirLabel, 0, 5);
         infoGridPane.add(dirBox, 1, 5);
+        
+        infoGridPane.setVgap(5);
+        infoGridPane.setHgap(10);
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {
@@ -183,12 +261,89 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         return res;
     }
     
-    private void buildTemplateSection() {
+    private void buildTemplateSection(PropertiesManager props) {
+        templateTitle = new Label(props.getProperty(CourseManagerProp.TEMPLATE_TITLE.toString()));
+        explainText = new Label(props.getProperty(CourseManagerProp.EXPLAIN_TEXT.toString()));
+        templateDir = new Label();
+        templateDirButton = new Button(props.getProperty(CourseManagerProp.TEMPLATE_DIR_BUTTON.toString()));
+        siteTitle = new Label(props.getProperty(CourseManagerProp.SITE_TABLE_TITLE.toString()));
+        siteTable = new TableView();
+        CourseData courseData = (CourseData) app.getDataComponent();
+        ObservableList<SitePage> templateList = courseData.getTemplates();
+        siteTable.setItems(templateList);
+        
+        // columns
+        useCol = new TableColumn(props.getProperty(CourseManagerProp.USE_COLUMN_TEXT.toString()));
+        navBarTitleCol = new TableColumn(props.getProperty(CourseManagerProp.NAVBAR_COLUMN_TEXT.toString()));
+        fileCol = new TableColumn(props.getProperty(CourseManagerProp.FILENAME_COLUMN_TEXT.toString()));
+        scriptCol = new TableColumn(props.getProperty(CourseManagerProp.SCRIPT_COLUMN_TEXT.toString()));
+        useCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.1));
+        navBarTitleCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
+        fileCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
+        scriptCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
+        
+        siteTable.getColumns().addAll(useCol, navBarTitleCol, fileCol, scriptCol);
+        
+        // combine
+        temPlatePane.getChildren().addAll(templateTitle, explainText, templateDir, templateDirButton, siteTitle, siteTable);
+        siteTable.maxWidthProperty().bind(temPlatePane.widthProperty().multiply(0.5));
         
     }
     
-    private void buildPageStyleSection() {
+    private void buildPageStyleSection(PropertiesManager props) {
+        styleTitle = new Label(props.getProperty(CourseManagerProp.PAGESTYLE_TITLE.toString()));
         
+        // line 1
+        bannerImageLabel = new Label(props.getProperty(CourseManagerProp.BANNER_IMAGE_LABEL.toString()));
+        bannerImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
+        bannerChangeButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
+        GridPane bannerBox = new GridPane();
+        bannerBox.add(new ImageView(bannerImage), 0, 0);
+        bannerBox.add(bannerChangeButton, 1, 0);
+        bannerBox.setHgap(15);
+        bannerBox.setAlignment(Pos.CENTER);
+        
+        // line 2
+        leftImageLabel = new Label(props.getProperty(CourseManagerProp.LEFT_IMAGE_LABEL.toString()));
+        leftImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
+        leftImageButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
+        GridPane leftImageBox = new GridPane();
+        leftImageBox.add(new ImageView(leftImage), 0, 0);
+        leftImageBox.add(leftImageButton, 1, 0);
+        leftImageBox.setHgap(15);
+        leftImageBox.setAlignment(Pos.CENTER);
+        
+        // line 3
+        rightImageLabel = new Label(props.getProperty(CourseManagerProp.RIGHT_IMAGE_LABEL.toString()));
+        rightImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
+        rightImageButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
+        GridPane rightImageBox = new GridPane();
+        rightImageBox.add(new ImageView(rightImage), 0, 0);
+        rightImageBox.add(rightImageButton, 1, 0);
+        rightImageBox.setHgap(15);
+        rightImageBox.setAlignment(Pos.CENTER);
+        
+        // line 4
+        stylesheetLabel = new Label(props.getProperty(CourseManagerProp.STYLE_SHEET_LABEL.toString()));
+        styleCombo = new ComboBox();
+        
+        noteLabel = new Label(props.getProperty(CourseManagerProp.NOTE_TEXT.toString()));
+        // combine
+        styleGridPane = new GridPane();
+        styleGridPane.add(bannerImageLabel, 0, 0);
+        styleGridPane.add(bannerBox, 1, 0);
+        styleGridPane.add(leftImageLabel, 0, 1);
+        styleGridPane.add(leftImageBox, 1, 1);
+        styleGridPane.add(rightImageLabel, 0, 2);
+        styleGridPane.add(rightImageBox, 1, 2);
+        styleGridPane.add(stylesheetLabel, 0, 3);
+        styleGridPane.add(styleCombo, 1, 3);
+        styleGridPane.setAlignment(Pos.CENTER);
+        styleGridPane.setVgap(5);
+        styleGridPane.setHgap(10);
+        
+        pageStyleVBox.getChildren().addAll(styleTitle, styleGridPane, noteLabel);
+        pageStyleVBox.setAlignment(Pos.CENTER);
     }
     
     @Override

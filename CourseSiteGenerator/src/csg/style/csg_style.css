@@ -144,3 +144,32 @@ and open the template in the editor.
 .office_hours_grid_ta_cell_label{
     
 }
+
+/* =========== COURSE TAB =========  */
+.outer_wrap {
+    -fx-padding: 10 0 10 0;
+}
+
+.infoBox, .template_pane, .page_style_vbox {
+    -fx-border-color: black;
+    -fx-border-width: 0.5px;
+    -fx-border-style: solid;
+    -fx-padding: 8 0 8 0;
+    -fx-background-color: #F0FFFF;
+    
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+.subjectBox, .semesterBox {
+    -fx-padding: 0 0 0 20px;
+}
+
+.title {
+    -fx-font-size: 16px;
+    -fx-padding: 0 0 10 0;
+}
+
+.siteTitle {
+    -fx-padding: 10 0 5 0;
+}

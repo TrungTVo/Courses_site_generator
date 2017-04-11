@@ -103,14 +103,14 @@ public abstract class AppTemplate extends Application {
                 
                 // BUILD THE APP GUI OBJECT FIRST, BUT DON'T
 		gui = new AppGUI(primaryStage, appTitle, this);
-
+                
                 // THIS BUILDS ALL OF THE COMPONENTS, NOTE THAT
                 // IT WOULD BE DEFINED IN AN APPLICATION-SPECIFIC
                 // CHILD CLASS
 		buildAppComponentsHook();
 	    } 
 	}catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
             dialog.show(props.getProperty(PROPERTIES_LOAD_ERROR_TITLE), props.getProperty(PROPERTIES_LOAD_ERROR_MESSAGE));
 	}

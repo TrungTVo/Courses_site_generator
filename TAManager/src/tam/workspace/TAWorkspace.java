@@ -130,6 +130,8 @@ public class TAWorkspace extends AppWorkspaceComponent {
         String emailColumnText = props.getProperty(TAManagerProp.EMAIL_COLUMN_TEXT.toString());
         nameColumn = new TableColumn(nameColumnText);
         emailColumn = new TableColumn(emailColumnText);
+        nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.4));
+        emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.6));
         nameColumn.setCellValueFactory(
                 new PropertyValueFactory<TeachingAssistant, String>("name")
         );
@@ -218,7 +220,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
         ((BorderPane) workspace).setCenter(sPane);
 
         // MAKE SURE THE TABLE EXTENDS DOWN FAR ENOUGH
-        taTable.prefHeightProperty().bind(workspace.heightProperty().multiply(1.9));
+        taTable.prefHeightProperty().bind(workspace.heightProperty().multiply(1));
 
         // NOW LET'S SETUP THE EVENT HANDLING
         controller = new TAController(app);
