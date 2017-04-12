@@ -144,7 +144,6 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         scrollPane = new ScrollPane(outerWrap);
         outerWrap.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //scrollPane.setPrefWidth(500);
         
         buildInfoSection(props);
