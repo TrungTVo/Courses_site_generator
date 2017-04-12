@@ -65,6 +65,12 @@ public class RecWorkspace extends AppWorkspaceComponent {
     Button addUpdateButton;
     Button clearButton;
     
+    public VBox getWrapVBox() {return wrapVBox;}
+    public Label getTitle() {return title;}
+    public HBox getHeaderBox() {return headerBox;}
+    public VBox getAddEditBox() {return addEditBox;}
+    public GridPane getaddEditGrid() {return addEditGrid;}
+    
     public RecWorkspace(RecManagerApp initApp) {
         app = initApp;
         
@@ -81,6 +87,7 @@ public class RecWorkspace extends AppWorkspaceComponent {
         
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(wrapVBox);
+        workspace.setStyle("-fx-background-color: #B0C4DE");
     }
     
     public void buildHeaderBox(PropertiesManager props) {
@@ -90,6 +97,7 @@ public class RecWorkspace extends AppWorkspaceComponent {
         // Del button
         deleteButton = new Button("-");
         headerBox.getChildren().addAll(title, deleteButton);
+        headerBox.setAlignment(Pos.CENTER);
     }
     
     public void buildTable(PropertiesManager props) {
@@ -104,8 +112,8 @@ public class RecWorkspace extends AppWorkspaceComponent {
         instructorCol = new TableColumn(props.getProperty(RecManagerProp.RECITATION_INSTRUCTOR_TABLECOLUMN.toString()));
         dayTimeCol = new TableColumn(props.getProperty(RecManagerProp.RECITATION_DAYTIME_TABLECOLUMN.toString()));
         locationCol = new TableColumn(props.getProperty(RecManagerProp.RECITATION_LOCATION_TABLECOLUMN.toString()));
-        ta1Col = new TableColumn(props.getProperty(RecManagerProp.RECITATION_TA_LABEL));
-        ta2Col = new TableColumn(props.getProperty(RecManagerProp.RECITATION_TA_LABEL));
+        ta1Col = new TableColumn(props.getProperty(RecManagerProp.RECITATION_TA_TABLECOLUMN.toString()));
+        ta2Col = new TableColumn(props.getProperty(RecManagerProp.RECITATION_TA_TABLECOLUMN.toString()));
         
         sectionCol.setCellValueFactory(new PropertyValueFactory<RecData, String>("section"));
         instructorCol.setCellValueFactory(new PropertyValueFactory<RecData, String>("instructor"));
@@ -121,6 +129,8 @@ public class RecWorkspace extends AppWorkspaceComponent {
         locationCol.prefWidthProperty().bind(recTable.widthProperty().multiply(0.2));
         ta1Col.prefWidthProperty().bind(recTable.widthProperty().multiply(0.2));
         ta2Col.prefWidthProperty().bind(recTable.widthProperty().multiply(0.2));
+        
+        recTable.maxWidthProperty().bind(wrapVBox.widthProperty().multiply(0.8));
     }
     
     public void buildAddEditBox(PropertiesManager props) {
@@ -164,9 +174,13 @@ public class RecWorkspace extends AppWorkspaceComponent {
         addEditGrid.add(clearButton, 1, 6);
         addEditGrid.setHgap(10);
         addEditGrid.setVgap(10);
+        addEditGrid.setAlignment(Pos.CENTER);
         
         addEditBox = new VBox();
         addEditBox.getChildren().addAll(addEditTitle, addEditGrid);
+        addEditBox.setAlignment(Pos.CENTER);
+        addEditBox.maxWidthProperty().bind(wrapVBox.widthProperty().multiply(0.8));
+        dayTimeTF.minWidthProperty().bind(addEditBox.widthProperty().multiply(0.5));
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {

@@ -3,6 +3,7 @@ package rm;
 
 import djf.AppTemplate;
 import rm.data.RecRecord;
+import rm.style.RecStyle;
 import rm.workspace.RecWorkspace;
 
 /**
@@ -15,7 +16,7 @@ public class RecManagerApp extends AppTemplate {
     public void buildAppComponentsHook() {
         dataComponent = new RecRecord(this);
         workspaceComponent = new RecWorkspace(this);
-        
+        styleComponent = new RecStyle(this);
     }
     
 }
