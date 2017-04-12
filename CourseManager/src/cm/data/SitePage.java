@@ -5,19 +5,20 @@
  */
 package cm.data;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class SitePage {
     private boolean isUsed;
-    private StringProperty navBar;
-    private StringProperty file;
-    private StringProperty script;
+    private final StringProperty navBar;
+    private final StringProperty file;
+    private final StringProperty script;
     
     public SitePage(boolean isUsed, String navBar, String file, String script){
         this.isUsed = isUsed;
-        this.navBar.set(navBar);
-        this.file.set(file);
-        this.script.set(script);
+        this.navBar = new SimpleStringProperty(navBar);
+        this.file = new SimpleStringProperty(file);
+        this.script = new SimpleStringProperty(script);
     }
     
     public boolean getIsUsed() {return isUsed;}
