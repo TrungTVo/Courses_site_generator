@@ -44,6 +44,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     VBox outerWrap;
     GridPane infoGridPane;
     VBox temPlatePane;
+    HBox invisibleTemPlateBox;
     ScrollPane scrollPane;
 
     Label infoTitle;
@@ -141,16 +142,22 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         outerWrap = new VBox();
         outerWrap.setAlignment(Pos.CENTER);
         scrollPane = new ScrollPane(outerWrap);
+        outerWrap.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //scrollPane.setPrefWidth(500);
         
         buildInfoSection(props);
         outerWrap.getChildren().add(infoBox);
+        infoBox.maxWidthProperty().bind(outerWrap.widthProperty().multiply(0.7));
         
         buildTemplateSection(props);
         outerWrap.getChildren().add(temPlatePane);
+        temPlatePane.maxWidthProperty().bind(outerWrap.widthProperty().multiply(0.7));
         
         buildPageStyleSection(props);
         outerWrap.getChildren().add(pageStyleVBox);
+        pageStyleVBox.maxWidthProperty().bind(outerWrap.widthProperty().multiply(0.7));
         
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(scrollPane);
@@ -240,7 +247,6 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         instructorHomeTF.minWidthProperty().bind(infoBox.widthProperty().multiply(0.4));
         infoBox.getChildren().addAll(infoTitle, infoGridPane);
         infoBox.setAlignment(Pos.CENTER);
-        infoBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {
@@ -280,7 +286,6 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         siteTable.maxWidthProperty().bind(temPlatePane.widthProperty().multiply(0.5));
         
         temPlatePane.setAlignment(Pos.CENTER);
-        temPlatePane.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
         
     }
     
@@ -339,7 +344,6 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         pageStyleVBox = new VBox();
         pageStyleVBox.getChildren().addAll(styleTitle, styleGridPane, noteLabel);
         pageStyleVBox.setAlignment(Pos.CENTER);
-        pageStyleVBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
     }
     
     @Override
