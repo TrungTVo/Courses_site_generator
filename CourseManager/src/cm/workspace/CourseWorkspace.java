@@ -143,23 +143,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         scrollPane = new ScrollPane(outerWrap);
         //scrollPane.setPrefWidth(500);
         
-        infoGridPane = new GridPane();
-        temPlatePane = new VBox();
-        
-        temPlatePane.setAlignment(Pos.CENTER);
-        temPlatePane.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
-        pageStyleVBox = new VBox();
-        pageStyleVBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
-        
         buildInfoSection(props);
-        infoBox = new VBox();
-        infoBox.getChildren().addAll(infoTitle, infoGridPane);
-        infoBox.setAlignment(Pos.CENTER);
-        infoBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
-        
-        
-        infoGridPane.setAlignment(Pos.CENTER);
-        //infoGridPane.minWidthProperty().bind(infoBox.widthProperty().multiply(1));
         outerWrap.getChildren().add(infoBox);
         
         buildTemplateSection(props);
@@ -170,11 +154,11 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(scrollPane);
-    
+        outerWrap.setStyle("-fx-background-color: #B0C4DE");
     }
     
     private void buildInfoSection(PropertiesManager props) {
-        
+        infoGridPane = new GridPane();
         infoTitle = new Label(props.getProperty(CourseManagerProp.COURSEINFO_TITLE.toString()));
         
         // line 1
@@ -248,9 +232,15 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         infoGridPane.add(instructorHomeTF, 1, 4);
         infoGridPane.add(exportDirLabel, 0, 5);
         infoGridPane.add(dirBox, 1, 5);
-        
+        infoGridPane.setAlignment(Pos.CENTER);
         infoGridPane.setVgap(5);
         infoGridPane.setHgap(10);
+        
+        infoBox = new VBox();
+        instructorHomeTF.minWidthProperty().bind(infoBox.widthProperty().multiply(0.4));
+        infoBox.getChildren().addAll(infoTitle, infoGridPane);
+        infoBox.setAlignment(Pos.CENTER);
+        infoBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {
@@ -285,8 +275,12 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         siteTable.getColumns().addAll(useCol, navBarTitleCol, fileCol, scriptCol);
         
         // combine
+        temPlatePane = new VBox();
         temPlatePane.getChildren().addAll(templateTitle, explainText, templateDir, templateDirButton, siteTitle, siteTable);
         siteTable.maxWidthProperty().bind(temPlatePane.widthProperty().multiply(0.5));
+        
+        temPlatePane.setAlignment(Pos.CENTER);
+        temPlatePane.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
         
     }
     
@@ -342,8 +336,10 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         styleGridPane.setVgap(5);
         styleGridPane.setHgap(10);
         
+        pageStyleVBox = new VBox();
         pageStyleVBox.getChildren().addAll(styleTitle, styleGridPane, noteLabel);
         pageStyleVBox.setAlignment(Pos.CENTER);
+        pageStyleVBox.prefWidthProperty().bind(scrollPane.widthProperty().multiply(1));
     }
     
     @Override
