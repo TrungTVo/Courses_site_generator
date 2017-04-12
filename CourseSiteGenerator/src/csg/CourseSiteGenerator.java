@@ -2,7 +2,7 @@
 package csg;
 
 import cm.CourseManagerApp;
-import cm.workspace.CSGWorkspace;
+import csg.workspace.CSGWorkspace;
 import csg.style.CSGStyle;
 import java.util.Locale;
 import static javafx.application.Application.launch;

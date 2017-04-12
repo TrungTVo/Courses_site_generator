@@ -1,5 +1,5 @@
 
-package cm.workspace;
+package csg.workspace;
 
 import djf.AppTemplate;
 import static djf.settings.AppPropertyType.COURSE_TAB_TEXT;
@@ -60,5 +60,15 @@ public class CSGWorkspace extends AppTemplate {
         bodyBox.getChildren().add(tabPane);
         tabPane.prefWidthProperty().bind(bodyBox.widthProperty());
         tabPane.setTabMinWidth(bodyBox.getWidth()/5);
+        
+        
+        tabPane.setOnMouseClicked(e -> {
+            courseTab.setStyle("-fx-background-color: white");
+            taTab.setStyle("-fx-background-color: white");
+            recitationTab.setStyle("-fx-background-color: white");
+            scheduleTab.setStyle("-fx-background-color: white");
+            projectTab.setStyle("-fx-background-color: white");
+            tabPane.getSelectionModel().getSelectedItem().setStyle("-fx-background-color: #F0E68C");
+        });
     }
 }

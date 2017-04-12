@@ -152,13 +152,13 @@ and open the template in the editor.
 
 .infoBox, .template_pane, .page_style_vbox {
     -fx-border-color: white;
-    -fx-border-width: 0.5px;
+    -fx-border-width: 1.5px;
     -fx-border-style: solid;
-    -fx-padding: 8 0 8 0;
+    -fx-padding: 8 6 8 6;
     -fx-background-color: #E6E6FA;
     
-    -fx-border-insets: 5px;
-    -fx-background-insets: 5px;
+    -fx-border-insets: 15px;
+    -fx-background-insets: 15px;
 }
 
 .subjectBox, .semesterBox {
@@ -172,4 +172,33 @@ and open the template in the editor.
 
 .siteTitle {
     -fx-padding: 10 0 5 0;
+}
+
+/* =========== RECITATION TAB =========  */
+.headerBox {
+    -fx-padding: 10 0 10 0;
+    -fx-font-size: 16px;
+}
+
+.recTitle {
+    -fx-padding: 0 15 0 0;
+}
+
+.addEditBox {
+    -fx-padding: 10 0 15 0;
+    -fx-background-color: #E6E6FA;
+    -fx-border-color: white;
+    -fx-border-width: 1.5px;
+    -fx-border-style: solid;
+    
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+}
+
+.addEditGrid {
+    -fx-padding: 5 0 5 0;
+}
+
+.wrapVBox {
+    -fx-padding: 0 0 10 0;
 }
