@@ -32,7 +32,7 @@ import sm.data.ScheduleTopic;
 public class ScheduleWorkspace extends AppWorkspaceComponent {
     ScheduleManagerApp app;
     VBox wrapVBox;
-    Label title;
+    Label scheTitle;
     
     VBox calendarWrapBox;
     Label calendarTitle;
@@ -71,6 +71,20 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
     Button addUpdateButton;
     Button clearButton;
     
+    public VBox getWrapVBox() {return wrapVBox;}
+    public Label getTitle() {return scheTitle;}
+    public VBox getCalendarWrapBox() {return calendarWrapBox;}
+    public Label getCalendarTitle() {return calendarTitle;}
+    public Label getStartMonLabel() {return startMonLabel;}
+    public Label getEndFriLabel() {return endFriLabel;}
+    
+    public VBox getScheduleBox() {return scheduleBox;}
+    public Label getScheduleLabel() {return scheduleLabel;}
+    public HBox getScheduleHeaderBox() {return scheduleHeaderBox;}
+    public TableView getScheTable() {return scheduleTable;}
+    public Label getAddEditLabel() {return addEditLabel;}
+    public GridPane getAddEditGrid() {return addEditGrid;}
+    
     public ScheduleWorkspace(ScheduleManagerApp app) {
         this.app = app;
         
@@ -79,8 +93,8 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         
         wrapVBox = new VBox();
         wrapVBox.setAlignment(Pos.CENTER);
-        title = new Label(props.getProperty(ScheduleManagerProp.SCHEDULE_TITLE.toString()));
-        wrapVBox.getChildren().add(title);
+        scheTitle = new Label(props.getProperty(ScheduleManagerProp.SCHEDULE_TITLE.toString()));
+        wrapVBox.getChildren().add(scheTitle);
         
         buildCalendarBox(props);
         wrapVBox.getChildren().add(calendarWrapBox);
@@ -124,6 +138,7 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         ScheduleData scheData = (ScheduleData)app.getDataComponent();
         ObservableList<ScheduleTopic> scheduleList = scheData.getScheduleList();
         scheduleTable.setItems(scheduleList);
+        scheduleTable.maxWidthProperty().bind(scheduleBox.widthProperty().multiply(0.6));
         
         // Build columns
         scheduleType = new TableColumn(props.getProperty(ScheduleManagerProp.TYPE_TABLECOLUMN.toString()));
@@ -158,6 +173,7 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         datePicker = new DatePicker();
         
         timeTF = new TextField();
+        timeTF.prefWidthProperty().bind(scheduleBox.widthProperty().multiply(0.5));
         timeTF.setPromptText(props.getProperty(ScheduleManagerProp.TIME_PROMPT_TEXT.toString()));
         titleTF = new TextField();
         titleTF.setPromptText(props.getProperty(ScheduleManagerProp.TITLE_PROMPT_TEXT.toString()));
@@ -190,6 +206,8 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         addEditGrid.add(criteriaTF, 1, 6);
         addEditGrid.add(addUpdateButton, 0, 7);
         addEditGrid.add(clearButton, 1, 7);
+        addEditGrid.setHgap(10);
+        addEditGrid.setVgap(10);
         
         addEditGrid.setAlignment(Pos.CENTER);
         scheduleBox.getChildren().addAll(scheduleHeaderBox, scheduleTable, addEditLabel, addEditGrid);
