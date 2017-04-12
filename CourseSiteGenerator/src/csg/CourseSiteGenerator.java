@@ -8,6 +8,7 @@ import java.util.Locale;
 import static javafx.application.Application.launch;
 import djf.AppTemplate;
 import rm.RecManagerApp;
+import sm.ScheduleManagerApp;
 import tam.TAManagerApp;
 
 /**
@@ -18,6 +19,8 @@ public class CourseSiteGenerator extends AppTemplate {
     CourseManagerApp courseComponent;
     TAManagerApp taComponent;
     RecManagerApp recComponent;
+    ScheduleManagerApp scheComponent;
+    
     CSGStyle csgStyle;
     CSGWorkspace csgWorkspace;
     
@@ -45,6 +48,11 @@ public class CourseSiteGenerator extends AppTemplate {
         recComponent = new RecManagerApp();
         recComponent.buildAppComponentsHook();
         csgWorkspace.getRecTab().setContent(recComponent.getWorkspaceComponent().getWorkspace());
+        
+        // Schedule Data component
+        scheComponent = new ScheduleManagerApp();
+        scheComponent.buildAppComponentsHook();
+        csgWorkspace.getScheduleTab().setContent(scheComponent.getWorkspaceComponent().getWorkspace());
     }
     
     public static void main(String[] args) {
