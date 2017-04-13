@@ -93,9 +93,16 @@ public abstract class AppTemplate extends Application {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 
 	try {
+            AppLanguagePickerDialog languageDialog = AppLanguagePickerDialog.getSingleton();
+            languageDialog.init(primaryStage);
+            languageDialog.show("Pick Language");
+            String languageFileName = APP_PROPERTIES_FILE_NAME;
+            if (languageDialog.getLanguage() != null)
+                languageFileName = languageDialog.getLanguage().equals("English")? APP_PROPERTIES_FILE_NAME:APP_PROPERTIES_FILE_NAME_SECOND;
+            
 	    // LOAD APP PROPERTIES, BOTH THE BASIC UI STUFF FOR THE FRAMEWORK
 	    // AND THE CUSTOM UI STUFF FOR THE WORKSPACE
-	    boolean success = loadProperties(APP_PROPERTIES_FILE_NAME);
+	    boolean success = loadProperties(languageFileName);
 	    
 	    if (success) {
                 // GET THE TITLE FROM THE XML FILE
