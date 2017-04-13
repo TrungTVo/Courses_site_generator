@@ -13,6 +13,8 @@ public enum AppPropertyType {
     // INITIAL WINDOW TITLE AND LOGO
     APP_TITLE,
     APP_LOGO,
+    APP_ABOUT_TITLE,
+    APP_DESCRIBE,
     
     // FOR FINDING THE CSS FILE
     APP_CSS,

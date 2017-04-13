@@ -20,6 +20,7 @@ import static djf.settings.AppStartupConstants.PATH_IMAGES;
 import djf.components.AppStyleComponent;
 import static djf.components.AppStyleComponent.CLASS_BORDERED_PANE;
 import static djf.components.AppStyleComponent.CLASS_FILE_BUTTON;
+import djf.settings.AppPropertyType;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -223,7 +224,12 @@ public class AppGUI {
         exitButton.setOnAction(e -> {
             fileController.handleExitRequest();
         });	
-        
+        AppAboutDialog aboutDialog = AppAboutDialog.getSingleton();
+        aboutDialog.init(primaryStage);
+        aboutButton.setOnAction(e -> {
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            aboutDialog.show(props.getProperty(AppPropertyType.APP_ABOUT_TITLE.toString()), props.getProperty(AppPropertyType.APP_DESCRIBE.toString()));
+        });
     }
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
