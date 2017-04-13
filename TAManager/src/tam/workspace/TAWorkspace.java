@@ -248,8 +248,8 @@ public class TAWorkspace extends AppWorkspaceComponent {
                     edited = controller.handleEditTA(ta,oldName,oldEmail);
                 }
             }
-            if (added || edited)
-                app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file as been modified
+            //if (added || edited)
+                //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file as been modified
         });
         
         // CONTROL FOR CLEAR BUTTON
@@ -288,7 +288,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
             }
             
             if (updated){
-                app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as office hours grid has been modified
+                //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as office hours grid has been modified
             }
             startBox.getSelectionModel().clearSelection();
             endBox.getSelectionModel().clearSelection();
@@ -894,7 +894,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
                 boolean toggled = false;
                 toggled = controller.handleCellToggle((Pane) e.getSource());
                 if (toggled){
-                    app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file has been modified
+                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file has been modified
                 }
             });
         }
@@ -911,7 +911,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
                 TeachingAssistant ta = (TeachingAssistant)selectedItem;
                 if (ev.getCode() == KeyCode.BACK_SPACE || ev.getCode() == KeyCode.DELETE){
                     controller.handleDeleteTAfromTable(dataComponent, ta);
-                    app.getGUI().getAppFileController().markAsEdited(app.getGUI());         // flag as file has been modified
+                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());         // flag as file has been modified
                     taTable.getSelectionModel().clearSelection();                           // clear selected item
                 } else if (ev.getCode() == KeyCode.UP || ev.getCode() == KeyCode.DOWN) {
                     int indexOfOldTA = ((TAData)app.getDataComponent()).getTeachingAssistants().indexOf(ta);
@@ -960,13 +960,13 @@ public class TAWorkspace extends AppWorkspaceComponent {
         KeyCombination redo = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
         
         // listen to CTRL+Z and CTRL+Y
-        app.getGUI().getAppPane().setOnKeyReleased(e->{
-            if (undo.match(e)){
-                jtps.undoTransaction();
-            } else if (redo.match(e)){
-                jtps.doTransaction();
-            }
-        });
+//        app.getGUI().getAppPane().setOnKeyReleased(e->{
+//            if (undo.match(e)){
+//                jtps.undoTransaction();
+//            } else if (redo.match(e)){
+//                jtps.doTransaction();
+//            }
+//        });
         
         // AND MAKE SURE ALL THE COMPONENTS HAVE THE PROPER STYLE
         TAStyle taStyle = (TAStyle)app.getStyleComponent();
