@@ -14,6 +14,7 @@ import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import static djf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static djf.settings.AppStartupConstants.PATH_IMAGES;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -23,8 +24,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -33,6 +36,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import properties_manager.PropertiesManager;
 
 /**
@@ -81,7 +85,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     Button templateDirButton;
     Label siteTitle;
     TableView<SitePage> siteTable;		
-    TableColumn<SitePage, CheckBox> useCol;
+    TableColumn<SitePage, Boolean> useCol;
     TableColumn<SitePage, String> navBarTitleCol;
     TableColumn<SitePage, String> fileCol;
     TableColumn<SitePage, String> scriptCol;
@@ -277,7 +281,28 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         fileCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
         scriptCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
         
+        useCol.setCellValueFactory(
+                new Callback<CellDataFeatures<SitePage, Boolean>, ObservableValue<Boolean>>(){
+                    @Override
+                    public ObservableValue<Boolean> call(CellDataFeatures<SitePage, Boolean> param) {
+                        return param.getValue().getIsUsedProp();
+                    }
+                }
+        );
+        
+        navBarTitleCol.setCellValueFactory(
+                new PropertyValueFactory<SitePage, String>("navBar")
+        );
+        fileCol.setCellValueFactory(
+                new PropertyValueFactory<SitePage, String>("file")
+        );
+        scriptCol.setCellValueFactory(
+                new PropertyValueFactory<SitePage, String>("script")
+        );
+        
         siteTable.getColumns().addAll(useCol, navBarTitleCol, fileCol, scriptCol);
+        siteTable.setEditable(true);
+        useCol.setEditable(true);
         
         // combine
         temPlatePane = new VBox();
