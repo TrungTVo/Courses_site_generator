@@ -62,7 +62,7 @@ public class EditTA_Transaction implements jTPS_Transaction {
         }
         
         // add new edited TA
-        taData.getTeachingAssistants().add(new TeachingAssistant(nameToUpdate,emailToUpdate));
+        taData.getTeachingAssistants().add(new TeachingAssistant(nameToUpdate,emailToUpdate, true));
         Collections.sort(taData.getTeachingAssistants());
         
         workspace.getNameTextField().clear();
@@ -85,7 +85,7 @@ public class EditTA_Transaction implements jTPS_Transaction {
             taData.getTeachingAssistants().remove(indexNewTA);
         }
         // retrieve back old TA
-        taData.getTeachingAssistants().add(new TeachingAssistant(oldName,oldEmail));
+        taData.getTeachingAssistants().add(new TeachingAssistant(oldName,oldEmail, true));
         Collections.sort(taData.getTeachingAssistants());
         
         // put deleted TA back to cell

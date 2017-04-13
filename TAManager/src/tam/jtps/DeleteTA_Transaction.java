@@ -65,7 +65,7 @@ public class DeleteTA_Transaction implements jTPS_Transaction {
         if (indexOfRemoveTA != -1)
             taData.getTeachingAssistants().remove(indexOfRemoveTA);
         
-        taData.getTeachingAssistants().add(new TeachingAssistant(taName, taEmail));
+        taData.getTeachingAssistants().add(new TeachingAssistant(taName, taEmail, true));
         Collections.sort(taData.getTeachingAssistants());
         
         // put deleted TA back to cell

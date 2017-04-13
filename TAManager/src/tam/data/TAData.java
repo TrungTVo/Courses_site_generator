@@ -286,7 +286,7 @@ public class TAData implements AppDataComponent {
 
     public void addTA(String initName, String initEmail) {
         // MAKE THE TA
-        TeachingAssistant ta = new TeachingAssistant(initName, initEmail);
+        TeachingAssistant ta = new TeachingAssistant(initName, initEmail, true);
 
         // ADD THE TA
         if (!containsTA(initName, teachingAssistants)) {

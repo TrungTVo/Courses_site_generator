@@ -35,7 +35,7 @@ public class AddingTA_Transaction implements jTPS_Transaction {
             taList.remove(indexOfOldTA);
         }
         
-        taList.add(new TeachingAssistant(taName, taEmail));
+        taList.add(new TeachingAssistant(taName, taEmail, true));
         Collections.sort(taList);
     }
 

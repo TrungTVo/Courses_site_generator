@@ -31,12 +31,19 @@ import tam.data.TeachingAssistant;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.util.*;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Callback;
 import tam.file.TAFiles;
 import tam.jtps.TimeFrameChange_Transaction;
 import tam.jtps.jTPS;
@@ -68,6 +75,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
     TableView<TeachingAssistant> taTable;
     TableColumn<TeachingAssistant, String> nameColumn;
     TableColumn<TeachingAssistant, String> emailColumn;
+    TableColumn<TeachingAssistant, Boolean> undergradColumn;
 
     // THE TA INPUT
     HBox addBox;
@@ -130,7 +138,9 @@ public class TAWorkspace extends AppWorkspaceComponent {
         String emailColumnText = props.getProperty(TAManagerProp.EMAIL_COLUMN_TEXT.toString());
         nameColumn = new TableColumn(nameColumnText);
         emailColumn = new TableColumn(emailColumnText);
-        nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.4));
+        undergradColumn = new TableColumn(props.getProperty(TAManagerProp.UNDERGRAD_COLUMN_TEXT.toString()));
+        undergradColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.1));
+        nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.3));
         emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.6));
         nameColumn.setCellValueFactory(
                 new PropertyValueFactory<TeachingAssistant, String>("name")
@@ -138,8 +148,18 @@ public class TAWorkspace extends AppWorkspaceComponent {
         emailColumn.setCellValueFactory(
                 new PropertyValueFactory<TeachingAssistant, String>("email")
         );
-        taTable.getColumns().add(nameColumn);
-        taTable.getColumns().add(emailColumn);
+        undergradColumn.setCellValueFactory(
+                new Callback<CellDataFeatures<TeachingAssistant, Boolean>, ObservableValue<Boolean>>(){
+                    @Override
+                    public ObservableValue<Boolean> call(CellDataFeatures<TeachingAssistant, Boolean> param) {
+                        return param.getValue().getIsUnderGrad();
+                    }
+                }
+        );
+        undergradColumn.setCellFactory(CheckBoxTableCell.forTableColumn(undergradColumn));
+        taTable.getColumns().addAll(undergradColumn, nameColumn, emailColumn);
+        undergradColumn.setEditable(true);
+        taTable.setEditable(true);
 
         // ADD BOX FOR ADDING A TA (name and email box)
         String namePromptText = props.getProperty(TAManagerProp.NAME_PROMPT_TEXT.toString());
@@ -231,6 +251,19 @@ public class TAWorkspace extends AppWorkspaceComponent {
         
         emailTextField.setOnMouseClicked(e -> {
             clearButton.setDisable(false);
+        });
+        
+        // HANDLE EDIT TA AT TEXTFIELD
+        taTable.setOnMouseClicked(e -> {
+            // IS A TA SELECTED IN THE TABLE?
+            Object selectedItem = taTable.getSelectionModel().getSelectedItem();
+            TeachingAssistant ta = (TeachingAssistant) selectedItem;
+            if (ta != null) {               // if TA selected
+                nameTextField.setText(ta.getName());                    // put text and email into textfield for editing
+                emailTextField.setText(ta.getEmail());
+                addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
+                clearButton.setDisable(false);
+            } 
         });
         
         
