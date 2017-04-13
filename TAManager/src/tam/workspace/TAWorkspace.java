@@ -225,11 +225,20 @@ public class TAWorkspace extends AppWorkspaceComponent {
         // NOW LET'S SETUP THE EVENT HANDLING
         controller = new TAController(app);
         
+        nameTextField.setOnMouseClicked(e -> {
+            clearButton.setDisable(false);
+        });
+        
+        emailTextField.setOnMouseClicked(e -> {
+            clearButton.setDisable(false);
+        });
+        
+        
         // CONTROLS FOR ADDING & EDITING TAs
         addButton.setOnAction(e -> {
             boolean added = false;
             boolean edited = false;
-            if (addButton.getText().equals("Add TA")){
+            if (addButton.getText().equals(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString()))){
                 added = false;
                 added = controller.handleAddTA();
             } else {
@@ -248,21 +257,24 @@ public class TAWorkspace extends AppWorkspaceComponent {
                     edited = controller.handleEditTA(ta,oldName,oldEmail);
                 }
             }
-            //if (added || edited)
+            if (added || edited){
                 //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file as been modified
+                clearButton.setDisable(true);
+            }
         });
         
         // CONTROL FOR CLEAR BUTTON
         clearButton.setOnAction(e -> {
             nameTextField.clear();
             emailTextField.clear();
-            addButton.setText("Add TA");
+            addButton.setText(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString()));
             // Get the table
             TAWorkspace workspace = (TAWorkspace) app.getWorkspaceComponent();
             TableView taTable = workspace.getTATable();
             taTable.getSelectionModel().clearSelection();
             // AND SEND THE CARET BACK TO THE NAME TEXT FIELD FOR EASY DATA ENTRY
             nameTextField.requestFocus();
+            clearButton.setDisable(true);
         });
         
         updated = false;
@@ -827,7 +839,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
 
     public void reloadOfficeHoursGrid(TAData dataComponent) {
         ArrayList<String> gridHeaders = dataComponent.getGridHeaders();
-
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         // ADD THE TIME HEADERS
         for (int i = 0; i < 2; i++) {
             addCellToGrid(dataComponent, officeHoursGridTimeHeaderPanes, officeHoursGridTimeHeaderLabels, i, 0);
@@ -933,7 +945,8 @@ public class TAWorkspace extends AppWorkspaceComponent {
                     if (newSelectedTA != null) {
                         nameTextField.setText(newSelectedTA.getName());                     // put text and email into textfield for editing
                         emailTextField.setText(newSelectedTA.getEmail());
-                        addButton.setText("Edit TA");
+                        addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
+                        clearButton.setDisable(false);
                     }
                 }
             }
@@ -947,14 +960,16 @@ public class TAWorkspace extends AppWorkspaceComponent {
             if (ta != null) {               // if TA selected
                 nameTextField.setText(ta.getName());                    // put text and email into textfield for editing
                 emailTextField.setText(ta.getEmail());
-                addButton.setText("Edit TA");
+                addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
+                clearButton.setDisable(false);
             } 
         });
         
         taTable.getSelectionModel().clearSelection();
         nameTextField.clear();
         emailTextField.clear();
-        addButton.setText("Add TA");
+        addButton.setText(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString()));
+        clearButton.setDisable(true);
         
         KeyCombination undo = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
         KeyCombination redo = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);

@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tam.TAManagerProp;
 import tam.jtps.AddingTA_Transaction;
 import tam.jtps.DeleteTA_Transaction;
 import tam.jtps.EditTA_Transaction;
@@ -80,7 +81,7 @@ public class TAController {
             dialog.show(props.getProperty(MISSING_TA_EMAIL_TITLE), props.getProperty(MISSING_TA_EMAIL_MESSAGE));
             return false;
         } else {
-            if (workspace.getAddButton().getText().equals("Add TA"))
+            if (workspace.getAddButton().getText().equals(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString())))
                 listExcludeOldTA = data.clone(data.getTeachingAssistants());
                 
             // DOES A TA ALREADY HAVE THE SAME NAME OR EMAIL?
@@ -96,7 +97,7 @@ public class TAController {
             // EVERYTHING IS FINE, ADD A NEW TA
             else {
                 if (isValidEmail(email)) {
-                    if (workspace.getAddButton().getText().equals("Add TA")){
+                    if (workspace.getAddButton().getText().equals(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString()))){
                         // ADD THE NEW TA TO THE DATA
                         data.addTA(name, email);
 
@@ -214,10 +215,10 @@ public class TAController {
         }
         data.getTeachingAssistants().remove(ta);
         */
-        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         TAWorkspace workspace = (TAWorkspace) app.getWorkspaceComponent();
         workspace.getNameTextField().clear();
         workspace.getEmailTextField().clear();
-        workspace.getAddButton().setText("Add TA");
+        workspace.getAddButton().setText(props.getProperty(TAManagerProp.ADD_BUTTON_TEXT.toString()));
     }
 }
