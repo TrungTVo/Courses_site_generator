@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -54,8 +55,8 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
     TextField linkTF;
     Button addUpdateTeamButton;
     Button clearTeamButton;
-    Circle colorCircle;
-    Circle textColorCircle;
+    ColorPicker colorCircle;
+    ColorPicker textColorCircle;
     TextField colorTF;
     TextField textColorTF;
 
@@ -170,14 +171,10 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
          linkTF.setPromptText(props.getProperty(ProjectManagerProp.LINK_TABLECOLUMN.toString()));
          
          colorTF = new TextField();
-         colorCircle = new Circle();
-         colorCircle.setFill(Color.RED);
-         colorCircle.setRadius(40);
+         colorCircle = new ColorPicker();
          
          textColorTF = new TextField();
-         textColorCircle = new Circle();
-         textColorCircle.setFill(Color.GREEN);
-         textColorCircle.setRadius(40);
+         textColorCircle = new ColorPicker();
          
          HBox tempBox = new HBox();
          tempBox.setAlignment(Pos.CENTER_LEFT);
