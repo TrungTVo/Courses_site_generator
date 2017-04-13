@@ -7,6 +7,7 @@ import csg.style.CSGStyle;
 import java.util.Locale;
 import static javafx.application.Application.launch;
 import djf.AppTemplate;
+import pm.ProjectManagerApp;
 import rm.RecManagerApp;
 import sm.ScheduleManagerApp;
 import tam.TAManagerApp;
@@ -20,6 +21,7 @@ public class CourseSiteGenerator extends AppTemplate {
     TAManagerApp taComponent;
     RecManagerApp recComponent;
     ScheduleManagerApp scheComponent;
+    ProjectManagerApp projectComponent;
     
     CSGStyle csgStyle;
     CSGWorkspace csgWorkspace;
@@ -53,6 +55,11 @@ public class CourseSiteGenerator extends AppTemplate {
         scheComponent = new ScheduleManagerApp();
         scheComponent.buildAppComponentsHook();
         csgWorkspace.getScheduleTab().setContent(scheComponent.getWorkspaceComponent().getWorkspace());
+        
+        // Project Data component
+        projectComponent = new ProjectManagerApp();
+        projectComponent.buildAppComponentsHook();
+        csgWorkspace.getProjectTab().setContent(projectComponent.getWorkspaceComponent().getWorkspace());
     }
     
     public static void main(String[] args) {

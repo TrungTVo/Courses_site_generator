@@ -243,3 +243,33 @@ and open the template in the editor.
 .endFriLabel {
     -fx-padding: 0 10 0 35;
 }
+
+/* =========== SCHEDULE TAB =========  */
+
+.projectTitle {
+    -fx-font-size: 20px;
+    -fx-padding: 10 0 5 0;
+}
+
+.teamTitle, .studentLabel {
+    -fx-font-size: 16px;
+    -fx-padding: 0 10 0 0;
+}
+
+.addEditTeamTitle, .addEditStudentTitle {
+    -fx-padding: 15 0 10 0;
+}
+
+.teamHeaderBox, .studentHeaderBox {
+    -fx-padding: 20 0 10 0;
+}
+
+.teamVBox, .studentVBox {
+    -fx-padding: 0 0 20 0;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+}
+
+.textColorLabel {
+    -fx-padding: 0 10 0 40;
+}
