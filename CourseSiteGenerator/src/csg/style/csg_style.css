@@ -268,6 +268,9 @@ and open the template in the editor.
     -fx-padding: 0 0 20 0;
     -fx-border-insets: 10px;
     -fx-background-insets: 10px;
+    -fx-border-color: white;
+    -fx-border-width: 1.5px;
+    -fx-border-style: solid;
 }
 
 .textColorLabel {

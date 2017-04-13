@@ -31,5 +31,8 @@ public enum ScheduleManagerProp {
     TITLE_PROMPT_TEXT,
     TOPIC_PROMPT_TEXT,
     LINK_PROMPT_TEXT,
-    CRITERIA_PROMPT_TEXT
+    CRITERIA_PROMPT_TEXT,
+    
+    // DELETE tooltip
+    DELETE_TOOLTIP
 }

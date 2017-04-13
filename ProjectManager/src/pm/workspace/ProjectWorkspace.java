@@ -14,6 +14,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -125,6 +126,8 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
     private void buildTeamVBox(PropertiesManager props) {
         teamTitle = new Label(props.getProperty(ProjectManagerProp.TEAMS_TITLE.toString()));
         deleteTeamButton = new Button("-");
+        Tooltip buttonTooltip = new Tooltip(props.getProperty(ProjectManagerProp.DELETE_TOOLTIP.toString()));
+        deleteTeamButton.setTooltip(buttonTooltip);
         teamHeaderBox = new HBox();
         teamHeaderBox.getChildren().addAll(teamTitle, deleteTeamButton);
         
@@ -210,6 +213,8 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
     private void buildStudentVBox(PropertiesManager props) {
         studentLabel = new Label(props.getProperty(ProjectManagerProp.STUDENT_LABEL.toString()));
         deleteStudentButton = new Button("-");
+        Tooltip buttonTooltip = new Tooltip(props.getProperty(ProjectManagerProp.DELETE_TOOLTIP.toString()));
+        deleteStudentButton.setTooltip(buttonTooltip);
         studentHeaderBox = new HBox();
         studentHeaderBox.setAlignment(Pos.CENTER);
         studentHeaderBox.getChildren().addAll(studentLabel, deleteStudentButton);

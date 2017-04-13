@@ -31,5 +31,8 @@ public enum ProjectManagerProp {
     FIRSTNAME_LABEL,
     LASTNAME_LABEL,
     TEAM_LABEL,
-    ROLE_LABEL
+    ROLE_LABEL,
+    
+    // DELETE tooltip
+    DELETE_TOOLTIP
 }

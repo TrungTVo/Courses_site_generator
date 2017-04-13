@@ -17,6 +17,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -96,6 +97,8 @@ public class RecWorkspace extends AppWorkspaceComponent {
         title = new Label(props.getProperty(RecManagerProp.RECITATION_TITLE.toString()));
         // Del button
         deleteButton = new Button("-");
+        Tooltip buttonTooltip = new Tooltip(props.getProperty(RecManagerProp.DELETE_TOOLTIP.toString()));
+        deleteButton.setTooltip(buttonTooltip);
         headerBox.getChildren().addAll(title, deleteButton);
         headerBox.setAlignment(Pos.CENTER);
     }

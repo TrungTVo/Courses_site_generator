@@ -14,6 +14,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -128,6 +129,8 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         scheduleBox.setAlignment(Pos.CENTER);
         scheduleLabel = new Label(props.getProperty(ScheduleManagerProp.SCHEDULE_LABEL.toString()));
         deleteScheduleButton = new Button("-");
+        Tooltip buttonTooltip = new Tooltip(props.getProperty(ScheduleManagerProp.DELETE_TOOLTIP.toString()));
+        deleteScheduleButton.setTooltip(buttonTooltip);
         scheduleHeaderBox = new HBox();
         scheduleHeaderBox.setAlignment(Pos.CENTER);
         scheduleHeaderBox.getChildren().addAll(scheduleLabel, deleteScheduleButton);
