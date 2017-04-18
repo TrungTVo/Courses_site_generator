@@ -2,6 +2,7 @@
 package csg.workspace;
 
 import djf.AppTemplate;
+import djf.settings.AppPropertyType;
 import static djf.settings.AppPropertyType.COURSE_TAB_TEXT;
 import static djf.settings.AppPropertyType.PROJECT_TAB_TEXT;
 import static djf.settings.AppPropertyType.REC_TAB_TEXT;
@@ -50,11 +51,11 @@ public class CSGWorkspace extends AppTemplate {
         scheduleTab.setClosable(false);
         projectTab.setClosable(false);
         
-        courseTab.setText(props.getProperty(COURSE_TAB_TEXT.toString()));
-        taTab.setText(props.getProperty(TA_TAB_TEXT.toString()));
-        recitationTab.setText(props.getProperty(REC_TAB_TEXT.toString()));
-        scheduleTab.setText(props.getProperty(SCHEDULE_TAB_TEXT.toString()));
-        projectTab.setText(props.getProperty(PROJECT_TAB_TEXT.toString()));
+        courseTab.setText(props.getProperty(AppPropertyType.COURSE_TAB_TEXT.toString()));
+        taTab.setText(props.getProperty(AppPropertyType.TA_TAB_TEXT.toString()));
+        recitationTab.setText(props.getProperty(AppPropertyType.REC_TAB_TEXT.toString()));
+        scheduleTab.setText(props.getProperty(AppPropertyType.SCHEDULE_TAB_TEXT.toString()));
+        projectTab.setText(props.getProperty(AppPropertyType.PROJECT_TAB_TEXT.toString()));
         tabPane.getTabs().addAll(courseTab, taTab, recitationTab, scheduleTab, projectTab);
         bodyBox = new Pane();
         bodyBox.getChildren().add(tabPane);
