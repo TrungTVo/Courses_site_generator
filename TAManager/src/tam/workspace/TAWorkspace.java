@@ -55,7 +55,7 @@ import tam.jtps.jTPS_Transaction;
  * 
  * @author Richard McKenna - Trung Vo
  */
-public class TAWorkspace extends AppWorkspaceComponent {
+public class TAWorkspace {
     // THIS PROVIDES US WITH ACCESS TO THE APP COMPONENTS
     TAManagerApp app;
     
@@ -66,6 +66,11 @@ public class TAWorkspace extends AppWorkspaceComponent {
     TAController controller;
 
     // NOTE THAT EVERY CONTROL IS PUT IN A BOX TO HELP WITH ALIGNMENT
+    
+    // BODER PANE
+    BorderPane workspace;
+    
+    boolean workspaceActivated;
     
     // FOR THE HEADER ON THE LEFT
     HBox tasHeaderBox;
@@ -139,9 +144,9 @@ public class TAWorkspace extends AppWorkspaceComponent {
         nameColumn = new TableColumn(nameColumnText);
         emailColumn = new TableColumn(emailColumnText);
         undergradColumn = new TableColumn(props.getProperty(TAManagerProp.UNDERGRAD_COLUMN_TEXT.toString()));
-        undergradColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.1));
+        undergradColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.2));
         nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.3));
-        emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.6));
+        emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(0.5));
         nameColumn.setCellValueFactory(
                 new PropertyValueFactory<TeachingAssistant, String>("name")
         );
@@ -237,7 +242,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
         workspace = new BorderPane();
         
         // AND PUT EVERYTHING IN THE WORKSPACE
-        ((BorderPane) workspace).setCenter(sPane);
+        workspace.setCenter(sPane);
 
         // MAKE SURE THE TABLE EXTENDS DOWN FAR ENOUGH
         taTable.prefHeightProperty().bind(workspace.heightProperty().multiply(1));
@@ -276,7 +281,7 @@ public class TAWorkspace extends AppWorkspaceComponent {
                 added = controller.handleAddTA();
             } else {
                 // Get the table
-                TAWorkspace workspace = (TAWorkspace)app.getWorkspaceComponent();
+                TAWorkspace workspace = app.getWorkspaceComponent();
                 TableView taTable = workspace.getTATable();
                 // IS A TA SELECTED IN THE TABLE?
                 Object selectedItem = taTable.getSelectionModel().getSelectedItem();
@@ -339,6 +344,8 @@ public class TAWorkspace extends AppWorkspaceComponent {
             endBox.getSelectionModel().clearSelection();
         });
     }
+    
+    public BorderPane getWorkspace() {return workspace;}
     
     public void handleBothStartEnd(TAData taData){
         // CONVERT NEW START TIME TO 0-24 HOUR UNIT
@@ -848,7 +855,6 @@ public class TAWorkspace extends AppWorkspaceComponent {
         return cellText;
     }
 
-    @Override
     public void resetWorkspace() {
         // CLEAR OUT THE GRID PANE
         officeHoursGridPane.getChildren().clear();
@@ -864,8 +870,15 @@ public class TAWorkspace extends AppWorkspaceComponent {
         officeHoursGridTACellLabels.clear();
     }
     
-    @Override
-    public void reloadWorkspace(AppDataComponent dataComponent) {
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(workspace);
+            workspaceActivated = true;
+        }
+    }
+    
+    public void reloadWorkspace(TAData dataComponent) {
         TAData taData = (TAData)dataComponent;
         reloadOfficeHoursGrid(taData);
     }

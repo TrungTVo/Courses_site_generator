@@ -26,19 +26,32 @@ public class CourseSiteGenerator extends AppTemplate {
     CSGStyle csgStyle;
     CSGWorkspace csgWorkspace;
     
+    public CourseManagerApp getCourse() {return courseComponent;}
+    public TAManagerApp getTA() {return taComponent;}
+    public RecManagerApp getRec() {return recComponent;}
+    public ScheduleManagerApp getSchedule() {return scheComponent;}
+    public ProjectManagerApp getProject() {return projectComponent;}
+    
+    public CSGWorkspace getCSGWorkspace() {return csgWorkspace;}
+    
     @Override
     public void buildAppComponentsHook() {
+        // sync csg in AppFileController with this current CSG object
+        CourseSiteGenerator newCSG = getGUI().getAppFileController().getCSG();
+        newCSG = this;
+        getGUI().getAppFileController().setCSG(newCSG);
+        
         // Style App
         csgStyle = new CSGStyle(this);
         
         // Create Tab Pane for App
-        csgWorkspace = new CSGWorkspace();
-        getGUI().getAppPane().setCenter(csgWorkspace.getTabPane());
+        this.csgWorkspace = new CSGWorkspace(this);
+        getGUI().getAppPane().setCenter(this.csgWorkspace.getTabPane());
         
         // Build each component for each tab
         // TA component
         taComponent = new TAManagerApp();
-        taComponent.buildAppComponentsHook();
+        taComponent.buildAppComponents();
         csgWorkspace.getTATab().setContent(taComponent.getWorkspaceComponent().getWorkspace());
         
         // Course Data component
@@ -60,6 +73,7 @@ public class CourseSiteGenerator extends AppTemplate {
         projectComponent = new ProjectManagerApp();
         projectComponent.buildAppComponentsHook();
         csgWorkspace.getProjectTab().setContent(projectComponent.getWorkspaceComponent().getWorkspace());
+        
     }
     
     public static void main(String[] args) {

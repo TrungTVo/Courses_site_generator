@@ -19,17 +19,20 @@ import static javafx.application.Application.launch;
  * @author Richard McKenna
  * @version 1.0
  */
-public class TAManagerApp extends AppTemplate {
+public class TAManagerApp {
+    
+    TAData dataComponent;
+    TAWorkspace workspaceComponent;
+    TAFiles fileComponent;
+    TAStyle styleComponent;
+    
+    public TAData getDataComponent() {return dataComponent;}
+    public TAWorkspace getWorkspaceComponent() {return workspaceComponent;}
+    public TAFiles getFilesComponent() {return fileComponent;}
+    public TAStyle getStyleComponent() {return styleComponent;}
     
     
-    /**
-     * This hook method must initialize all four components in the
-     * proper order ensuring proper dependencies are respected, meaning
-     * all proper objects are already constructed when they are needed
-     * for use, since some may need others for initialization.
-     */
-    @Override
-    public void buildAppComponentsHook() {
+    public void buildAppComponents() {
         // CONSTRUCT ALL FOUR COMPONENTS. NOTE THAT FOR THIS APP
         // THE WORKSPACE NEEDS THE DATA COMPONENT TO EXIST ALREADY
         // WHEN IT IS CONSTRUCTED, SO BE CAREFUL OF THE ORDER

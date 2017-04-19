@@ -1,6 +1,7 @@
 
 package csg.workspace;
 
+import csg.CourseSiteGenerator;
 import djf.AppTemplate;
 import djf.settings.AppPropertyType;
 import static djf.settings.AppPropertyType.COURSE_TAB_TEXT;
@@ -14,7 +15,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import properties_manager.PropertiesManager;
 
-public class CSGWorkspace extends AppTemplate {
+public class CSGWorkspace {
+    CourseSiteGenerator csg;
     protected TabPane tabPane;
     protected Tab courseTab;
     protected Tab taTab;
@@ -23,7 +25,8 @@ public class CSGWorkspace extends AppTemplate {
     protected Tab projectTab;
     protected Pane bodyBox;
     
-    public CSGWorkspace() {
+    public CSGWorkspace(CourseSiteGenerator csg) {
+        this.csg = csg;
         buildAppComponentsHook();
     }
     
@@ -35,7 +38,6 @@ public class CSGWorkspace extends AppTemplate {
     public TabPane getTabPane() { return tabPane;}
     public Pane getBodyBox() {return bodyBox;}
 
-    @Override
     public void buildAppComponentsHook() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         tabPane = new TabPane();
@@ -71,5 +73,9 @@ public class CSGWorkspace extends AppTemplate {
             projectTab.setStyle("-fx-background-color: white");
             tabPane.getSelectionModel().getSelectedItem().setStyle("-fx-background-color: #F0E68C");
         });
+    }
+    
+    public void resetWorkspace() {
+        csg.buildAppComponentsHook();
     }
 }

@@ -34,7 +34,7 @@ import tam.workspace.TAWorkspace;
  * 
  * @author Richard McKenna - Trung Vo
  */
-public class TAFiles implements AppFileComponent {
+public class TAFiles {
     // THIS IS THE APP ITSELF
     TAManagerApp app;
     
@@ -52,8 +52,7 @@ public class TAFiles implements AppFileComponent {
         app = initApp;
     }
 
-    @Override
-    public void loadData(AppDataComponent data, String filePath) throws IOException {
+    public void loadData(TAData data, String filePath) throws IOException {
 	// CLEAR THE OLD DATA OUT
 	TAData dataManager = (TAData)data;
 
@@ -103,8 +102,7 @@ public class TAFiles implements AppFileComponent {
 	return json;
     }
 
-    @Override
-    public void saveData(AppDataComponent data, String filePath) throws IOException {
+    public void saveData(TAData data, String filePath) throws IOException {
 	// GET THE DATA
 	TAData dataManager = (TAData)data;
 
@@ -166,12 +164,10 @@ public class TAFiles implements AppFileComponent {
     // IMPORTING/EXPORTING DATA IS USED WHEN WE READ/WRITE DATA IN AN
     // ADDITIONAL FORMAT USEFUL FOR ANOTHER PURPOSE, LIKE ANOTHER APPLICATION
 
-    @Override
     public void importData(AppDataComponent data, String filePath) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
+    
     public void exportData(AppDataComponent data, String filePath) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

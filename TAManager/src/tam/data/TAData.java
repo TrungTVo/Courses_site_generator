@@ -22,7 +22,7 @@ import tam.workspace.TAWorkspace;
  * 
  * @author Richard McKenna - Trung Vo
  */
-public class TAData implements AppDataComponent {
+public class TAData {
 
     // WE'LL NEED ACCESS TO THE APP TO NOTIFY THE GUI WHEN DATA CHANGES
     TAManagerApp app;
@@ -88,11 +88,6 @@ public class TAData implements AppDataComponent {
         gridHeaders.addAll(dayHeaders);
     }
     
-    /**
-     * Called each time new work is created or loaded, it resets all data
-     * and data structures such that they can be used for new values.
-     */
-    @Override
     public void resetData() {
         startHour = MIN_START_HOUR;
         endHour = MAX_END_HOUR;

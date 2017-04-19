@@ -1,5 +1,6 @@
 package djf.controller;
 
+import csg.CourseSiteGenerator;
 import djf.ui.AppYesNoCancelDialogSingleton;
 import djf.ui.AppMessageDialogSingleton;
 import djf.ui.AppGUI;
@@ -42,6 +43,9 @@ public class AppFileController {
     // HERE'S THE APP
     AppTemplate app;
     
+    // Course Site Generator object
+    CourseSiteGenerator csg;
+    
     // WE WANT TO KEEP TRACK OF WHEN SOMETHING HAS NOT BEEN SAVED
     boolean saved;
     
@@ -58,7 +62,11 @@ public class AppFileController {
         // NOTHING YET
         saved = true;
         app = initApp;
+        csg = new CourseSiteGenerator();
     }
+    
+    public CourseSiteGenerator getCSG() {return csg;}
+    public void setCSG(CourseSiteGenerator csg) { this.csg = csg;}
     
     /**
      * This method marks the appropriate variable such that we know
@@ -94,17 +102,22 @@ public class AppFileController {
             // IF THE USER REALLY WANTS TO MAKE A NEW COURSE
             if (continueToMakeNew) {
                 // RESET THE WORKSPACE
-		app.getWorkspaceComponent().resetWorkspace();
-
+		//app.getWorkspaceComponent().resetWorkspace();
+                System.out.println(csg.getCSGWorkspace());
+                csg.getCSGWorkspace().resetWorkspace();
+                
                 // RESET THE DATA
-                app.getDataComponent().resetData();
+                //app.getDataComponent().resetData();
+                //csg.getTA().getDataComponent().resetData();
                 
                 // NOW RELOAD THE WORKSPACE WITH THE RESET DATA
-                app.getWorkspaceComponent().reloadWorkspace(app.getDataComponent());
-
+                //app.getWorkspaceComponent().reloadWorkspace(app.getDataComponent());
+                //csg.getTA().getWorkspaceComponent().reloadWorkspace(csg.getTA().getDataComponent());
+                
 		// MAKE SURE THE WORKSPACE IS ACTIVATED
-		app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
-		
+		//app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
+		//csg.getTA().getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
+                
 		// WORK IS NOT SAVED
                 saved = false;
 		currentWorkFile = null;

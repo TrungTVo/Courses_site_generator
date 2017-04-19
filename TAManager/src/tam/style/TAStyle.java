@@ -53,7 +53,7 @@ public class TAStyle extends AppStyleComponent {
     public static String CLASS_OFFICE_HOURS_GRID_TA_CELL_LABEL = "office_hours_grid_ta_cell_label";
     
     // THIS PROVIDES ACCESS TO OTHER COMPONENTS
-    private AppTemplate app;
+    private TAManagerApp app;
     
     /**
      * This constructor initializes all style for the application.
