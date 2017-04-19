@@ -3,10 +3,11 @@ package pm.style;
 
 import djf.AppTemplate;
 import djf.components.AppStyleComponent;
+import pm.ProjectManagerApp;
 import pm.workspace.ProjectWorkspace;
 
 public class ProjectStyle extends AppStyleComponent {
-    private AppTemplate app;
+    private ProjectManagerApp app;
     public static String CLASS_WRAP_VBOX = "wrapVBox";
     public static String CLASS_TEXTCOLOR_LABEL = "textColorLabel";
     public static String CLASS_PROJECT_TITLE = "projectTitle";
@@ -19,7 +20,7 @@ public class ProjectStyle extends AppStyleComponent {
     public static String CLASS_TEAM_VBOX = "teamVBox";
     public static String CLASS_STUDENT_VBOX = "studentVBox";
              
-    public ProjectStyle(AppTemplate app){
+    public ProjectStyle(ProjectManagerApp app){
         this.app = app;
         initProjectStyle();
     }

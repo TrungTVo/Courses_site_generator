@@ -30,7 +30,7 @@ import pm.data.StudentData;
 import pm.data.TeamData;
 import properties_manager.PropertiesManager;
 
-public class ProjectWorkspace extends AppWorkspaceComponent {
+public class ProjectWorkspace {
     
     ProjectManagerApp app;
     ScrollPane scrollPane;
@@ -82,6 +82,9 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
     Button addUpdateStudentButton;
     Button clearStudentButton;
     
+    BorderPane workspace;
+    boolean workspaceActivated;
+    
     public VBox getWrapVBox() {return wrapVBox;}
     public Label getProjectTitle() {return projectTitle;}
     public Label getTeamTitle() {return teamTitle;}
@@ -96,6 +99,7 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
     public VBox getTeamVBox() {return teamVBox;}
     public VBox getStudentVBox() {return studentVBox;}
     
+    public BorderPane getWorkspace() {return workspace;}
     
     public ProjectWorkspace(ProjectManagerApp app) {
         this.app = app;
@@ -119,9 +123,17 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
         wrapVBox.getChildren().add(studentVBox);
         
         workspace = new BorderPane();
-        ((BorderPane)workspace).setCenter(scrollPane);
+        workspace.setCenter(scrollPane);
         wrapVBox.setStyle("-fx-background-color: #B0C4DE");
         
+    }
+    
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(workspace);
+            workspaceActivated = true;
+        }
     }
     
     private void buildTeamVBox(PropertiesManager props) {
@@ -296,13 +308,11 @@ public class ProjectWorkspace extends AppWorkspaceComponent {
         return res;
     }
     
-    @Override
     public void resetWorkspace() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void reloadWorkspace(AppDataComponent dataComponent) {
+    public void reloadWorkspace(ProjectRecord dataComponent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

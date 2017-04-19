@@ -6,7 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pm.ProjectManagerApp;
 
-public class ProjectRecord implements AppDataComponent {
+public class ProjectRecord {
     
     ProjectManagerApp app;
     ObservableList<TeamData> teamList;
@@ -21,7 +21,6 @@ public class ProjectRecord implements AppDataComponent {
     public ObservableList<TeamData> getTeamList() {return teamList;}
     public ObservableList<StudentData> getStudentList() {return studentList;}
     
-    @Override
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
