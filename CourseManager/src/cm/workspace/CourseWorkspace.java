@@ -43,7 +43,7 @@ import properties_manager.PropertiesManager;
  *
  * @author trungvo
  */
-public class CourseWorkspace extends AppWorkspaceComponent {
+public class CourseWorkspace {
     CourseManagerApp app;
     VBox outerWrap;
     GridPane infoGridPane;
@@ -106,6 +106,9 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     ComboBox styleCombo;
     Label noteLabel;
     
+    BorderPane workspace;
+    boolean workspaceActivated;
+    
     public VBox getOuterWrap() {return outerWrap;}
     public VBox getInfoBox() {return infoBox;}
     public GridPane getInfoGridPane() {return infoGridPane;}
@@ -137,6 +140,8 @@ public class CourseWorkspace extends AppWorkspaceComponent {
     public Button getLeftImageButton() {return leftImageButton;}
     public Button getRightImageButton() {return rightImageButton;}
     
+    public BorderPane getWorkspace() {return workspace;}
+    
     public CourseWorkspace(CourseManagerApp initApp) {
         app = initApp;
         
@@ -163,7 +168,7 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         pageStyleVBox.maxWidthProperty().bind(outerWrap.widthProperty().multiply(0.7));
         
         workspace = new BorderPane();
-        ((BorderPane)workspace).setCenter(scrollPane);
+        workspace.setCenter(scrollPane);
         outerWrap.setStyle("-fx-background-color: #B0C4DE");
     }
     
@@ -370,13 +375,19 @@ public class CourseWorkspace extends AppWorkspaceComponent {
         pageStyleVBox.setAlignment(Pos.CENTER);
     }
     
-    @Override
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(workspace);
+            workspaceActivated = true;
+        }
+    }
+    
     public void resetWorkspace() {
         
     }
 
-    @Override
-    public void reloadWorkspace(AppDataComponent dataComponent) {
+    public void reloadWorkspace(CourseData dataComponent) {
         
     }
     

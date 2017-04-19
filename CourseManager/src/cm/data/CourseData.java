@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-public class CourseData implements AppDataComponent {
+public class CourseData {
     
     CourseManagerApp app;
     String subject;
@@ -34,7 +34,6 @@ public class CourseData implements AppDataComponent {
     
     public ObservableList<SitePage> getTemplates() {return templates;}
     
-    @Override
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

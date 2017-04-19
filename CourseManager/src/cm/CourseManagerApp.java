@@ -15,9 +15,16 @@ import djf.ui.AppGUI;
  *
  * @author trungvo
  */
-public class CourseManagerApp extends AppTemplate {
+public class CourseManagerApp {
     
-    @Override
+    CourseData dataComponent;
+    CourseWorkspace workspaceComponent;
+    CourseStyle styleComponent;
+    
+    public CourseData getDataComponent() {return dataComponent;}
+    public CourseWorkspace getWorkspaceComponent() {return workspaceComponent;}
+    public CourseStyle getStyleComponent() {return styleComponent;}
+    
     public void buildAppComponentsHook() {
         dataComponent = new CourseData(this);
         workspaceComponent = new CourseWorkspace(this);

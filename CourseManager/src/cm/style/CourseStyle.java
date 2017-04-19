@@ -1,12 +1,13 @@
 
 package cm.style;
 
+import cm.CourseManagerApp;
 import cm.workspace.CourseWorkspace;
 import djf.AppTemplate;
 import djf.components.AppStyleComponent;
 
 public class CourseStyle extends AppStyleComponent {
-    private AppTemplate app;
+    private CourseManagerApp app;
     public static String CLASS_OUTER_WRAP = "outer_wrap";
     public static String CLASS_INFOBOX = "infoBox";
     public static String CLASS_INFO_GRID_PANE = "info_grid_pane";
@@ -25,7 +26,7 @@ public class CourseStyle extends AppStyleComponent {
     
     public static String CLASS_STYLE_COMBO = "style_combo";
     
-    public CourseStyle(AppTemplate app){
+    public CourseStyle(CourseManagerApp app){
         this.app = app;
         initCourseStyle();
     }

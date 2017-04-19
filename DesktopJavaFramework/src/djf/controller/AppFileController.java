@@ -103,7 +103,6 @@ public class AppFileController {
             if (continueToMakeNew) {
                 // RESET THE WORKSPACE
 		//app.getWorkspaceComponent().resetWorkspace();
-                System.out.println(csg.getCSGWorkspace());
                 csg.getCSGWorkspace().resetWorkspace();
                 
                 // RESET THE DATA
