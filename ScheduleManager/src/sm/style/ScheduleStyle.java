@@ -3,6 +3,7 @@ package sm.style;
 
 import djf.AppTemplate;
 import djf.components.AppStyleComponent;
+import sm.ScheduleManagerApp;
 import sm.workspace.ScheduleWorkspace;
 
 /**
@@ -10,7 +11,7 @@ import sm.workspace.ScheduleWorkspace;
  * @author trungvo
  */
 public class ScheduleStyle extends AppStyleComponent {
-    private AppTemplate app;
+    private ScheduleManagerApp app;
     public static String CLASS_WRAP_BOX = "wrapVBox";
     public static String CLASS_TITLE = "scheTitle";
     public static String CLASS_CALENDAR_WRAPBOX = "calendarWrapBox";
@@ -24,7 +25,7 @@ public class ScheduleStyle extends AppStyleComponent {
     public static String CLASS_ADDEDIT_LABEL = "addEditLabel";
     public static String CLASS_ADDEDIT_GRID = "addEditGrid";
      
-    public ScheduleStyle(AppTemplate app) {
+    public ScheduleStyle(ScheduleManagerApp app) {
         this.app = app;
         initScheduleStyle();
     }

@@ -6,7 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sm.ScheduleManagerApp;
 
-public class ScheduleData implements AppDataComponent {
+public class ScheduleData {
     
     ScheduleManagerApp app;
     String startMon;
@@ -22,7 +22,6 @@ public class ScheduleData implements AppDataComponent {
     
     public ObservableList<ScheduleTopic> getScheduleList() {return scheduleList;}
     
-    @Override
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

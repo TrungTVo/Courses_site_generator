@@ -30,7 +30,7 @@ import sm.data.ScheduleTopic;
  *
  * @author trungvo
  */
-public class ScheduleWorkspace extends AppWorkspaceComponent {
+public class ScheduleWorkspace {
     ScheduleManagerApp app;
     VBox wrapVBox;
     Label scheTitle;
@@ -72,6 +72,9 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
     Button addUpdateButton;
     Button clearButton;
     
+    BorderPane workspace;
+    boolean workspaceActivated;
+    
     public VBox getWrapVBox() {return wrapVBox;}
     public Label getTitle() {return scheTitle;}
     public VBox getCalendarWrapBox() {return calendarWrapBox;}
@@ -85,6 +88,8 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
     public TableView getScheTable() {return scheduleTable;}
     public Label getAddEditLabel() {return addEditLabel;}
     public GridPane getAddEditGrid() {return addEditGrid;}
+    
+    public BorderPane getWorkspace() {return workspace;}
     
     public ScheduleWorkspace(ScheduleManagerApp app) {
         this.app = app;
@@ -106,6 +111,14 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(wrapVBox);
         workspace.setStyle("-fx-background-color: #B0C4DE");
+    }
+    
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(workspace);
+            workspaceActivated = true;
+        }
     }
     
     private void buildCalendarBox(PropertiesManager props) {
@@ -224,13 +237,11 @@ public class ScheduleWorkspace extends AppWorkspaceComponent {
         return res;
     }
     
-    @Override
     public void resetWorkspace() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void reloadWorkspace(AppDataComponent dataComponent) {
+    public void reloadWorkspace(ScheduleData dataComponent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
