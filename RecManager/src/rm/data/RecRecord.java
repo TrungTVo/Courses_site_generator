@@ -10,7 +10,7 @@ import rm.RecManagerApp;
  *
  * @author trungvo
  */
-public class RecRecord implements AppDataComponent {
+public class RecRecord {
     ObservableList<RecData> recRecord;
     RecManagerApp app;
     
@@ -21,7 +21,6 @@ public class RecRecord implements AppDataComponent {
     
     public ObservableList<RecData> getRecRecord() {return recRecord;}
 
-    @Override
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -33,7 +33,7 @@ import rm.data.RecRecord;
  *
  * @author trungvo
  */
-public class RecWorkspace extends AppWorkspaceComponent {
+public class RecWorkspace {
     RecManagerApp app;
     VBox wrapVBox;
     HBox headerBox;
@@ -66,11 +66,16 @@ public class RecWorkspace extends AppWorkspaceComponent {
     Button addUpdateButton;
     Button clearButton;
     
+    BorderPane workspace;
+    boolean workspaceActivated;
+    
     public VBox getWrapVBox() {return wrapVBox;}
     public Label getTitle() {return title;}
     public HBox getHeaderBox() {return headerBox;}
     public VBox getAddEditBox() {return addEditBox;}
     public GridPane getaddEditGrid() {return addEditGrid;}
+    
+    public BorderPane getWorkspace() {return workspace;}
     
     public RecWorkspace(RecManagerApp initApp) {
         app = initApp;
@@ -194,13 +199,19 @@ public class RecWorkspace extends AppWorkspaceComponent {
         return res;
     }
     
-    @Override
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(workspace);
+            workspaceActivated = true;
+        }
+    }
+    
     public void resetWorkspace() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void reloadWorkspace(AppDataComponent dataComponent) {
+    public void reloadWorkspace(RecRecord dataComponent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

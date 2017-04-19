@@ -10,9 +10,16 @@ import rm.workspace.RecWorkspace;
  *
  * @author trungvo
  */
-public class RecManagerApp extends AppTemplate {
-
-    @Override
+public class RecManagerApp {
+    
+    RecRecord dataComponent;
+    RecWorkspace workspaceComponent;
+    RecStyle styleComponent;
+    
+    public RecRecord getDataComponent() {return dataComponent;}
+    public RecWorkspace getWorkspaceComponent() {return workspaceComponent;}
+    public RecStyle getStyleComponent() {return styleComponent;}
+    
     public void buildAppComponentsHook() {
         dataComponent = new RecRecord(this);
         workspaceComponent = new RecWorkspace(this);

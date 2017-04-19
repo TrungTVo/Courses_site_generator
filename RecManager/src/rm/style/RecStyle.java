@@ -7,14 +7,15 @@ package rm.style;
 
 import djf.AppTemplate;
 import djf.components.AppStyleComponent;
+import rm.RecManagerApp;
 import rm.workspace.RecWorkspace;
 
 /**
  *
  * @author trungvo
  */
-public class RecStyle extends AppStyleComponent {
-    private AppTemplate app;
+public class RecStyle {
+    private RecManagerApp app;
     public static String CLASS_WRAPVBOX = "wrapVBox";
     public static String CLASS_REC_TITLE = "recTitle";
     public static String CLASS_DELETE_BUTTON = "deleteButton";
@@ -28,7 +29,7 @@ public class RecStyle extends AppStyleComponent {
     public static String CLASS_REC_ADDUPDATE_BUTTON = "addUpdateButton";
     public static String CLASS_REC_CLEAR_BUTTON = "clearButton";
     
-    public RecStyle(AppTemplate app){
+    public RecStyle(RecManagerApp app){
         this.app = app;
         initRecStyle();
     }
