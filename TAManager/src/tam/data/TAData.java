@@ -98,7 +98,11 @@ public class TAData {
     }
     
     // ACCESSOR METHODS
-
+    
+    public void setTeachingAssistants(ObservableList<TeachingAssistant> teachingAssistants) {
+        this.teachingAssistants = teachingAssistants;
+    }
+    
     public int getStartHour() {
         return startHour;
     }

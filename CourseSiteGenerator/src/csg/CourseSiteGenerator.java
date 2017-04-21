@@ -4,9 +4,15 @@ package csg;
 import cm.CourseManagerApp;
 import csg.workspace.CSGWorkspace;
 import csg.style.CSGStyle;
+import csg.test_bed.TestSave;
 import java.util.Locale;
 import static javafx.application.Application.launch;
 import djf.AppTemplate;
+import static djf.settings.AppStartupConstants.FILE_PROTOCOL;
+import static djf.settings.AppStartupConstants.PATH_WORK;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pm.ProjectManagerApp;
 import rm.RecManagerApp;
 import sm.ScheduleManagerApp;
@@ -37,9 +43,7 @@ public class CourseSiteGenerator extends AppTemplate {
     @Override
     public void buildAppComponentsHook() {
         // sync csg in AppFileController with this current CSG object
-        CourseSiteGenerator newCSG = getGUI().getAppFileController().getCSG();
-        newCSG = this;
-        getGUI().getAppFileController().setCSG(newCSG);
+        getGUI().getAppFileController().setCSG(this);
         
         // Style App
         csgStyle = new CSGStyle(this);

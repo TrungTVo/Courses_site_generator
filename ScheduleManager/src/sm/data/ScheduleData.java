@@ -21,6 +21,11 @@ public class ScheduleData {
     }
     
     public ObservableList<ScheduleTopic> getScheduleList() {return scheduleList;}
+    public void setStart(String startMon) {this.startMon = startMon;}
+    public void setEnd(String endFri) {this.endFri = endFri;}
+    public void setScheduleList(ObservableList<ScheduleTopic> scheduleList) {this.scheduleList = scheduleList;}
+    public String getStart() {return startMon;}
+    public String getEnd() {return endFri;}
     
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

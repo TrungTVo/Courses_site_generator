@@ -20,6 +20,7 @@ public class RecRecord {
     }
     
     public ObservableList<RecData> getRecRecord() {return recRecord;}
+    public void setRecRecord(ObservableList<RecData> recRecord) {this.recRecord = recRecord;}
 
     public void resetData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -1,6 +1,7 @@
 package djf.controller;
 
 import csg.CourseSiteGenerator;
+import csg.test_bed.TestSave;
 import djf.ui.AppYesNoCancelDialogSingleton;
 import djf.ui.AppMessageDialogSingleton;
 import djf.ui.AppGUI;
@@ -188,7 +189,7 @@ public class AppFileController {
 		fc.setTitle(props.getProperty(SAVE_WORK_TITLE));
 		fc.getExtensionFilters().addAll(
 		new ExtensionFilter(props.getProperty(WORK_FILE_EXT_DESC), props.getProperty(WORK_FILE_EXT)));
-
+                
 		File selectedFile = fc.showSaveDialog(app.getGUI().getWindow());
 		if (selectedFile != null) {
 		    saveWork(selectedFile);
@@ -225,8 +226,9 @@ public class AppFileController {
     // HELPER METHOD FOR SAVING WORK
     private void saveWork(File selectedFile) throws IOException {
 	// SAVE IT TO A FILE
-	app.getFileComponent().saveData(app.getDataComponent(), selectedFile.getPath());
-	
+	//app.getFileComponent().saveData(app.getDataComponent(), selectedFile.getPath());
+	TestSave.saveData(csg, selectedFile.getPath());
+        
 	// MARK IT AS SAVED
 	currentWorkFile = selectedFile;
 	saved = true;
