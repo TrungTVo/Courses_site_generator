@@ -73,39 +73,34 @@ public class TestSave {
         taData.setTeachingAssistants(teachingAssistants);
         
         ArrayList<TimeSlot> officeHours = new ArrayList<>();
-        TimeSlot ts1 = new TimeSlot("Monday", "8_00am", "Trung Vo");
-        TimeSlot ts2 = new TimeSlot("Tuesday", "9_00am", "Aiko Chu");
-        TimeSlot ts3 = new TimeSlot("Wednesday", "10_00am", "Hong Phuong");
-        officeHours.add(ts1);
-        officeHours.add(ts2);
-        officeHours.add(ts3);
+        for (int i=1; i<=3; i++){
+            officeHours.add(new TimeSlot("Day "+i, "8_00am", "TA "+i));
+        }
         
         // Recitation Data
-        RecData recData1 = new RecData("R02", "McKenna", "Wed 3:30pm-4:20pm", "Old CS 2114", "Trung Vo", "Hong Phuong");
-        RecData recData2 = new RecData("R03", "Stevens", "Tues 3:00pm-4:00pm", "New CS 1114", "Ron Vo", "Aiko Chu");
         ObservableList<RecData> recList = FXCollections.observableArrayList();
-        recList.add(recData1);
-        recList.add(recData2);
+        for (int i=1; i<=2; i++){
+            recList.add(new RecData("R0"+i, "Instructor "+i, "DayTime "+i, "Location "+i, "Trung Vo", "Hong Phuong"));
+        }
         recRecord.setRecRecord(recList);
         
         // Schedule Data
         scheduleData.setStart("4/22/2012");
         scheduleData.setEnd("4/20/2013");
-        ScheduleTopic scheTopic1 = new ScheduleTopic("Holiday", "2/9/2017", "4:00pm", "SNOW DAY", "Event Programming", "https://course.com", "");
-        ScheduleTopic scheTopic2 = new ScheduleTopic("Homework", "3/9/2017", "5:00pm", "HW5", "File Management", "https://course.com", "");
         ObservableList<ScheduleTopic> scheTopicList = FXCollections.observableArrayList();
-        scheTopicList.add(scheTopic1);
-        scheTopicList.add(scheTopic2);
+        for (int i=1; i<=2; i++){
+            scheTopicList.add(new ScheduleTopic("Type "+i, "Date "+i, "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));
+        }
         
         // Project Data
-        TeamData team1 = new TeamData("Trung Vo", "ffffff", "123456", "https://sample.com");
-        TeamData team2 = new TeamData("Ron Vo", "ffffff", "123456", "https://sample.com");
-        StudentData student1 = new StudentData("Trung", "Vo", "Database", "Data Sciencetist");
-        StudentData student2 = new StudentData("Phuong", "Chu", "Web Design", "Web Developer");
         ObservableList<TeamData> teamList = FXCollections.observableArrayList();
+        for (int i=1; i<=2; i++){
+            teamList.add(new TeamData("Team "+i, "Color "+i, "TextColor "+i, "Link "+i));
+        }
         ObservableList<StudentData> studentList = FXCollections.observableArrayList();
-        teamList.addAll(team1, team2);
-        studentList.addAll(student1, student2);
+        for (int i=1; i<=2; i++){
+            studentList.add(new StudentData("fName "+i, "lName "+i, "Team "+i, "Role "+i));
+        }
         
         
         // SAVING DATA INTO JSON OBJECTS
