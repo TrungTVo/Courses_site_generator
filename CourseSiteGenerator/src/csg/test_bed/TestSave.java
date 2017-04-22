@@ -74,7 +74,7 @@ public class TestSave {
         
         ArrayList<TimeSlot> officeHours = new ArrayList<>();
         for (int i=1; i<=3; i++){
-            officeHours.add(new TimeSlot("Day "+i, "8_00am", "TA "+i));
+            officeHours.add(new TimeSlot("MONDAY", "8_00am", "TA "+i));
         }
         
         // Recitation Data
