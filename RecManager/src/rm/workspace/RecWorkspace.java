@@ -19,6 +19,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -94,6 +96,56 @@ public class RecWorkspace {
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(wrapVBox);
         workspace.setStyle("-fx-background-color: #B0C4DE");
+        
+        
+        // handle when clicking on Recitation Table, parse Info into text fields
+        recTable.setOnMouseClicked(e -> {
+            Object selectedItem = recTable.getSelectionModel().getSelectedItem();
+            RecData rec = (RecData) selectedItem;
+            if (rec != null){
+                sectionTF.setText(rec.getSection());
+                instructorTF.setText(rec.getInstructor());
+                dayTimeTF.setText(rec.getDayTime());
+                locationTF.setText(rec.getLocation());
+                ta1Combo.setValue(rec.getTa1());
+                ta2Combo.setValue(rec.getTa2());
+            }
+        });
+        
+        // Handle Key Pressed on the Rec Table
+        recTable.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            Object selectedItem = recTable.getSelectionModel().getSelectedItem();
+            if (selectedItem != null){
+                RecData rec = (RecData) selectedItem;
+                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                    int indexOfOldRec = ((RecRecord)app.getDataComponent()).getRecRecord().indexOf(rec);
+                    int indexOfNewRec;
+                    RecData newRec = null;
+                    
+                    if (e.getCode() == KeyCode.UP){
+                        if (indexOfOldRec != 0){
+                            indexOfNewRec = indexOfOldRec - 1;
+                            newRec = (RecData)((RecRecord)app.getDataComponent()).getRecRecord().get(indexOfNewRec);
+                        }
+                    } else if (e.getCode() == KeyCode.DOWN) {
+                        if (indexOfOldRec != ((RecRecord)app.getDataComponent()).getRecRecord().size()-1){
+                            indexOfNewRec = indexOfOldRec + 1;
+                            newRec = (RecData)((RecRecord)app.getDataComponent()).getRecRecord().get(indexOfNewRec);
+                        }
+                    }
+                    
+                    // parse Info into text fields
+                    if (newRec != null) {
+                        sectionTF.setText(newRec.getSection());
+                        instructorTF.setText(newRec.getInstructor());
+                        dayTimeTF.setText(newRec.getDayTime());
+                        locationTF.setText(newRec.getLocation());
+                        ta1Combo.setValue(newRec.getTa1());
+                        ta2Combo.setValue(newRec.getTa2());
+                    }
+                }
+            }
+        });
     }
     
     public void buildHeaderBox(PropertiesManager props) {
