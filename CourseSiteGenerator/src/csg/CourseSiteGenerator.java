@@ -2,6 +2,7 @@
 package csg;
 
 import cm.CourseManagerApp;
+import csg.file.CSGFiles;
 import csg.workspace.CSGWorkspace;
 import csg.style.CSGStyle;
 import csg.test_bed.TestSave;
@@ -31,6 +32,7 @@ public class CourseSiteGenerator extends AppTemplate {
     
     CSGStyle csgStyle;
     CSGWorkspace csgWorkspace;
+    CSGFiles csgFiles;
     
     public CourseManagerApp getCourse() {return courseComponent;}
     public TAManagerApp getTA() {return taComponent;}
@@ -39,11 +41,15 @@ public class CourseSiteGenerator extends AppTemplate {
     public ProjectManagerApp getProject() {return projectComponent;}
     
     public CSGWorkspace getCSGWorkspace() {return csgWorkspace;}
+    public CSGFiles getCSGFiles() {return csgFiles;}
     
     @Override
     public void buildAppComponentsHook() {
         // sync csg in AppFileController with this current CSG object
         getGUI().getAppFileController().setCSG(this);
+        
+        // Init Files Manager
+        csgFiles = new CSGFiles(this);
         
         // Style App
         csgStyle = new CSGStyle(this);

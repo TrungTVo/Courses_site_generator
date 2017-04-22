@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -131,6 +132,9 @@ public class CourseWorkspace {
     public Label getInstructorNameLabel() {return instructorNameLabel;}
     public Label getInstructorHomeLabel() {return instructorHomeLabel;}
     public BorderPane getDirBox() {return dirBox;}
+    public TextField getTitleTF() {return titleTF;}
+    public TextField getInstructorNameTF() {return instructorNameTF;}
+    public TextField getInstructorHomeTF() {return instructorHomeTF;}
     
     public GridPane getSubjectBox() {return subjectBox;}
     public GridPane getSemesterBox() {return semesterBox;}
@@ -304,7 +308,7 @@ public class CourseWorkspace {
         scriptCol.setCellValueFactory(
                 new PropertyValueFactory<SitePage, String>("script")
         );
-        
+        useCol.setCellFactory(CheckBoxTableCell.forTableColumn(useCol));
         siteTable.getColumns().addAll(useCol, navBarTitleCol, fileCol, scriptCol);
         siteTable.setEditable(true);
         useCol.setEditable(true);

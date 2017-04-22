@@ -368,22 +368,28 @@ public class AppFileController {
         if (selectedFile != null) {
             try {
                 // RESET THE WORKSPACE
-		app.getWorkspaceComponent().resetWorkspace();
+		//app.getWorkspaceComponent().resetWorkspace();
 
                 // RESET THE DATA
-                app.getDataComponent().resetData();
+                //app.getDataComponent().resetData();
+                
+                csg.getCSGWorkspace().resetWorkspace();
+                csg.getTA().getWorkspaceComponent().reloadWorkspace(csg.getTA().getDataComponent());
                 
                 // LOAD THE FILE INTO THE DATA
-                app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
+                //app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
+                csg.getCSGFiles().loadData(csg, selectedFile.getAbsolutePath());
                 
 		// MAKE SURE THE WORKSPACE IS ACTIVATED
-		app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
+		//app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
+                csg.getCSGWorkspace().activateWorkspace(app.getGUI().getAppPane());
                 
                 // AND MAKE SURE THE FILE BUTTONS ARE PROPERLY ENABLED
                 saved = true;
                 currentWorkFile = selectedFile;
                 app.getGUI().updateToolbarControls(saved);
             } catch (Exception e) {
+                e.printStackTrace();
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(LOAD_ERROR_TITLE), props.getProperty(LOAD_ERROR_MESSAGE));
             }

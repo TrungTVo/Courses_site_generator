@@ -12,6 +12,7 @@ import static djf.settings.AppPropertyType.TA_TAB_TEXT;
 import djf.ui.AppGUI;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import properties_manager.PropertiesManager;
 
@@ -24,6 +25,8 @@ public class CSGWorkspace {
     protected Tab scheduleTab;
     protected Tab projectTab;
     protected Pane bodyBox;
+    
+    boolean workspaceActivated;
     
     public CSGWorkspace(CourseSiteGenerator csg) {
         this.csg = csg;
@@ -77,5 +80,18 @@ public class CSGWorkspace {
     
     public void resetWorkspace() {
         csg.buildAppComponentsHook();
+    }
+    
+    public void activateWorkspace(BorderPane appPane) {
+        if (!workspaceActivated) {
+            csg.getCSGWorkspace().getCourseTab().setContent(csg.getCourse().getWorkspaceComponent().getWorkspace());
+            csg.getCSGWorkspace().getTATab().setContent(csg.getTA().getWorkspaceComponent().getWorkspace());
+            csg.getCSGWorkspace().getRecTab().setContent(csg.getRec().getWorkspaceComponent().getWorkspace());
+            csg.getCSGWorkspace().getScheduleTab().setContent(csg.getSchedule().getWorkspaceComponent().getWorkspace());
+            csg.getCSGWorkspace().getProjectTab().setContent(csg.getProject().getWorkspaceComponent().getWorkspace());
+            // PUT THE WORKSPACE IN THE GUI
+            appPane.setCenter(tabPane);
+            workspaceActivated = true;
+        }
     }
 }

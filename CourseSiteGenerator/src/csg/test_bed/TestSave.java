@@ -85,8 +85,8 @@ public class TestSave {
         recRecord.setRecRecord(recList);
         
         // Schedule Data
-        scheduleData.setStart("4/22/2012");
-        scheduleData.setEnd("4/20/2013");
+        scheduleData.setStart("10/22/2012");
+        scheduleData.setEnd("04/20/2013");
         ObservableList<ScheduleTopic> scheTopicList = FXCollections.observableArrayList();
         for (int i=1; i<=2; i++){
             scheTopicList.add(new ScheduleTopic("Type "+i, "Date "+i, "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));

@@ -3,6 +3,9 @@ package sm.workspace;
 
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -20,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import properties_manager.PropertiesManager;
 import sm.ScheduleManagerApp;
 import sm.ScheduleManagerProp;
@@ -90,6 +94,11 @@ public class ScheduleWorkspace {
     public GridPane getAddEditGrid() {return addEditGrid;}
     
     public BorderPane getWorkspace() {return workspace;}
+    
+    public void parseDate(String startDate, String endDate){
+        startPicker.setValue(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        endPicker.setValue(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+    }
     
     public ScheduleWorkspace(ScheduleManagerApp app) {
         this.app = app;
