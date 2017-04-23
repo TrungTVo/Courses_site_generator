@@ -19,6 +19,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -120,6 +122,57 @@ public class ScheduleWorkspace {
         workspace = new BorderPane();
         ((BorderPane)workspace).setCenter(wrapVBox);
         workspace.setStyle("-fx-background-color: #B0C4DE");
+        
+        // handle when clicking on Schedule table, parse Info into text fields
+        scheduleTable.setOnMouseClicked(e -> {
+            Object selectedItem = scheduleTable.getSelectionModel().getSelectedItem();
+            ScheduleTopic sche = (ScheduleTopic) selectedItem;
+            if (sche != null){
+                typeCombo.setValue(sche.getType());
+                datePicker.setValue(LocalDate.parse(sche.getDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                timeTF.setText(sche.getTime());
+                titleTF.setText(sche.getTitle());
+                topicTF.setText(sche.getTopic());
+                linkTF.setText(sche.getLink());
+                criteriaTF.setText(sche.getCriteria());
+            }
+        });
+        
+        // Handle Key Pressed on the Schedule Table
+        scheduleTable.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            Object selectedItem = scheduleTable.getSelectionModel().getSelectedItem();
+            if (selectedItem != null){
+                ScheduleTopic sche = (ScheduleTopic) selectedItem;
+                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                    int indexOfOldSche = ((ScheduleData)app.getDataComponent()).getScheduleList().indexOf(sche);
+                    int indexOfNewSche;
+                    ScheduleTopic newSche = null;
+                    
+                    if (e.getCode() == KeyCode.UP){
+                        if (indexOfOldSche != 0){
+                            indexOfNewSche = indexOfOldSche - 1;
+                            newSche = (ScheduleTopic)((ScheduleData)app.getDataComponent()).getScheduleList().get(indexOfNewSche);
+                        }
+                    } else if (e.getCode() == KeyCode.DOWN){
+                        if (indexOfOldSche != ((ScheduleData)app.getDataComponent()).getScheduleList().size()-1){
+                            indexOfNewSche = indexOfOldSche + 1;
+                            newSche = (ScheduleTopic)((ScheduleData)app.getDataComponent()).getScheduleList().get(indexOfNewSche);
+                        }
+                    }
+                    
+                    // parse Info into text fields
+                    if (newSche != null){
+                        typeCombo.setValue(newSche.getType());
+                        datePicker.setValue(LocalDate.parse(newSche.getDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                        timeTF.setText(newSche.getTime());
+                        titleTF.setText(newSche.getTitle());
+                        topicTF.setText(newSche.getTopic());
+                        linkTF.setText(newSche.getLink());
+                        criteriaTF.setText(newSche.getCriteria());
+                    }
+                }
+            }
+        });
     }
     
     public void activateWorkspace(BorderPane appPane) {
