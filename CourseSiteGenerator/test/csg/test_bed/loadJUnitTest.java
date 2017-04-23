@@ -96,7 +96,7 @@ public class loadJUnitTest extends TestCase {
         for (int i=1; i<=scheJson.size(); i++){
             JsonObject schedule = scheJson.getJsonObject(i-1);
             assertTrue(loadTest.loadTesting(schedule, "Type", "Holiday"));
-            assertTrue(loadTest.loadTesting(schedule, "Date", "Date "+i));
+            assertTrue(loadTest.loadTesting(schedule, "Date", "10/22/2012"));
             assertTrue(loadTest.loadTesting(schedule, "Time", "Time "+i));
             assertTrue(loadTest.loadTesting(schedule, "Title", "Title "+i));
             assertTrue(loadTest.loadTesting(schedule, "Topic", "Topic "+i));
