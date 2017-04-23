@@ -89,7 +89,7 @@ public class TestSave {
         scheduleData.setEnd("04/20/2013");
         ObservableList<ScheduleTopic> scheTopicList = FXCollections.observableArrayList();
         for (int i=1; i<=2; i++){
-            scheTopicList.add(new ScheduleTopic("Type "+i, "Date "+i, "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));
+            scheTopicList.add(new ScheduleTopic("Holiday", "Date "+i, "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));
         }
         
         // Project Data
