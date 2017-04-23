@@ -109,9 +109,9 @@ public class loadJUnitTest extends TestCase {
         JsonArray teamDataJson = jsonObject.getJsonArray("Team Data");
         for (int i=1; i<=teamDataJson.size(); i++){
             JsonObject team = teamDataJson.getJsonObject(i-1);
-            assertTrue(loadTest.loadTesting(team, "Name", "Team "+i));
-            assertTrue(loadTest.loadTesting(team, "Color", "Color "+i));
-            assertTrue(loadTest.loadTesting(team, "TextColor", "TextColor "+i));
+            assertTrue(loadTest.loadTesting(team, "Name", "A"));
+            assertTrue(loadTest.loadTesting(team, "Color", "b31a1a"));
+            assertTrue(loadTest.loadTesting(team, "TextColor", "334db3"));
             assertTrue(loadTest.loadTesting(team, "Link", "Link "+i));
         }
         
@@ -121,7 +121,7 @@ public class loadJUnitTest extends TestCase {
             JsonObject student = studentDataJson.getJsonObject(i-1);
             assertTrue(loadTest.loadTesting(student, "First Name", "fName "+i));
             assertTrue(loadTest.loadTesting(student, "Last Name", "lName "+i));
-            assertTrue(loadTest.loadTesting(student, "Team", "Team "+i));
+            assertTrue(loadTest.loadTesting(student, "Team", "B"));
             assertTrue(loadTest.loadTesting(student, "Role", "Role "+i));
         }
         

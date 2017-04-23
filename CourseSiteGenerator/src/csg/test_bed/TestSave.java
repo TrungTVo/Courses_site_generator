@@ -95,11 +95,11 @@ public class TestSave {
         // Project Data
         ObservableList<TeamData> teamList = FXCollections.observableArrayList();
         for (int i=1; i<=2; i++){
-            teamList.add(new TeamData("Team "+i, "Color "+i, "TextColor "+i, "Link "+i));
+            teamList.add(new TeamData("A", "b31a1a", "334db3", "Link "+i));
         }
         ObservableList<StudentData> studentList = FXCollections.observableArrayList();
         for (int i=1; i<=2; i++){
-            studentList.add(new StudentData("fName "+i, "lName "+i, "Team "+i, "Role "+i));
+            studentList.add(new StudentData("fName "+i, "lName "+i, "B", "Role "+i));
         }
         
         
