@@ -17,6 +17,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -125,6 +128,96 @@ public class ProjectWorkspace {
         workspace = new BorderPane();
         workspace.setCenter(scrollPane);
         wrapVBox.setStyle("-fx-background-color: #B0C4DE");
+        
+        // handle when clicking on Team Table, parse Info into text fields
+        teamTable.setOnMouseClicked((MouseEvent e) -> {
+            Object selectedItem = teamTable.getSelectionModel().getSelectedItem();
+            TeamData team = (TeamData) selectedItem;
+            if (team != null){
+                nameTF.setText(team.getName());
+                linkTF.setText(team.getLink());
+                colorCircle.setValue(Color.valueOf(team.getColor()));
+                textColorCircle.setValue(Color.valueOf(team.getTextColor()));
+            }
+        });
+        
+        // Handle Key Pressed on Team Table
+        teamTable.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            Object selectedItem = teamTable.getSelectionModel().getSelectedItem();
+            if (selectedItem != null){
+                TeamData team = (TeamData) selectedItem;
+                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                    int indexOfOldTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().indexOf(team);
+                    int indexOfNewTeam;
+                    TeamData newTeam = null;
+                    
+                    if (e.getCode() == KeyCode.UP) {
+                        if (indexOfOldTeam != 0){
+                            indexOfNewTeam = indexOfOldTeam - 1;
+                            newTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().get(indexOfNewTeam);
+                        }
+                    } else if (e.getCode() == KeyCode.DOWN){
+                        if (indexOfOldTeam != app.getDataComponent().getTeamList().size()-1){
+                            indexOfNewTeam = indexOfOldTeam + 1;
+                            newTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().get(indexOfNewTeam);
+                        }
+                    }
+                    
+                    // parse Info into text fields
+                    if (newTeam != null){
+                        nameTF.setText(newTeam.getName());
+                        linkTF.setText(newTeam.getLink());
+                        colorCircle.setValue(Color.valueOf(newTeam.getColor()));
+                        textColorCircle.setValue(Color.valueOf(newTeam.getTextColor()));
+                    }
+                }
+            }
+        });
+        
+        // handle when clicking on Student Table, parse Info into text fields
+        studentTable.setOnMouseClicked((MouseEvent e) -> {
+            Object selectedItem = studentTable.getSelectionModel().getSelectedItem();
+            StudentData student = (StudentData) selectedItem;
+            if (student != null){
+                firstNameTF.setText(student.getFirstName());
+                lastNameTF.setText(student.getLastName());
+                teamCombo.setValue(student.getTeam());
+                roleTF.setText(student.getRole());
+            }
+        });
+        
+        // Handle Key Pressed on Team Table
+        studentTable.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            Object selectedItem = studentTable.getSelectionModel().getSelectedItem();
+            if (selectedItem != null){
+                StudentData student = (StudentData) selectedItem;
+                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                    int indexOfOldStudent = ((ProjectRecord)app.getDataComponent()).getStudentList().indexOf(student);
+                    int indexOfNewStudent;
+                    StudentData newStudent = null;
+                    
+                    if (e.getCode() == KeyCode.UP) {
+                        if (indexOfOldStudent != 0){
+                            indexOfNewStudent = indexOfOldStudent - 1;
+                            newStudent = ((ProjectRecord)app.getDataComponent()).getStudentList().get(indexOfNewStudent);
+                        }
+                    } else if (e.getCode() == KeyCode.DOWN){
+                        if (indexOfOldStudent != app.getDataComponent().getStudentList().size()-1){
+                            indexOfNewStudent = indexOfOldStudent + 1;
+                            newStudent = ((ProjectRecord)app.getDataComponent()).getStudentList().get(indexOfNewStudent);
+                        }
+                    }
+                    
+                    // parse Info into text fields
+                    if (newStudent != null){
+                        firstNameTF.setText(newStudent.getFirstName());
+                        lastNameTF.setText(newStudent.getLastName());
+                        teamCombo.setValue(newStudent.getTeam());
+                        roleTF.setText(newStudent.getRole());
+                    }
+                }
+            }
+        });
         
     }
     
