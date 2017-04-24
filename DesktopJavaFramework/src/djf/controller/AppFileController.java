@@ -277,11 +277,14 @@ public class AppFileController {
         File selectedDirectory = chooser.showDialog(app.getGUI().getWindow());
         if (selectedDirectory != null) {
             String currentDir = System.getProperty("user.dir");
-            File srcDir = new File(currentDir.substring(0,currentDir.lastIndexOf("/")).concat("/TAManagerTester/public_html"));
-            
+            File srcDir = new File(currentDir.substring(0,currentDir.lastIndexOf("/")).concat("/Test"));
             FileUtils.copyDirectory(srcDir, selectedDirectory);
-            File pathToNewOfficeHoursGrid = new File(selectedDirectory.toString().concat("/js/OfficeHoursGridData.json"));
-            saveWork(pathToNewOfficeHoursGrid);
+            csg.getCSGFiles().saveDataForExport(csg);
+            FileUtils.copyFileToDirectory(new File("./work/OfficeHoursGridData.json"), new File(selectedDirectory.toString().concat("/public_html/syllabus_files")));
+            FileUtils.copyFileToDirectory(new File("./work/RecitationsData.json"), new File(selectedDirectory.toString().concat("/public_html/syllabus_files")));
+            FileUtils.copyFileToDirectory(new File("./work/ScheduleData.json"), new File(selectedDirectory.toString().concat("/public_html/schedule_files")));
+            //File pathToNewOfficeHoursGrid = new File(selectedDirectory.toString().concat("/js/OfficeHoursGridData.json"));
+            //saveWork(pathToNewOfficeHoursGrid);
         }
     }
 
@@ -389,7 +392,6 @@ public class AppFileController {
                 currentWorkFile = selectedFile;
                 app.getGUI().updateToolbarControls(saved);
             } catch (Exception e) {
-                e.printStackTrace();
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(LOAD_ERROR_TITLE), props.getProperty(LOAD_ERROR_MESSAGE));
             }

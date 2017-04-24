@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class TAFiles {
     static final String JSON_TIME = "time";
     static final String JSON_NAME = "name";
     static final String JSON_EMAIL = "email";
+    static final String JSON_ISUNDERGRAD = "undergrad";
     static final String JSON_UNDERGRAD_TAS = "undergrad_tas";
     
     public TAFiles(TAManagerApp initApp) {
@@ -111,13 +113,12 @@ public class TAFiles {
 	ObservableList<TeachingAssistant> tas = dataManager.getTeachingAssistants();
 	for (TeachingAssistant ta : tas) {
             JsonObject taJson;
-            if (ta.getEmail() != null){
-                taJson = Json.createObjectBuilder()
-		    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
-            } else {
-                taJson = Json.createObjectBuilder()
-		    .add(JSON_NAME, ta.getName()).build();
-            }
+            boolean isUndergrad = (ta.getIsUndergrad())? true:false;
+            String undergrad = (isUndergrad)? "yes":"no";
+            taJson = Json.createObjectBuilder()
+                        .add(JSON_NAME, ta.getName())
+                        .add(JSON_EMAIL, ta.getEmail())
+                        .add(JSON_ISUNDERGRAD, undergrad).build();
 	    taArrayBuilder.add(taJson);
 	}
 	JsonArray undergradTAsArray = taArrayBuilder.build();

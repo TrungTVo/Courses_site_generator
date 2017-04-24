@@ -160,4 +160,10 @@ public class CSGFiles {
 	is.close();
 	return json;
     }
+    
+    public void saveDataForExport(CourseSiteGenerator csg) throws IOException {
+        csg.getTA().getFilesComponent().saveData(csg.getTA().getDataComponent(), "./work/OfficeHoursGridData.json");
+        csg.getRec().getFileComponent().saveData(csg.getRec().getDataComponent(), "./work/RecitationsData.json");
+        csg.getSchedule().getFileComponent().saveData(csg.getSchedule().getDataComponent(), "./work/ScheduleData.json");
+    }
 }

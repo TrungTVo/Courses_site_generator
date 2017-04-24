@@ -85,11 +85,11 @@ public class TestSave {
         recRecord.setRecRecord(recList);
         
         // Schedule Data
-        scheduleData.setStart("10/22/2012");
+        scheduleData.setStart("03/22/2012");
         scheduleData.setEnd("04/20/2013");
         ObservableList<ScheduleTopic> scheTopicList = FXCollections.observableArrayList();
         for (int i=1; i<=2; i++){
-            scheTopicList.add(new ScheduleTopic("Holiday", "10/22/2012", "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));
+            scheTopicList.add(new ScheduleTopic("Holiday", "03/25/2012", "Time "+i, "Title "+i, "Topic "+i, "Link "+i, "Criteria "+i));
         }
         
         // Project Data

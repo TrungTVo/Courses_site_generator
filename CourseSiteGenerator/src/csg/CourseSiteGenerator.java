@@ -70,7 +70,7 @@ public class CourseSiteGenerator extends AppTemplate {
         csgWorkspace.getCourseTab().setContent(courseComponent.getWorkspaceComponent().getWorkspace());
         
         // Recitation Data component
-        recComponent = new RecManagerApp();
+        recComponent = new RecManagerApp(courseComponent);
         recComponent.buildAppComponentsHook();
         csgWorkspace.getRecTab().setContent(recComponent.getWorkspaceComponent().getWorkspace());
         
