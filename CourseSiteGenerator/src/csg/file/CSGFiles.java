@@ -28,14 +28,14 @@ public class CSGFiles {
 	JsonObject jsonObject = loadJSONFile(filePath);
         
         // Course Data
-        JsonObject courseDataJson = jsonObject.getJsonObject("Course Data");
+        JsonObject courseDataJson = jsonObject.getJsonObject("Course_Data");
         csg.getCourse().getDataComponent().setSubject(courseDataJson.getString("Subject"));
         csg.getCourse().getDataComponent().setNumber(courseDataJson.getString("Number"));
         csg.getCourse().getDataComponent().setSemester(courseDataJson.getString("Semester"));
         csg.getCourse().getDataComponent().setYear(courseDataJson.getString("Year"));
         csg.getCourse().getDataComponent().setTitle(courseDataJson.getString("Title"));
-        csg.getCourse().getDataComponent().setInstructorName(courseDataJson.getString("Instructor Name"));
-        csg.getCourse().getDataComponent().setInstructorHome(courseDataJson.getString("Instructor Home"));
+        csg.getCourse().getDataComponent().setInstructorName(courseDataJson.getString("Instructor_Name"));
+        csg.getCourse().getDataComponent().setInstructorHome(courseDataJson.getString("Instructor_Home"));
         
         // Fill in Textfields
         csg.getCourse().getWorkspaceComponent().getSubjectCombo().setValue(csg.getCourse().getDataComponent().getSubject());
@@ -46,21 +46,21 @@ public class CSGFiles {
         csg.getCourse().getWorkspaceComponent().getInstructorNameTF().setText(csg.getCourse().getDataComponent().getInstructorName());
         csg.getCourse().getWorkspaceComponent().getInstructorHomeTF().setText(csg.getCourse().getDataComponent().getInstructorHome());
         
-        JsonArray templateJson = courseDataJson.getJsonArray("Site Templates");
+        JsonArray templateJson = courseDataJson.getJsonArray("Site_Templates");
         for (int i=1; i<=templateJson.size(); i++){
             JsonObject template = templateJson.getJsonObject(i-1);
             boolean isUse = (template.getString("Use").equals("yes"))? true:false;
             SitePage sp = new SitePage (
                     isUse,
-                    template.getString("NavBar Title"),
-                    template.getString("File Name"),
+                    template.getString("NavBar_Title"),
+                    template.getString("File_Name"),
                     template.getString("Script")
             );
             csg.getCourse().getDataComponent().getTemplates().add(sp);
         }
         
         // TA Data
-        JsonObject TADataJson = jsonObject.getJsonObject("TA Data");
+        JsonObject TADataJson = jsonObject.getJsonObject("TA_Data");
         csg.getTA().getDataComponent().setStartHour(Integer.parseInt(TADataJson.getString("StartHour")));
         csg.getTA().getDataComponent().setEndHour(Integer.parseInt(TADataJson.getString("EndHour")));
         
@@ -86,7 +86,7 @@ public class CSGFiles {
         }
         
         // Rec Data
-        JsonArray recDataJson = jsonObject.getJsonArray("Recitation Data");
+        JsonArray recDataJson = jsonObject.getJsonArray("Recitation_Data");
         for (int i=1; i<=recDataJson.size(); i++){
             JsonObject recObject = recDataJson.getJsonObject(i-1);
             RecData rec = new RecData(
@@ -101,7 +101,7 @@ public class CSGFiles {
         }
         
         // Schedule Data
-        JsonObject scheDataJson = jsonObject.getJsonObject("Schedule Data");
+        JsonObject scheDataJson = jsonObject.getJsonObject("Schedule_Data");
         csg.getSchedule().getDataComponent().setStart(scheDataJson.getString("Start"));
         csg.getSchedule().getDataComponent().setEnd(scheDataJson.getString("End"));
         JsonArray scheJson = scheDataJson.getJsonArray("ScheduleList");
@@ -125,7 +125,7 @@ public class CSGFiles {
         );
         
         // Team Data
-        JsonArray teamDataJson = jsonObject.getJsonArray("Team Data");
+        JsonArray teamDataJson = jsonObject.getJsonArray("Team_Data");
         for (int i=1; i<=teamDataJson.size(); i++){
             JsonObject team = teamDataJson.getJsonObject(i-1);
             TeamData teamData = new TeamData(
@@ -138,12 +138,12 @@ public class CSGFiles {
         }
         
         // Student Data
-        JsonArray studentDataJson = jsonObject.getJsonArray("Student Data");
+        JsonArray studentDataJson = jsonObject.getJsonArray("Student_Data");
         for (int i=1; i<=studentDataJson.size(); i++){
             JsonObject student = studentDataJson.getJsonObject(i-1);
             StudentData studentData = new StudentData(
-                    student.getString("First Name"),
-                    student.getString("Last Name"),
+                    student.getString("First_Name"),
+                    student.getString("Last_Name"),
                     student.getString("Team"),
                     student.getString("Role")
             );
@@ -165,5 +165,7 @@ public class CSGFiles {
         csg.getTA().getFilesComponent().saveData(csg.getTA().getDataComponent(), "./work/OfficeHoursGridData.json");
         csg.getRec().getFileComponent().saveData(csg.getRec().getDataComponent(), "./work/RecitationsData.json");
         csg.getSchedule().getFileComponent().saveData(csg.getSchedule().getDataComponent(), "./work/ScheduleData.json");
+        csg.getProject().getFileComponent().saveDataForTeamStudent(csg.getProject().getDataComponent(), "./work/TeamsAndStudents.json");
+        csg.getProject().getFileComponent().saveDataForProjects(csg.getProject().getDataComponent(), "./work/ProjectsData.json");
     }
 }

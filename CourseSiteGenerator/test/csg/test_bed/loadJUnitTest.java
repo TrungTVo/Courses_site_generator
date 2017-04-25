@@ -37,26 +37,26 @@ public class loadJUnitTest extends TestCase {
         JsonObject jsonObject = loadTest.loadJSONFile(jsonFilePath);
         
         // Course Data
-        JsonObject courseDataJson = jsonObject.getJsonObject("Course Data");
+        JsonObject courseDataJson = jsonObject.getJsonObject("Course_Data");
         assertTrue(loadTest.loadTesting(courseDataJson, "Subject", "CSE"));
         assertTrue(loadTest.loadTesting(courseDataJson, "Number", "219"));
         assertTrue(loadTest.loadTesting(courseDataJson, "Semester", "Fall"));
         assertTrue(loadTest.loadTesting(courseDataJson, "Year", "2017"));
         assertTrue(loadTest.loadTesting(courseDataJson, "Title", "Computer Science III"));
-        assertTrue(loadTest.loadTesting(courseDataJson, "Instructor Name", "Richard McKenna"));
-        assertTrue(loadTest.loadTesting(courseDataJson, "Instructor Home", "http://www3.cs.stonybrook.edu/~richard/"));
+        assertTrue(loadTest.loadTesting(courseDataJson, "Instructor_Name", "Richard McKenna"));
+        assertTrue(loadTest.loadTesting(courseDataJson, "Instructor_Home", "http://www3.cs.stonybrook.edu/~richard/"));
         
-        JsonArray templateJson = courseDataJson.getJsonArray("Site Templates");
+        JsonArray templateJson = courseDataJson.getJsonArray("Site_Templates");
         for (int i=1; i<=templateJson.size(); i++){
             JsonObject template = templateJson.getJsonObject(i-1);
             assertTrue(loadTest.loadTesting(template, "Use", "yes"));
-            assertTrue(loadTest.loadTesting(template, "NavBar Title", "navBar "+String.valueOf(i)));
-            assertTrue(loadTest.loadTesting(template, "File Name", "file "+String.valueOf(i)));
+            assertTrue(loadTest.loadTesting(template, "NavBar_Title", "navBar "+String.valueOf(i)));
+            assertTrue(loadTest.loadTesting(template, "File_Name", "file "+String.valueOf(i)));
             assertTrue(loadTest.loadTesting(template, "Script", "script "+String.valueOf(i)));
         } 
         
         // TA Data
-        JsonObject TADataJson = jsonObject.getJsonObject("TA Data");
+        JsonObject TADataJson = jsonObject.getJsonObject("TA_Data");
         assertTrue(loadTest.loadTesting(TADataJson, "StartHour", "0"));
         assertTrue(loadTest.loadTesting(TADataJson, "EndHour", "23"));
         
@@ -77,7 +77,7 @@ public class loadJUnitTest extends TestCase {
         }
         
         // Rec Data
-        JsonArray recDataJson = jsonObject.getJsonArray("Recitation Data");
+        JsonArray recDataJson = jsonObject.getJsonArray("Recitation_Data");
         for (int i=1; i<=recDataJson.size(); i++){
             JsonObject recObject = recDataJson.getJsonObject(i-1);
             assertTrue(loadTest.loadTesting(recObject, "Section", "R0"+i));
@@ -89,7 +89,7 @@ public class loadJUnitTest extends TestCase {
         }
         
         // Schedule Data
-        JsonObject scheDataJson = jsonObject.getJsonObject("Schedule Data");
+        JsonObject scheDataJson = jsonObject.getJsonObject("Schedule_Data");
         assertTrue(loadTest.loadTesting(scheDataJson, "Start", "03/22/2012"));
         assertTrue(loadTest.loadTesting(scheDataJson, "End", "04/20/2013"));
         JsonArray scheJson = scheDataJson.getJsonArray("ScheduleList");
@@ -106,7 +106,7 @@ public class loadJUnitTest extends TestCase {
         
         // Project Data
         // Team Data
-        JsonArray teamDataJson = jsonObject.getJsonArray("Team Data");
+        JsonArray teamDataJson = jsonObject.getJsonArray("Team_Data");
         for (int i=1; i<=teamDataJson.size(); i++){
             JsonObject team = teamDataJson.getJsonObject(i-1);
             assertTrue(loadTest.loadTesting(team, "Name", "A"));
@@ -116,11 +116,11 @@ public class loadJUnitTest extends TestCase {
         }
         
         // Student Data
-        JsonArray studentDataJson = jsonObject.getJsonArray("Student Data");
+        JsonArray studentDataJson = jsonObject.getJsonArray("Student_Data");
         for (int i=1; i<=studentDataJson.size(); i++){
             JsonObject student = studentDataJson.getJsonObject(i-1);
-            assertTrue(loadTest.loadTesting(student, "First Name", "fName "+i));
-            assertTrue(loadTest.loadTesting(student, "Last Name", "lName "+i));
+            assertTrue(loadTest.loadTesting(student, "First_Name", "fName "+i));
+            assertTrue(loadTest.loadTesting(student, "Last_Name", "lName "+i));
             assertTrue(loadTest.loadTesting(student, "Team", "B"));
             assertTrue(loadTest.loadTesting(student, "Role", "Role "+i));
         }

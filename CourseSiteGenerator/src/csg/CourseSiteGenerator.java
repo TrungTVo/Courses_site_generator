@@ -80,7 +80,7 @@ public class CourseSiteGenerator extends AppTemplate {
         csgWorkspace.getScheduleTab().setContent(scheComponent.getWorkspaceComponent().getWorkspace());
         
         // Project Data component
-        projectComponent = new ProjectManagerApp();
+        projectComponent = new ProjectManagerApp(courseComponent);
         projectComponent.buildAppComponentsHook();
         csgWorkspace.getProjectTab().setContent(projectComponent.getWorkspaceComponent().getWorkspace());
         

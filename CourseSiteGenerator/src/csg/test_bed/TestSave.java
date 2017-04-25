@@ -112,14 +112,14 @@ public class TestSave {
             if (sp.getIsUsed()) {
                 spJson = Json.createObjectBuilder()
                         .add("Use", "yes")
-                        .add("NavBar Title", sp.getNavBar())
-                        .add("File Name", sp.getFile())
+                        .add("NavBar_Title", sp.getNavBar())
+                        .add("File_Name", sp.getFile())
                         .add("Script", sp.getScript()).build();
             } else {
                 spJson = Json.createObjectBuilder()
                         .add("Use", "no")
-                        .add("NavBar Title", sp.getNavBar())
-                        .add("File Name", sp.getFile())
+                        .add("NavBar_Title", sp.getNavBar())
+                        .add("File_Name", sp.getFile())
                         .add("Script", sp.getScript()).build();
             }
             siteTemplateArrayBuilder.add(spJson);
@@ -131,9 +131,9 @@ public class TestSave {
                                 .add("Semester", courseData.getSemester())
                                 .add("Year", courseData.getYear())
                                 .add("Title", courseData.getTitle())
-                                .add("Instructor Name", courseData.getInstructorName())
-                                .add("Instructor Home", courseData.getInstructorHome())
-                                .add("Site Templates", siteTemplatesArray)
+                                .add("Instructor_Name", courseData.getInstructorName())
+                                .add("Instructor_Home", courseData.getInstructorHome())
+                                .add("Site_Templates", siteTemplatesArray)
                                 .build();
         
         // ================== TAJson ==================
@@ -216,8 +216,8 @@ public class TestSave {
         JsonArrayBuilder studentArrayBuilder = Json.createArrayBuilder();
         for (StudentData student:studentList){
             JsonObject studentJson = Json.createObjectBuilder()
-                                        .add("First Name", student.getFirstName())
-                                        .add("Last Name", student.getLastName())
+                                        .add("First_Name", student.getFirstName())
+                                        .add("Last_Name", student.getLastName())
                                         .add("Team", student.getTeam())
                                         .add("Role", student.getRole()).build();
             studentArrayBuilder.add(studentJson);
@@ -226,12 +226,12 @@ public class TestSave {
         
         // PUT EVERYTHING INTO A SINGLE JSON OBJECT
         JsonObject dataJson = Json.createObjectBuilder()
-                                .add("Course Data", courseJson)
-                                .add("TA Data", taJson)
-                                .add("Recitation Data", recArray)
-                                .add("Schedule Data", scheJson)
-                                .add("Team Data", teamArray)
-                                .add("Student Data", studentArray).build();
+                                .add("Course_Data", courseJson)
+                                .add("TA_Data", taJson)
+                                .add("Recitation_Data", recArray)
+                                .add("Schedule_Data", scheJson)
+                                .add("Team_Data", teamArray)
+                                .add("Student_Data", studentArray).build();
 	
 	// AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
 	Map<String, Object> properties = new HashMap<>(1);

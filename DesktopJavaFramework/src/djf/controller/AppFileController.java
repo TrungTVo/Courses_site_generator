@@ -280,9 +280,12 @@ public class AppFileController {
             File srcDir = new File(currentDir.substring(0,currentDir.lastIndexOf("/")).concat("/Test"));
             FileUtils.copyDirectory(srcDir, selectedDirectory);
             csg.getCSGFiles().saveDataForExport(csg);
+            FileUtils.copyFileToDirectory(new File("./work/SiteSaveTest.json"), new File(selectedDirectory.toString().concat("/public_html/home_files")));
             FileUtils.copyFileToDirectory(new File("./work/OfficeHoursGridData.json"), new File(selectedDirectory.toString().concat("/public_html/syllabus_files")));
             FileUtils.copyFileToDirectory(new File("./work/RecitationsData.json"), new File(selectedDirectory.toString().concat("/public_html/syllabus_files")));
             FileUtils.copyFileToDirectory(new File("./work/ScheduleData.json"), new File(selectedDirectory.toString().concat("/public_html/schedule_files")));
+            FileUtils.copyFileToDirectory(new File("./work/TeamsAndStudents.json"), new File(selectedDirectory.toString().concat("/public_html/project_files")));
+            FileUtils.copyFileToDirectory(new File("./work/ProjectsData.json"), new File(selectedDirectory.toString().concat("/public_html/project_files")));
             //File pathToNewOfficeHoursGrid = new File(selectedDirectory.toString().concat("/js/OfficeHoursGridData.json"));
             //saveWork(pathToNewOfficeHoursGrid);
         }
