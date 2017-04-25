@@ -1,0 +1,140 @@
+
+{
+    "Course Data":{
+        "Subject":"CSE",
+        "Number":"219",
+        "Semester":"Fall",
+        "Year":"2017",
+        "Title":"Computer Science III",
+        "Instructor Name":"Richard McKenna",
+        "Instructor Home":"http://www3.cs.stonybrook.edu/~richard/",
+        "Site Templates":[
+            {
+                "Use":"no",
+                "NavBar Title":"navBar 1",
+                "File Name":"file 1",
+                "Script":"script 1"
+            },
+            {
+                "Use":"yes",
+                "NavBar Title":"navBar 2",
+                "File Name":"file 2",
+                "Script":"script 2"
+            },
+            {
+                "Use":"yes",
+                "NavBar Title":"navBar 3",
+                "File Name":"file 3",
+                "Script":"script 3"
+            }
+        ]
+    },
+    "TA Data":{
+        "StartHour":"0",
+        "EndHour":"23",
+        "Tas":[
+            {
+                "Name":"TA 1",
+                "Email":"Email TA 1",
+                "Undergrad":"yes"
+            },
+            {
+                "Name":"TA 2",
+                "Email":"Email TA 2",
+                "Undergrad":"no"
+            },
+            {
+                "Name":"TA 3",
+                "Email":"Email TA 3",
+                "Undergrad":"yes"
+            }
+        ],
+        "OfficeHours":[
+            {
+                "Day":"MONDAY",
+                "Time":"8_00am",
+                "Name":"TA 1"
+            },
+            {
+                "Day":"MONDAY",
+                "Time":"8_00am",
+                "Name":"TA 2"
+            },
+            {
+                "Day":"MONDAY",
+                "Time":"8_00am",
+                "Name":"TA 3"
+            }
+        ]
+    },
+    "Recitation Data":[
+        {
+            "Section":"R01",
+            "Instructor":"Instructor 1",
+            "Day/Time":"DayTime 1",
+            "Location":"Location 1",
+            "Ta1":"Trung Vo",
+            "Ta2":"Hong Phuong"
+        },
+        {
+            "Section":"R02",
+            "Instructor":"Instructor 2",
+            "Day/Time":"DayTime 2",
+            "Location":"Location 2",
+            "Ta1":"Trung Vo",
+            "Ta2":"Hong Phuong"
+        }
+    ],
+    "Schedule Data":{
+        "Start":"03/22/2012",
+        "End":"04/20/2013",
+        "ScheduleList":[
+            {
+                "Type":"Holiday",
+                "Date":"03/25/2012",
+                "Time":"Time 1",
+                "Title":"Title 1",
+                "Topic":"Topic 1",
+                "Link":"Link 1",
+                "Criteria":"Criteria 1"
+            },
+            {
+                "Type":"Holiday",
+                "Date":"03/25/2012",
+                "Time":"Time 2",
+                "Title":"Title 2",
+                "Topic":"Topic 2",
+                "Link":"Link 2",
+                "Criteria":"Criteria 2"
+            }
+        ]
+    },
+    "Team Data":[
+        {
+            "Name":"A",
+            "Color":"b31a1a",
+            "TextColor":"334db3",
+            "Link":"Link 1"
+        },
+        {
+            "Name":"A",
+            "Color":"b31a1a",
+            "TextColor":"334db3",
+            "Link":"Link 2"
+        }
+    ],
+    "Student Data":[
+        {
+            "First Name":"fName 1",
+            "Last Name":"lName 1",
+            "Team":"B",
+            "Role":"Role 1"
+        },
+        {
+            "First Name":"fName 2",
+            "Last Name":"lName 2",
+            "Team":"B",
+            "Role":"Role 2"
+        }
+    ]
+}

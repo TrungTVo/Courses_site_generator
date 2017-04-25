@@ -1,0 +1,29 @@
+
+{
+    "startingMondayMonth":"03",
+    "startingMondayDay":"22",
+    "endingFridayMonth":"04",
+    "endingFridayDay":"20",
+    "holidays":[
+        {
+            "month":"03",
+            "day":"25",
+            "title":"Title 1<br/><br/><br/><br/>",
+            "link":"Link 1"
+        },
+        {
+            "month":"03",
+            "day":"25",
+            "title":"Title 2<br/><br/><br/><br/>",
+            "link":"Link 2"
+        }
+    ],
+    "lectures":[
+    ],
+    "references":[
+    ],
+    "recitations":[
+    ],
+    "hws":[
+    ]
+}

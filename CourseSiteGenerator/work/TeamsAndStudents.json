@@ -1,0 +1,33 @@
+
+{
+    "teams":[
+        {
+            "name":"A",
+            "red":179,
+            "green":26,
+            "blue":26,
+            "text_color":"334db3"
+        },
+        {
+            "name":"A",
+            "red":179,
+            "green":26,
+            "blue":26,
+            "text_color":"334db3"
+        }
+    ],
+    "students":[
+        {
+            "lastName":"lName 1",
+            "firstName":"fName 1",
+            "team":"B",
+            "role":"Role 1"
+        },
+        {
+            "lastName":"lName 2",
+            "firstName":"fName 2",
+            "team":"B",
+            "role":"Role 2"
+        }
+    ]
+}

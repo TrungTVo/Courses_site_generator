@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this properties file is only
+    for the standard controls for an app from the Desktop Java Framework, so
+    it would not include things initialized for the workspace, which is
+    customizable.
+-->
+<properties>
+    <property_list>
+        <property name="APP_TITLE"      value="Course Site Generator"></property>
+        <property name="APP_LOGO"       value="TAManagerLogo.png"></property>
+        <property name="APP_PATH_CSS"       value="style/"></property>
+        <property name="APP_CSS"        value="csg_style.css"></property>
+        <property name="APP_ABOUT_TITLE"    value="Giới Thiệu"></property>
+        <property name="APP_DESCRIBE"       value="Course Site Generator là ứng dụng Java Desktop cho phép &#xD; người dùng có thể tạo nhanh một Website cho các khoá học trong &#xD; trường Đại Học. Dữ liệu của App (trợ giảng, giáo viên, &#xD; học sinh, thời khoá biểu, bài học, etc) được lưu trữ và &#xD; xuất nhập dưới dạng JSON file format, như một Database. &#xD; Thông tin dữ liệu được xuất trực tiếp đến trang chủ &#xD; HTML để tạo thành trang Web cho Khoá Học. Ứng dụng được &#xD; phát triển nhằm để giúp giáo viên có thể tạo nhanh và chỉnh sửa &#xD; nội dung cho Website của các Khoá Học."></property>
+        
+        <!-- PROGRAM ICON FILES -->
+        <property name="NEW_ICON"       value="New.png"></property>
+        <property name="LOAD_ICON"      value="Load.png"></property>
+        <property name="SAVE_ICON"      value="Save.png"></property>
+        <property name="SAVE_AS_ICON"    value="SaveAs.png"></property>
+        <property name="EXPORT_ICON"          value="Export.png"></property>
+        <property name="EXIT_ICON"          value="Exit.png"></property> 
+        
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="NEW_TOOLTIP"        value="Tạo Course Site mới"></property>
+        <property name="LOAD_TOOLTIP"       value="Nhập Course Site có sẵn"></property>
+        <property name="SAVE_TOOLTIP"       value="Lưu Course Site hiện tại"></property>
+        <property name="SAVE_AS_TOOLTIP"     value="Save as cho Course Site hiện tại"></property>
+        <property name="EXPORT_TOOLTIP"          value="Xuất dữ liệu"></property>
+        <property name="EXIT_TOOLTIP"       value="Thoát ứng dụng"></property>
+        <property name="UNDO_TOOLTIP"       value="Trở lại bước trước"></property>
+        <property name="REDO_TOOLTIP"       value="Quay lại bước kế tiếp"></property>
+        <property name="ABOUT_TOOLTIP"              value="Giới thiệu sơ lược"></property>
+
+        <!-- CONTROLS FOR 3 BUTTONS ON THE RIGHT TOOL BAR -->
+        <property name="UNDO_BUTTON_TEXT"        value="Quay lại"></property>
+        <property name="REDO_BUTTON_TEXT"        value="Kế tiếp"></property>
+        <property name="ABOUT_BUTTON_TEXT"        value="Giới thiệu"></property>
+        
+        <!-- ERROR MESSAGES -->
+        <property name="CLOSE_BUTTON_TEXT"              value="Đóng"></property>
+
+        <!-- TAB PANE COMPONENTS -->
+        <property name="COURSE_TAB_TEXT"    value="Chi tiết"></property>
+        <property name="TA_TAB_TEXT"    value="Thông tin trợ giảng"></property>
+        <property name="REC_TAB_TEXT"    value="Giờ tăng cường"></property>
+        <property name="SCHEDULE_TAB_TEXT"    value="Lịch học"></property>
+        <property name="PROJECT_TAB_TEXT"    value="Bài tập"></property>
+
+
+        <property name="NEW_ERROR_MESSAGE"              value="Lỗi khi tạo Course Site mới!"></property>
+        <property name="NEW_ERROR_TITLE"        value="Lỗi Tạo mới"></property>
+        <property name="LOAD_ERROR_MESSAGE"             value="Lỗi khi nhập Course Site có sẵn!"></property>
+        <property name="LOAD_ERROR_TITLE"       value="Lỗi nhập dữ liệu"></property>
+        <property name="SAVE_ERROR_MESSAGE"             value="Lỗi khi lưu Course Site hiện tại!"></property>
+        <property name="SAVE_ERROR_TITLE"       value="Lỗi lưu"></property>
+        <property name="PROPERTIES_LOAD_ERROR_MESSAGE"  value="Lỗi xảy ra khi thu nhập dữ liệu từ property file!"></property> 
+        <property name="PROPERTIES_LOAD_ERROR_TITLE"    value="Lỗi nhập Properties File"></property>
+    
+        <!-- VERIFICATION MESSAGES -->
+    
+        <property name="NEW_COMPLETED_MESSAGE"      value="New Work Ready for Editing"></property>
+        <property name="NEW_COMPLETED_TITLE"        value="New Work Created"></property>
+        <property name="LOAD_COMPLETED_MESSAGE"     value="File Loading Completed and ready for editing"></property>
+        <property name="LOAD_COMPLETED_TITLE"       value="Loading Completed"></property>
+        <property name="SAVE_COMPLETED_MESSAGE"     value="File Saving Completed"></property>
+        <property name="SAVE_COMPLETED_TITLE"       value="Saving Completed"></property>
+        <property name="SAVE_UNSAVED_WORK_MESSAGE"  value="Would you like to save your unsaved work first?"></property>
+        <property name="SAVE_UNSAVED_WORK_TITLE"    value="Save unsaved work?"></property>
+    
+        <property name="NEW_CREATED_MESSAGE"        value="New Work Created but not yet Saved"></property>
+        <property name="WORK_LOADED_MESSAGE"        value="The Work has been Loaded"></property>
+        <property name="WORK_SAVED_MESSAGE"     value="The Work has been Saved"></property>
+        <property name="SAVE_UNSAVED_WORK_MESSAGE"  value="Do you want to save your unsaved work first?"></property>
+        <property name="SAVE_WORK_TITLE"        value="Save your work"></property>
+        <property name="LOAD_WORK_TITLE"        value="Select work file to load"></property>
+        <property name="WORK_FILE_EXT"          value="json"></property>
+        <property name="WORK_FILE_EXT_DESC"     value="TA Office Hours"></property>
+
+
+        <!-- ********************************** Course Tab *************************************** -->
+        <!-- Info -->
+        <property name="COURSEINFO_TITLE"       value="THÔNG TIN KHOÁ HỌC"></property>
+        <property name="SUBJECT_LABEL"          value="Môn học:"></property>
+        <property name="NUMBER_LABEL"           value="Mã số:"></property>
+        <property name="SEMESTER_LABEL"         value="Kỳ học:"></property>
+        <property name="YEAR_LABEL"             value="Năm:"></property>
+        <property name="TITLE_LABEL"            value="Tiêu đề:"></property>
+        <property name="TITLE_PROMPT_TEXT"      value="Môn học"></property>
+        <property name="INSTRUCTOR_NAME_LABEL"  value="Giáo viên:"></property>
+        <property name="INSTRUCTOR_NAME_PROMT_TEXT"     value="Giáo viên"></property>
+        <property name="INSTRUCTOR_HOME_LABEL"  value="Chi tiết Giáo viên:"></property>
+        <property name="INSTRUCTOR_HOME_PROMT_TEXT"     value="Chi tiết Giáo viên"></property>
+        <property name="EXPORT_DIR_LABEL"       value="Địa chỉ xuất dữ liệu:"></property>
+        <property name="CHANGE_BUTTON"          value="Đổi"></property>
+
+        <!-- Template -->
+        <property name="TEMPLATE_TITLE"     value="TEMPLATE CHO TRANG"></property>
+        <property name="EXPLAIN_TEXT"   value="Địa chỉ phải bao gồm tất cả nội dung cần thiết cho trang, kể cả HTML file."></property>
+        <property name="TEMPLATE_DIR_BUTTON"    value="Chọn Địa chỉ Template"></property>
+        <property name="SITE_TABLE_TITLE"       value="Thông tin trang:"></property>
+        <property name="USE_COLUMN_TEXT"        value="Sử dụng"></property>
+        <property name="NAVBAR_COLUMN_TEXT"     value="Thư Mục"></property>
+        <property name="FILENAME_COLUMN_TEXT"   value="Tên file"></property>
+        <property name="SCRIPT_COLUMN_TEXT"     value="Script"></property>
+
+        <!-- Page Style -->
+        <property name="PAGESTYLE_TITLE"        value="THIẾT KẾ TRANG"></property>
+        <property name="BANNER_IMAGE_LABEL"     value="Hình ảnh trường:"></property>
+        <property name="LEFT_IMAGE_LABEL"       value="Hình ảnh góc trái:"></property>
+        <property name="RIGHT_IMAGE_LABEL"      value="Hình ảnh góc phải:"></property>
+        <property name="STYLE_SHEET_LABEL"      value="Stylesheet:"></property>
+        <property name="NOTE_TEXT"              value="Lưu ý: Stylesheet có thể chọn bằng cách lưu trong thư mục work/css."></property>
+
+        <!-- ********************************** TA Tab *************************************** -->
+        <!-- WORKSPACE CONTROLS STUFF -->        
+        <property name="TAS_HEADER_TEXT"                value="Thông tin Trợ Giảng"></property>
+        <property name="UNDERGRAD_COLUMN_TEXT"          value="Đại Học"></property>
+        <property name="NAME_COLUMN_TEXT"               value="Họ và Tên"></property>
+        <property name="EMAIL_COLUMN_TEXT"              value="Email"></property>
+        <property name="NAME_PROMPT_TEXT"               value="Họ và Tên"></property>
+        <property name="EMAIL_PROMPT_TEXT"              value="Email"></property>
+        <property name="ADD_BUTTON_TEXT"                value="Thêm"></property>
+        <property name="EDIT_BUTTON_TEXT"               value="Lưu"></property>
+        <property name="CLEAR_BUTTON_TEXT"                value="Xoá"></property>
+        <property name="UPDATE_BUTTON"                value="Lưu"></property>
+        <property name="OFFICE_HOURS_SUBHEADER"         value="Thời Khoá Biểu"></property>
+        <property name="START_TIME_LABEL"         value="Bắt đầu:"></property>
+        <property name="END_TIME_LABEL"         value="Kết thúc:"></property>
+        
+        <!-- WORKSPACE ERROR MESSAGES -->
+        <property name="MISSING_TA_NAME_TITLE"          value="Thiếu tên Trợ Giảng"></property>
+        <property name="MISSING_TA_NAME_MESSAGE"        value="Vui lòng cung cấp Họ Tên Trợ Giảng!"></property>
+        <property name="MISSING_TA_EMAIL_TITLE"         value="Thiếu email Trợ Giảng"></property>
+        <property name="MISSING_TA_EMAIL_MESSAGE"       value="Vui lòng cung cấp Email Trợ Giảng!"></property>
+        <property name="TA_NAME_AND_EMAIL_NOT_UNIQUE_TITLE"     value="Thông tin trùng lặp"></property>
+        <property name="TA_NAME_AND_EMAIL_NOT_UNIQUE_MESSAGE"   value="Họ Tên hoặc Email này đã tồn tại!"></property>
+
+        <!-- ********************************** Recitation Tab *************************************** -->
+        <property name="RECITATION_TITLE"   value="TĂNG CƯỜNG"></property>
+        <property name="RECITATION_SECTION_TABLECOLUMN"     value="Mã lớp"></property>
+        <property name="RECITATION_INSTRUCTOR_TABLECOLUMN"  value="Giáo viên"></property>
+        <property name="RECITATION_DAYTIME_TABLECOLUMN"     value="Ngày/Giờ"></property>
+        <property name="RECITATION_LOCATION_TABLECOLUMN"    value="Địa điểm"></property>
+        <property name="RECITATION_TA_TABLECOLUMN"          value="Trợ giảng"></property>
+        <property name="RECITATION_ADDEDIT_LABEL"           value="Thêm/Thay Đổi"></property>
+        <property name="RECITATION_SECTION_LABEL"           value="Mã lớp:"></property>
+        <property name="RECITATION_INSTRUCTOR_LABEL"        value="Giáo viên:"></property>
+        <property name="RECITATION_DAYTIME_LABEL"           value="Ngày/giờ:"></property>
+        <property name="RECITATION_LOCATION_LABEL"          value="Địa điểm:"></property>
+        <property name="RECITATION_TA_LABEL"                value="Trợ giảng:"></property>
+        <property name="RECITATION_ADDUPDATE_BUTTON"        value="Thêm/Thay đổi"></property>
+        <property name="RECITATION_CLEAR_BUTTON"            value="Xoá"></property>
+
+        <property name="SECTION_PROMPT_TEXT"        value="Mã lớp"></property>
+        <property name="INSTRUCTOR_PROMPT_TEXT"     value="Giáo viên"></property>
+        <property name="DAYTIME_PROMPT_TEXT"         value="Ngày giờ"></property>
+        <property name="LOCATION_PROMPT_TEXT"       value="Địa điểm"></property>
+        <property name="TA_PROMPT_TEXT"             value="Trợ giảng"></property>
+
+        <!-- ********************************** Schedule Tab *************************************** -->
+        <property name="SCHEDULE_TITLE"     value="THỜI KHOÁ BIỂU"></property>
+        <property name="CALENDAR_LABEL"     value="Lịch"></property>
+        <property name="START_MON_LABEL"    value="Bắt đầu Thứ 2:"></property>
+        <property name="END_FRI_LABEL"      value="Kết thúc Thứ 6:"></property>
+        <property name="SCHEDULE_LABEL"     value="Lịch Chi Tiết"></property>
+        <property name="TYPE_TABLECOLUMN"   value="Loại"></property>
+        <property name="DATE_TABLECOLUMN"   value="Ngày"></property>
+        <property name="TITLE_TABLECOLUMN"  value="Tiêu Đề"></property>
+        <property name="TOPIC_TABLECOLUMN"  value="Chủ Đề"></property>
+        <property name="SCHE_ADDEDIT_LABEL"      value="Thêm/Thay Đổi"></property>
+        <property name="TYPE_LABEL"         value="Loại:"></property>
+        <property name="DATE_LABEL"         value="Ngày:"></property>
+        <property name="TIME_LABEL"         value="Giờ:"></property>
+        <property name="TITLE_LABEL"        value="Tiêu Đề:"></property>
+        <property name="TOPIC_LABEL"        value="Chủ Đề:"></property>
+        <property name="LINK_LABEL"         value="Link:"></property>
+        <property name="CRITERIA_LABEL"     value="Tiêu Chí:"></property>
+        <property name="SCHE_ADDUPDATE_BUTTON"      value="Thêm/Lưu"></property>
+        <property name="SCHE_CLEAR_BUTTON"       value="Xoá"></property>
+
+        <property name="TIME_PROMPT_TEXT"        value="Giờ"></property>
+        <property name="TITLE_PROMPT_TEXT"     value="Tiêu Đề"></property>
+        <property name="TOPIC_PROMPT_TEXT"         value="Chủ Đề"></property>
+        <property name="LINK_PROMPT_TEXT"       value="Link"></property>
+        <property name="CRITERIA_PROMPT_TEXT"             value="Tiêu Chí"></property>
+
+        <!-- ********************************** Project Tab *************************************** -->
+        <property name="PROJECT_TITLE"              value="BÀI TẬP"></property>
+        <property name="TEAMS_TITLE"                value="THÔNG TIN NHÓM"></property>
+        <property name="NAME_TABLECOLUMN"           value="Tên Nhóm"></property>
+        <property name="COLOR_TABLECOLUMN"          value="Màu(hex#)"></property>
+        <property name="TEXTCOLOR_TABLECOLUMN"      value="Màu Chữ(hex#)"></property>
+        <property name="LINK_TABLECOLUMN"           value="Link"></property>
+        <property name="PROJ_ADDEDIT_LABEL"         value="Thêm/Thay Đổi"></property>
+        <property name="NAME_LABEL"                 value="Tên Nhóm:"></property>
+        <property name="COLOR_LABEL"                value="Màu:"></property>
+        <property name="TEXTCOLOR_LABEL"            value="Màu Chữ:"></property>
+        <property name="LINK_LABEL"                 value="Link:"></property>
+        <property name="PROJ_ADDUPDATE_BUTTON"      value="Thêm/Lưu"></property>
+        <property name="PROJ_CLEAR_BUTTON"               value="Xoá"></property>
+        <property name="STUDENT_LABEL"              value="THÔNG TIN HỌC SINH"></property>
+        <property name="FIRSTNAME_TABLECOLUMN"      value="Tên"></property>
+        <property name="LASTNAME_TABLECOLUMN"       value="Họ"></property>
+        <property name="TEAM_TABLECOLUMN"           value="Nhóm"></property>
+        <property name="ROLE_TABLECOLUMN"           value="Vị Trí"></property>
+        <property name="FIRSTNAME_LABEL"            value="Tên:"></property>
+        <property name="LASTNAME_LABEL"             value="Họ:"></property>
+        <property name="TEAM_LABEL"                 value="Nhóm:"></property>
+        <property name="ROLE_LABEL"                 value="Vị Trí:"></property>
+        <property name="DELETE_TOOLTIP"             value="Xoá phần chọn lựa"></property>
+
+    </property_list>
+    <property_options_list>
+        <property_options name="OFFICE_HOURS_TABLE_HEADERS">
+            <option>Bắt Đầu</option>
+            <option>Kết Thúc</option>
+        </property_options>
+        <property_options name="DAYS_OF_WEEK">
+            <option>Thứ Hai</option>
+            <option>Thứ Ba</option>
+            <option>Thứ Tư</option>
+            <option>Thứ Năm</option>
+            <option>Thứ Sáu</option>
+        </property_options>
+    </property_options_list>
+    
+</properties>

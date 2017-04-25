@@ -1,0 +1,19 @@
+
+{
+    "recitations":[
+        {
+            "section":"R01 (Richard McKenna)",
+            "day_time":"DayTime 1",
+            "location":"Location 1",
+            "ta_1":"Trung Vo",
+            "ta_2":"Hong Phuong"
+        },
+        {
+            "section":"R02 (Richard McKenna)",
+            "day_time":"DayTime 2",
+            "location":"Location 2",
+            "ta_1":"Trung Vo",
+            "ta_2":"Hong Phuong"
+        }
+    ]
+}

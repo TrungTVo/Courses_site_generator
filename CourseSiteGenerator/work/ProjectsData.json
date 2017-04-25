@@ -1,0 +1,22 @@
+
+{
+    "work":[
+        {
+            "semester":"Fall 2017",
+            "projects":[
+                {
+                    "name":"A",
+                    "students":[
+                    ],
+                    "link":"Link 1"
+                },
+                {
+                    "name":"A",
+                    "students":[
+                    ],
+                    "link":"Link 2"
+                }
+            ]
+        }
+    ]
+}
