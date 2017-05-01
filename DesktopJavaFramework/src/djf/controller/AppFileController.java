@@ -227,8 +227,13 @@ public class AppFileController {
     private void saveWork(File selectedFile) throws IOException {
 	// SAVE IT TO A FILE
 	//app.getFileComponent().saveData(app.getDataComponent(), selectedFile.getPath());
-	TestSave.saveData(csg, selectedFile.getPath());
         
+        // GENERATED TESTCASE FOR TESTING SAVE IN HARD CODED FASHION
+	//TestSave.saveData(csg, selectedFile.getPath());
+        
+        // SAVE
+        csg.getCSGFiles().saveData(csg, selectedFile.getPath());
+  
 	// MARK IT AS SAVED
 	currentWorkFile = selectedFile;
 	saved = true;

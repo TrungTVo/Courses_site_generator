@@ -9,11 +9,13 @@ import cm.CourseManagerApp;
 import cm.CourseManagerProp;
 import cm.data.CourseData;
 import cm.data.SitePage;
+import csg.CourseSiteGenerator;
 import djf.AppTemplate;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import static djf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static djf.settings.AppStartupConstants.PATH_IMAGES;
+import java.io.File;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +39,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import properties_manager.PropertiesManager;
 
@@ -46,6 +50,7 @@ import properties_manager.PropertiesManager;
  */
 public class CourseWorkspace {
     CourseManagerApp app;
+    CourseSiteGenerator csg;
     VBox outerWrap;
     GridPane infoGridPane;
     VBox temPlatePane;
@@ -146,8 +151,9 @@ public class CourseWorkspace {
     
     public BorderPane getWorkspace() {return workspace;}
     
-    public CourseWorkspace(CourseManagerApp initApp) {
+    public CourseWorkspace(CourseManagerApp initApp, CourseSiteGenerator csg) {
         app = initApp;
+        this.csg = csg;
         
         // WE'LL NEED THIS TO GET LANGUAGE PROPERTIES FOR OUR UI
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -324,50 +330,99 @@ public class CourseWorkspace {
     
     private void buildPageStyleSection(PropertiesManager props) {
         styleTitle = new Label(props.getProperty(CourseManagerProp.PAGESTYLE_TITLE.toString()));
+        styleGridPane = new GridPane();
         
         // line 1
         bannerImageLabel = new Label(props.getProperty(CourseManagerProp.BANNER_IMAGE_LABEL.toString()));
-        bannerImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
         bannerChangeButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
-        GridPane bannerBox = new GridPane();
-        bannerBox.add(new ImageView(bannerImage), 0, 0);
-        bannerBox.add(bannerChangeButton, 1, 0);
-        bannerBox.setHgap(15);
-        bannerBox.setAlignment(Pos.CENTER);
+        ImageView bannerImageView = new ImageView();
+        bannerChangeButton.setOnAction(e -> {
+            // PROMPT THE USER FOR A FILE NAME
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File(PATH_IMAGES));
+            fc.setTitle(props.getProperty("Choose Image"));
+            File selectedFile = fc.showOpenDialog(csg.getWindow());
+            if (selectedFile != null){
+                String imageString = selectedFile.toString();
+                bannerImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                if (bannerImage != null){
+                    styleGridPane.getChildren().remove(bannerImageView);
+                    bannerImageView.setImage(bannerImage);
+                    styleGridPane.add(bannerImageView, 1, 0);
+                }
+            }
+        });
         
         // line 2
         leftImageLabel = new Label(props.getProperty(CourseManagerProp.LEFT_IMAGE_LABEL.toString()));
-        leftImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
         leftImageButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
-        GridPane leftImageBox = new GridPane();
-        leftImageBox.add(new ImageView(leftImage), 0, 0);
-        leftImageBox.add(leftImageButton, 1, 0);
-        leftImageBox.setHgap(15);
-        leftImageBox.setAlignment(Pos.CENTER);
+        ImageView leftImageView = new ImageView();
+        leftImageButton.setOnAction(e -> {
+            // PROMPT THE USER FOR A FILE NAME
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File(PATH_IMAGES));
+            fc.setTitle(props.getProperty("Choose Image"));
+            File selectedFile = fc.showOpenDialog(csg.getWindow());
+            if (selectedFile != null){
+                String imageString = selectedFile.toString();
+                leftImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                if (leftImage != null){
+                    styleGridPane.getChildren().remove(leftImageView);
+                    leftImageView.setImage(leftImage);
+                    styleGridPane.add(leftImageView, 1, 1);
+                }
+            }
+        });
         
         // line 3
         rightImageLabel = new Label(props.getProperty(CourseManagerProp.RIGHT_IMAGE_LABEL.toString()));
-        rightImage = new Image(FILE_PROTOCOL+PATH_IMAGES+"SBUimage.png");
         rightImageButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
-        GridPane rightImageBox = new GridPane();
-        rightImageBox.add(new ImageView(rightImage), 0, 0);
-        rightImageBox.add(rightImageButton, 1, 0);
-        rightImageBox.setHgap(15);
-        rightImageBox.setAlignment(Pos.CENTER);
+        ImageView rightImageView = new ImageView();
+        rightImageButton.setOnAction(e -> {
+            // PROMPT THE USER FOR A FILE NAME
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File(PATH_IMAGES));
+            fc.setTitle(props.getProperty("Choose Image"));
+            File selectedFile = fc.showOpenDialog(csg.getWindow());
+            if (selectedFile != null){
+                String imageString = selectedFile.toString();
+                rightImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                if (rightImage != null){
+                    styleGridPane.getChildren().remove(rightImageView);
+                    rightImageView.setImage(rightImage);
+                    styleGridPane.add(rightImageView, 1, 2);
+                }
+            }
+        });
         
         // line 4
         stylesheetLabel = new Label(props.getProperty(CourseManagerProp.STYLE_SHEET_LABEL.toString()));
         styleCombo = new ComboBox();
         
         noteLabel = new Label(props.getProperty(CourseManagerProp.NOTE_TEXT.toString()));
+        
         // combine
-        styleGridPane = new GridPane();
+        // banner
         styleGridPane.add(bannerImageLabel, 0, 0);
-        styleGridPane.add(bannerBox, 1, 0);
+        if (bannerImage != null){
+            styleGridPane.add(new ImageView(bannerImage), 1, 0);
+        }
+        styleGridPane.add(bannerChangeButton, 2, 0);
+        
+        // left
         styleGridPane.add(leftImageLabel, 0, 1);
-        styleGridPane.add(leftImageBox, 1, 1);
+        if (leftImage != null){
+            styleGridPane.add(new ImageView(leftImage), 1, 1);
+        }
+        styleGridPane.add(leftImageButton, 2, 1);
+        
+        // right
         styleGridPane.add(rightImageLabel, 0, 2);
-        styleGridPane.add(rightImageBox, 1, 2);
+        if (rightImage != null){
+            styleGridPane.add(new ImageView(rightImage), 1, 2);
+        }
+        styleGridPane.add(rightImageButton, 2, 2);
+        
         styleGridPane.add(stylesheetLabel, 0, 3);
         styleGridPane.add(styleCombo, 1, 3);
         styleGridPane.setAlignment(Pos.CENTER);

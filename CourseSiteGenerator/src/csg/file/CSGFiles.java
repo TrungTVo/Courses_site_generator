@@ -1,13 +1,16 @@
 
 package csg.file;
 
+import cm.data.CourseData;
 import cm.data.SitePage;
 import csg.CourseSiteGenerator;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import javafx.collections.ObservableList;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import pm.data.StudentData;
@@ -159,6 +162,53 @@ public class CSGFiles {
 	jsonReader.close();
 	is.close();
 	return json;
+    }
+    
+    public void saveData(CourseSiteGenerator csg, String filePath) throws IOException {
+        saveCourse();
+    }
+    
+    public void saveCourse() {
+        // SAVE DATA FOR COURSE TAB
+        csg.getCourse().getDataComponent().setSubject(csg.getCourse().getWorkspaceComponent().getSubjectCombo().getSelectionModel().getSelectedItem().toString());
+        csg.getCourse().getDataComponent().setNumber(csg.getCourse().getWorkspaceComponent().getNumberCombo().getSelectionModel().getSelectedItem().toString());
+        csg.getCourse().getDataComponent().setSemester(csg.getCourse().getWorkspaceComponent().getSemesterCombo().getSelectionModel().getSelectedItem().toString());
+        csg.getCourse().getDataComponent().setYear(csg.getCourse().getWorkspaceComponent().getYearCombo().getSelectionModel().getSelectedItem().toString());
+        csg.getCourse().getDataComponent().setTitle(csg.getCourse().getWorkspaceComponent().getTitleTF().getText());
+        csg.getCourse().getDataComponent().setInstructorName(csg.getCourse().getWorkspaceComponent().getInstructorNameTF().getText());
+        csg.getCourse().getDataComponent().setInstructorHome(csg.getCourse().getWorkspaceComponent().getInstructorHomeTF().getText());
+        
+        CourseData courseData = csg.getCourse().getDataComponent();
+        JsonArrayBuilder siteTemplateArrayBuilder = Json.createArrayBuilder();
+        ObservableList<SitePage> courseTemplates = courseData.getTemplates();
+        for (SitePage sp:courseTemplates){
+            JsonObject spJson;
+            if (sp.getIsUsed()) {
+                spJson = Json.createObjectBuilder()
+                        .add("Use", "yes")
+                        .add("NavBar_Title", sp.getNavBar())
+                        .add("File_Name", sp.getFile())
+                        .add("Script", sp.getScript()).build();
+            } else {
+                spJson = Json.createObjectBuilder()
+                        .add("Use", "no")
+                        .add("NavBar_Title", sp.getNavBar())
+                        .add("File_Name", sp.getFile())
+                        .add("Script", sp.getScript()).build();
+            }
+            siteTemplateArrayBuilder.add(spJson);
+        }
+        JsonArray siteTemplatesArray = siteTemplateArrayBuilder.build();
+        JsonObject courseJson = Json.createObjectBuilder()
+                                .add("Subject", courseData.getSubject())
+                                .add("Number", courseData.getNumber())
+                                .add("Semester", courseData.getSemester())
+                                .add("Year", courseData.getYear())
+                                .add("Title", courseData.getTitle())
+                                .add("Instructor_Name", courseData.getInstructorName())
+                                .add("Instructor_Home", courseData.getInstructorHome())
+                                .add("Site_Templates", siteTemplatesArray)
+                                .build();
     }
     
     public void saveDataForExport(CourseSiteGenerator csg) throws IOException {

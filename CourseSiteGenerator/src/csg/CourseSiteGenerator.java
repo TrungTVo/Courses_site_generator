@@ -14,6 +14,7 @@ import static djf.settings.AppStartupConstants.PATH_WORK;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.Stage;
 import pm.ProjectManagerApp;
 import rm.RecManagerApp;
 import sm.ScheduleManagerApp;
@@ -42,6 +43,7 @@ public class CourseSiteGenerator extends AppTemplate {
     
     public CSGWorkspace getCSGWorkspace() {return csgWorkspace;}
     public CSGFiles getCSGFiles() {return csgFiles;}
+    public Stage getWindow() {return getGUI().getWindow();}
     
     @Override
     public void buildAppComponentsHook() {
@@ -65,7 +67,7 @@ public class CourseSiteGenerator extends AppTemplate {
         csgWorkspace.getTATab().setContent(taComponent.getWorkspaceComponent().getWorkspace());
         
         // Course Data component
-        courseComponent = new CourseManagerApp();
+        courseComponent = new CourseManagerApp(this);
         courseComponent.buildAppComponentsHook();
         csgWorkspace.getCourseTab().setContent(courseComponent.getWorkspaceComponent().getWorkspace());
         
