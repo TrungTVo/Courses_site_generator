@@ -160,4 +160,19 @@ public class RecController {
         return null;
     }
     
+    public void handleDeleteRec(RecData rec) {
+        // GET WORKSPACE
+        RecWorkspace recWorkspace = recManager.getWorkspaceComponent();
+        
+        // get current selected Rec in table
+        RecData selectedRec = (RecData)recWorkspace.getRecTable().getSelectionModel().getSelectedItem();
+        int indexOfCurrentRec = recManager.getDataComponent().getRecRecord().indexOf(selectedRec);
+        
+        // REMOVE SELECTED REC
+        recManager.getDataComponent().getRecRecord().remove(indexOfCurrentRec);
+        
+        // UDPATE TABLE
+        recWorkspace.getRecTable().refresh();
+    }
+    
 }

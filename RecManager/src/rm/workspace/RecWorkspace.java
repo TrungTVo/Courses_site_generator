@@ -114,6 +114,13 @@ public class RecWorkspace {
         // Init Controller
         recController = new RecController(app);
         
+        // Handle Delete Rec
+        deleteButton.setOnAction(e -> {
+            RecData selectedRec = recTable.getSelectionModel().getSelectedItem();
+            recController.handleDeleteRec(selectedRec);
+            clearFields();
+        });
+        
         // handle Add/Update Button
         addUpdateButton.setOnAction(e -> {
             String newSection = sectionTF.getText();
@@ -139,16 +146,7 @@ public class RecWorkspace {
         
         // Clear Fields
         clearButton.setOnAction(e -> {
-            sectionTF.clear();
-            dayTimeTF.clear();
-            locationTF.clear();
-            instructorTF.clear();
-            ta1Combo.getSelectionModel().clearSelection();
-            ta2Combo.getSelectionModel().clearSelection();
-            
-            // Change Button text to Add
-            addUpdateButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
-            recTable.getSelectionModel().clearSelection();
+            clearFields();
         });
         
         // handle when clicking on Recitation Table, parse Info into text fields
@@ -173,7 +171,10 @@ public class RecWorkspace {
             Object selectedItem = recTable.getSelectionModel().getSelectedItem();
             if (selectedItem != null){
                 RecData rec = (RecData) selectedItem;
-                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
+                    recController.handleDeleteRec(rec);
+                    clearFields();
+                } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldRec = ((RecRecord)app.getDataComponent()).getRecRecord().indexOf(rec);
                     int indexOfNewRec;
                     RecData newRec = null;
@@ -205,6 +206,21 @@ public class RecWorkspace {
                 }
             }
         });
+    }
+    
+    public void clearFields() {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        sectionTF.clear();
+        dayTimeTF.clear();
+        locationTF.clear();
+        instructorTF.clear();
+        ta1Combo.getSelectionModel().clearSelection();
+        ta2Combo.getSelectionModel().clearSelection();
+            
+        // Change Button text to Add
+        addUpdateButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+        recTable.getSelectionModel().clearSelection();
     }
     
     public void buildHeaderBox(PropertiesManager props) {
