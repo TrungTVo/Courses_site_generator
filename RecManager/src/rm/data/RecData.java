@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author trungvo
  */
-public class RecData {
+public class RecData<E extends Comparable<E>> implements Comparable<E> {
     private final StringProperty section;
     private final StringProperty instructor;
     private final StringProperty dayTime;
@@ -38,5 +38,10 @@ public class RecData {
     public void setLocation(String location) {this.location.set(location);}
     public void setTa1(String ta1) {this.ta1.set(ta1);}
     public void setTa2(String ta2) {this.ta2.set(ta2);}
+
+    @Override
+    public int compareTo(E recData) {
+        return getSection().compareTo(((RecData)recData).getSection());
+    }
     
 }

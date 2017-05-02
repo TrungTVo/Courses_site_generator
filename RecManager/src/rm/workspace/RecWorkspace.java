@@ -7,6 +7,10 @@ package rm.workspace;
 
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
+import djf.settings.AppPropertyType;
+import static djf.settings.AppPropertyType.ADD_BUTTON_TEXT;
+import static djf.settings.AppPropertyType.EDIT_BUTTON_TEXT;
+import static djf.settings.AppPropertyType.UPDATE_BUTTON;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -37,6 +41,7 @@ import rm.data.RecRecord;
  */
 public class RecWorkspace {
     RecManagerApp app;
+    RecController recController;
     VBox wrapVBox;
     HBox headerBox;
     Label title;
@@ -77,6 +82,15 @@ public class RecWorkspace {
     public VBox getAddEditBox() {return addEditBox;}
     public GridPane getaddEditGrid() {return addEditGrid;}
     
+    public TextField getSectionTF() {return sectionTF;}
+    public TextField getDayTimeTF() {return dayTimeTF;}
+    public TextField getLocationTF() {return locationTF;}
+    public TextField getInstructorTF() {return instructorTF;}
+    public ComboBox getTa1Combo() {return ta1Combo;}
+    public ComboBox getTa2Combo() {return ta2Combo;}
+    public Button getAddUpdateButton() {return addUpdateButton;}
+    public TableView getRecTable() {return recTable;}
+    
     public BorderPane getWorkspace() {return workspace;}
     
     public RecWorkspace(RecManagerApp initApp) {
@@ -97,6 +111,45 @@ public class RecWorkspace {
         ((BorderPane)workspace).setCenter(wrapVBox);
         workspace.setStyle("-fx-background-color: #B0C4DE");
         
+        // Init Controller
+        recController = new RecController(app);
+        
+        // handle Add/Update Button
+        addUpdateButton.setOnAction(e -> {
+            String newSection = sectionTF.getText();
+            String newInstructor = instructorTF.getText();
+            String newDayTimeTF = dayTimeTF.getText();
+            String newLocation = locationTF.getText();
+            String newTA1 = null;
+            String newTA2 = null;
+            if (ta1Combo.getSelectionModel().getSelectedItem() != null) {
+                newTA1 = ta1Combo.getSelectionModel().getSelectedItem().toString();
+            }
+            if (ta2Combo.getSelectionModel().getSelectedItem() != null) {
+                newTA2 = ta2Combo.getSelectionModel().getSelectedItem().toString();
+            }
+            RecData newRec = new RecData(newSection, newInstructor, newDayTimeTF, newLocation, newTA1, newTA2);
+            
+            if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))){
+                recController.handleAddRec(newRec);
+            } else if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
+                recController.handleUpdateRec(newRec);
+            }
+        });
+        
+        // Clear Fields
+        clearButton.setOnAction(e -> {
+            sectionTF.clear();
+            dayTimeTF.clear();
+            locationTF.clear();
+            instructorTF.clear();
+            ta1Combo.getSelectionModel().clearSelection();
+            ta2Combo.getSelectionModel().clearSelection();
+            
+            // Change Button text to Add
+            addUpdateButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+            recTable.getSelectionModel().clearSelection();
+        });
         
         // handle when clicking on Recitation Table, parse Info into text fields
         recTable.setOnMouseClicked(e -> {
@@ -109,6 +162,9 @@ public class RecWorkspace {
                 locationTF.setText(rec.getLocation());
                 ta1Combo.setValue(rec.getTa1());
                 ta2Combo.setValue(rec.getTa2());
+                
+                // Change button text to Edit
+                addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
             }
         });
         
@@ -142,6 +198,9 @@ public class RecWorkspace {
                         locationTF.setText(newRec.getLocation());
                         ta1Combo.setValue(newRec.getTa1());
                         ta2Combo.setValue(newRec.getTa2());
+                        
+                        // Change button text to Edit
+                        addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
                     }
                 }
             }
@@ -201,7 +260,7 @@ public class RecWorkspace {
         locationLabel = new Label(props.getProperty(RecManagerProp.RECITATION_LOCATION_LABEL.toString()));
         ta1Label = new Label(props.getProperty(RecManagerProp.RECITATION_TA_LABEL.toString()));
         ta2Label = new Label(props.getProperty(RecManagerProp.RECITATION_TA_LABEL.toString()));
-        addUpdateButton = new Button(props.getProperty(RecManagerProp.RECITATION_ADDUPDATE_BUTTON.toString()));
+        addUpdateButton = new Button(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
         clearButton = new Button(props.getProperty(RecManagerProp.RECITATION_CLEAR_BUTTON.toString()));
         
         sectionTF = new TextField();

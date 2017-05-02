@@ -160,6 +160,16 @@
         <property name="LOCATION_PROMPT_TEXT"       value="Địa điểm"></property>
         <property name="TA_PROMPT_TEXT"             value="Trợ giảng"></property>
 
+        <property name="REC_SECTION_MISS"           value="Thiếu Mã lớp"></property>
+        <property name="REC_SECTION_MISS_MESS"      value="Vui lòng nhập Mã lớp Tăng Cường!"></property>
+        <property name="REC_TIME_MISS"              value="Thiếu Thời gian biểu"></property>
+        <property name="REC_TIME_MISS_MESS"         value="Vui lòng nhập thời gian cho lớp Tăng Cường!"></property>
+        <property name="REC_LOCATION_MISS"          value="Thiếu địa điểm"></property>
+        <property name="REC_LOCATION_MISS_MESS"     value="Vui lòng nhập địa điểm cho lớp Tăng Cường!"></property>
+
+        <property name="REC_SECTION_UNIQUE"         value="Trùng lặp lớp"></property>
+        <property name="REC_SECTION_UNIQUE_MESS"    value="Lớp này hiện đã có. Vui lòng nhập lớp mới!"></property>
+
         <!-- ********************************** Schedule Tab *************************************** -->
         <property name="SCHEDULE_TITLE"     value="THỜI KHOÁ BIỂU"></property>
         <property name="CALENDAR_LABEL"     value="Lịch"></property>

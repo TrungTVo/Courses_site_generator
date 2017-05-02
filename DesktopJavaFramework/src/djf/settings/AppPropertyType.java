@@ -48,7 +48,13 @@ public enum AppPropertyType {
     REC_TAB_TEXT,
     SCHEDULE_TAB_TEXT,
     PROJECT_TAB_TEXT,
-	
+    
+    // Add, edit, clear, update button text
+    ADD_BUTTON_TEXT,
+    EDIT_BUTTON_TEXT,
+    CLEAR_BUTTON_TEXT,
+    UPDATE_BUTTON,
+    
     // ERROR MESSAGES AND TITLES FOR DIALOG BOXES
     NEW_ERROR_MESSAGE,
     NEW_ERROR_TITLE,
@@ -73,5 +79,17 @@ public enum AppPropertyType {
 
     // DATA FILE EXTENSIONS AND DESSCRIPTIONS
     WORK_FILE_EXT,
-    WORK_FILE_EXT_DESC
+    WORK_FILE_EXT_DESC,
+    
+    // Recitation Error mess
+    REC_SECTION_MISS,
+    REC_SECTION_MISS_MESS,
+    REC_TIME_MISS,
+    REC_TIME_MISS_MESS,
+    REC_LOCATION_MISS,
+    REC_LOCATION_MISS_MESS,
+    
+    REC_SECTION_UNIQUE,
+    REC_SECTION_UNIQUE_MESS
+    
 }
