@@ -198,6 +198,11 @@
         <property name="LINK_PROMPT_TEXT"       value="Link"></property>
         <property name="CRITERIA_PROMPT_TEXT"             value="Criteria"></property>
 
+        <property name="SCHEDULE_TYPE_MISS"         value="Missing Type"></property>
+        <property name="SCHEDULE_TYPE_MISS_MESS"    value="Please enter Schedule Type!"></property>
+        <property name="SCHEDULE_DATE_MISS"         value="Missing Date"></property>
+        <property name="SCHEDULE_DATE_MISS_MESS"    value="Please enter Schedule Date!"></property>
+
         <!-- ********************************** Project Tab *************************************** -->
         <property name="PROJECT_TITLE"              value="PROJECTS"></property>
         <property name="TEAMS_TITLE"                value="TEAMS"></property>

@@ -90,6 +90,12 @@ public enum AppPropertyType {
     REC_LOCATION_MISS_MESS,
     
     REC_SECTION_UNIQUE,
-    REC_SECTION_UNIQUE_MESS
+    REC_SECTION_UNIQUE_MESS,
+    
+    // Schedule Error mess
+    SCHEDULE_TYPE_MISS,
+    SCHEDULE_TYPE_MISS_MESS,
+    SCHEDULE_DATE_MISS,
+    SCHEDULE_DATE_MISS_MESS
     
 }

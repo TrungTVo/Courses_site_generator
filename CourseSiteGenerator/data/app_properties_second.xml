@@ -197,6 +197,11 @@
         <property name="LINK_PROMPT_TEXT"       value="Link"></property>
         <property name="CRITERIA_PROMPT_TEXT"             value="Tiêu Chí"></property>
 
+        <property name="SCHEDULE_TYPE_MISS"         value="Thiếu Loại lịch"></property>
+        <property name="SCHEDULE_TYPE_MISS_MESS"    value="Vui lòng nhập Loại Lịch!"></property>
+        <property name="SCHEDULE_DATE_MISS"         value="Thiếu Ngày"></property>
+        <property name="SCHEDULE_DATE_MISS_MESS"    value="Vui lòng nhập Thời Gian!"></property>
+
         <!-- ********************************** Project Tab *************************************** -->
         <property name="PROJECT_TITLE"              value="BÀI TẬP"></property>
         <property name="TEAMS_TITLE"                value="THÔNG TIN NHÓM"></property>

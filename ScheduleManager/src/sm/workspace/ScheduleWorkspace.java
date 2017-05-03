@@ -3,6 +3,7 @@ package sm.workspace;
 
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
+import djf.settings.AppPropertyType;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +39,7 @@ import sm.data.ScheduleTopic;
  */
 public class ScheduleWorkspace {
     ScheduleManagerApp app;
+    ScheduleController scheController;
     VBox wrapVBox;
     Label scheTitle;
     
@@ -81,6 +83,16 @@ public class ScheduleWorkspace {
     BorderPane workspace;
     boolean workspaceActivated;
     
+    public DatePicker getStartPicker() {return startPicker;}
+    public DatePicker getEndPicker() {return endPicker;}
+    public ComboBox getTypeComboBox() {return typeCombo;}
+    public DatePicker getDatePicker() {return datePicker;}
+    public TextField getTimeTF() {return timeTF;}
+    public TextField getTitleTF() {return titleTF;}
+    public TextField getTopicTF() {return topicTF;}
+    public TextField getLinkTF() {return linkTF;}
+    public TextField getCriteriaTF() {return criteriaTF;}
+    
     public VBox getWrapVBox() {return wrapVBox;}
     public Label getTitle() {return scheTitle;}
     public VBox getCalendarWrapBox() {return calendarWrapBox;}
@@ -123,6 +135,43 @@ public class ScheduleWorkspace {
         ((BorderPane)workspace).setCenter(wrapVBox);
         workspace.setStyle("-fx-background-color: #B0C4DE");
         
+        // Init controller
+        scheController = new ScheduleController(app);
+        
+        clearButton.setOnAction(e -> {
+            clearFields();
+        });
+        
+        deleteScheduleButton.setOnAction(e -> {
+            scheController.handleDeleteSchedule(scheduleTable.getSelectionModel().getSelectedItem());
+            clearFields();
+        });
+        
+        addUpdateButton.setOnAction(e -> {
+            String type = null;
+            String date = null;
+            if (typeCombo.getSelectionModel().getSelectedItem() != null){
+                type = typeCombo.getSelectionModel().getSelectedItem().toString();
+            }
+            if (datePicker.getValue() != null){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                date = formatter.format(datePicker.getValue());
+            }
+            String time = timeTF.getText();
+            String title = titleTF.getText();
+            String topic = topicTF.getText();
+            String link = linkTF.getText();
+            String criteria = criteriaTF.getText();
+            
+            ScheduleTopic newTopic = new ScheduleTopic(type, date, time, title, topic, link, criteria);
+            if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
+                scheController.handleAddSchedule(newTopic);
+            } else if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
+                ScheduleTopic selectedTopic = scheduleTable.getSelectionModel().getSelectedItem();
+                scheController.handleUpdateSchedule(selectedTopic, newTopic);
+            }
+        });
+        
         // handle when clicking on Schedule table, parse Info into text fields
         scheduleTable.setOnMouseClicked(e -> {
             Object selectedItem = scheduleTable.getSelectionModel().getSelectedItem();
@@ -135,6 +184,9 @@ public class ScheduleWorkspace {
                 topicTF.setText(sche.getTopic());
                 linkTF.setText(sche.getLink());
                 criteriaTF.setText(sche.getCriteria());
+                
+                // change Add/update button to Update
+                addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
             }
         });
         
@@ -143,6 +195,10 @@ public class ScheduleWorkspace {
             Object selectedItem = scheduleTable.getSelectionModel().getSelectedItem();
             if (selectedItem != null){
                 ScheduleTopic sche = (ScheduleTopic) selectedItem;
+                if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
+                    scheController.handleDeleteSchedule(sche);
+                    clearFields();
+                }
                 if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldSche = ((ScheduleData)app.getDataComponent()).getScheduleList().indexOf(sche);
                     int indexOfNewSche;
@@ -169,10 +225,29 @@ public class ScheduleWorkspace {
                         topicTF.setText(newSche.getTopic());
                         linkTF.setText(newSche.getLink());
                         criteriaTF.setText(newSche.getCriteria());
+                        
+                        // change Add/update button to Update
+                        addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
                     }
                 }
             }
         });
+    }
+    
+    public void clearFields() {
+        typeCombo.getSelectionModel().clearSelection();
+        datePicker.setValue(null);
+        timeTF.clear();
+        titleTF.clear();
+        topicTF.clear();
+        linkTF.clear();
+        criteriaTF.clear();
+        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        // change add/update button text to add
+        addUpdateButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+        // clear selected item in table
+        scheduleTable.getSelectionModel().clearSelection();
     }
     
     public void activateWorkspace(BorderPane appPane) {
@@ -263,8 +338,8 @@ public class ScheduleWorkspace {
         criteriaTF.setPromptText(props.getProperty(ScheduleManagerProp.CRITERIA_PROMPT_TEXT.toString()));
         
         // buttons
-        addUpdateButton = new Button(props.getProperty(ScheduleManagerProp.SCHE_ADDUPDATE_BUTTON.toString()));
-        clearButton = new Button(props.getProperty(ScheduleManagerProp.SCHE_CLEAR_BUTTON.toString()));
+        addUpdateButton = new Button(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+        clearButton = new Button(props.getProperty(AppPropertyType.CLEAR_BUTTON_TEXT.toString()));
         
         // combine
         addEditGrid = new GridPane();
