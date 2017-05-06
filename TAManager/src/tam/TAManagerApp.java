@@ -7,6 +7,7 @@ import tam.workspace.TAWorkspace;
 import djf.AppTemplate;
 import tam.style.TAStyle;
 import static javafx.application.Application.launch;
+import rm.workspace.RecWorkspace;
 
 /**
  * This class serves as the application class for our TA Manager App program. 
@@ -25,19 +26,25 @@ public class TAManagerApp {
     TAWorkspace workspaceComponent;
     TAFiles fileComponent;
     TAStyle styleComponent;
+    RecWorkspace recWorkspace;
     
     public TAData getDataComponent() {return dataComponent;}
     public TAWorkspace getWorkspaceComponent() {return workspaceComponent;}
     public TAFiles getFilesComponent() {return fileComponent;}
     public TAStyle getStyleComponent() {return styleComponent;}
     
+    public void setRecWorkspace(RecWorkspace recWorkspace) {this.recWorkspace = recWorkspace;}
+    
+    public TAManagerApp(RecWorkspace recWorkspace) {
+        this.recWorkspace = recWorkspace;
+    }
     
     public void buildAppComponents() {
         // CONSTRUCT ALL FOUR COMPONENTS. NOTE THAT FOR THIS APP
         // THE WORKSPACE NEEDS THE DATA COMPONENT TO EXIST ALREADY
         // WHEN IT IS CONSTRUCTED, SO BE CAREFUL OF THE ORDER
         dataComponent = new TAData(this);
-        workspaceComponent = new TAWorkspace(this);
+        workspaceComponent = new TAWorkspace(this, recWorkspace);
         fileComponent = new TAFiles(this);
         styleComponent = new TAStyle(this);
     }

@@ -61,10 +61,6 @@ public class CourseSiteGenerator extends AppTemplate {
         getGUI().getAppPane().setCenter(this.csgWorkspace.getTabPane());
         
         // Build each component for each tab
-        // TA component
-        taComponent = new TAManagerApp();
-        taComponent.buildAppComponents();
-        csgWorkspace.getTATab().setContent(taComponent.getWorkspaceComponent().getWorkspace());
         
         // Course Data component
         courseComponent = new CourseManagerApp(this);
@@ -73,8 +69,17 @@ public class CourseSiteGenerator extends AppTemplate {
         
         // Recitation Data component
         recComponent = new RecManagerApp(courseComponent);
+        taComponent = new TAManagerApp(recComponent.getWorkspaceComponent());
+        // reset TAComponent for RecComponent (this ensures TA List updated in TAComboBox of Rec Tab
+        recComponent.setTaManagerApp(taComponent);
         recComponent.buildAppComponentsHook();
         csgWorkspace.getRecTab().setContent(recComponent.getWorkspaceComponent().getWorkspace());
+        
+        // TA component
+        //taComponent = new TAManagerApp(recComponent.getWorkspaceComponent());
+        taComponent.setRecWorkspace(recComponent.getWorkspaceComponent());
+        taComponent.buildAppComponents();
+        csgWorkspace.getTATab().setContent(taComponent.getWorkspaceComponent().getWorkspace());
         
         // Schedule Data component
         scheComponent = new ScheduleManagerApp();

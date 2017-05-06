@@ -34,6 +34,8 @@ import rm.RecManagerApp;
 import rm.RecManagerProp;
 import rm.data.RecData;
 import rm.data.RecRecord;
+import tam.TAManagerApp;
+import tam.data.TeachingAssistant;
 
 /**
  *
@@ -41,6 +43,7 @@ import rm.data.RecRecord;
  */
 public class RecWorkspace {
     RecManagerApp app;
+    TAManagerApp taApp;
     RecController recController;
     VBox wrapVBox;
     HBox headerBox;
@@ -93,8 +96,9 @@ public class RecWorkspace {
     
     public BorderPane getWorkspace() {return workspace;}
     
-    public RecWorkspace(RecManagerApp initApp) {
+    public RecWorkspace(RecManagerApp initApp, TAManagerApp taApp) {
         app = initApp;
+        this.taApp = taApp;
         
         // WE'LL NEED THIS TO GET LANGUAGE PROPERTIES FOR OUR UI
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -287,9 +291,13 @@ public class RecWorkspace {
         locationTF = new TextField();
         locationTF.setPromptText(props.getProperty(RecManagerProp.LOCATION_PROMPT_TEXT.toString()));
         
-        String[] ta1List = {"Trung Vo", "Hong Phuong", "Aiko", "Ron"};
-        ta1Combo = new ComboBox(generateComboBoxText(ta1List));
-        ta2Combo = new ComboBox(generateComboBoxText(ta1List));
+        //String[] ta1List = {"Trung Vo", "Hong Phuong", "Aiko", "Ron"};
+        ta1Combo = new ComboBox();
+        ta2Combo = new ComboBox();
+        if (taApp.getDataComponent() != null) {
+            ta1Combo.setItems(getTAList(taApp.getDataComponent().getTeachingAssistants()));
+            ta2Combo.setItems(getTAList(taApp.getDataComponent().getTeachingAssistants()));
+        }
         // put into grid pane
         addEditGrid = new GridPane();
         addEditGrid.add(sectionLabel, 0, 0);
@@ -315,6 +323,14 @@ public class RecWorkspace {
         addEditBox.setAlignment(Pos.CENTER);
         addEditBox.maxWidthProperty().bind(wrapVBox.widthProperty().multiply(0.8));
         dayTimeTF.minWidthProperty().bind(addEditBox.widthProperty().multiply(0.5));
+    }
+    
+    public ObservableList<String> getTAList(ObservableList<TeachingAssistant> taList) {
+        ObservableList<String> res = FXCollections.observableArrayList();
+        for (TeachingAssistant ta:taList){
+            res.add(ta.getName());
+        }
+        return res;
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {

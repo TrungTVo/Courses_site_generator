@@ -44,6 +44,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Callback;
+import rm.workspace.RecWorkspace;
 import tam.file.TAFiles;
 import tam.jtps.TimeFrameChange_Transaction;
 import tam.jtps.jTPS;
@@ -58,6 +59,9 @@ import tam.jtps.jTPS_Transaction;
 public class TAWorkspace {
     // THIS PROVIDES US WITH ACCESS TO THE APP COMPONENTS
     TAManagerApp app;
+    
+    // For updating  TA ComboBox in Rec tab
+    RecWorkspace recWorkspace;
     
     // jTPS Object
     jTPS jtps;
@@ -118,9 +122,10 @@ public class TAWorkspace {
      * the full office hours grid, since it doesn't yet know what
      * the hours will be until a file is loaded or a new one is created.
      */
-    public TAWorkspace(TAManagerApp initApp) {
+    public TAWorkspace(TAManagerApp initApp, RecWorkspace recWorkspace) {
         // KEEP THIS FOR LATER
         app = initApp;
+        this.recWorkspace = recWorkspace;
         
         jtps = new jTPS();
         
@@ -295,6 +300,12 @@ public class TAWorkspace {
                     edited = controller.handleEditTA(ta,oldName,oldEmail);
                 }
             }
+            // Reset TA ComboBox in Recitation tab
+            if (app.getDataComponent() != null && recWorkspace != null) {
+                this.recWorkspace.getTa1Combo().setItems(app.getDataComponent().getTeachingAssistants());
+                this.recWorkspace.getTa2Combo().setItems(app.getDataComponent().getTeachingAssistants());
+            }
+            
             if (added || edited){
                 //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file as been modified
                 clearButton.setDisable(true);
@@ -343,6 +354,60 @@ public class TAWorkspace {
             startBox.getSelectionModel().clearSelection();
             endBox.getSelectionModel().clearSelection();
         });
+        
+        
+        taTable.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            // IS A TA SELECTED IN THE TABLE?
+            Object selectedItem = taTable.getSelectionModel().getSelectedItem();
+            if (selectedItem != null){
+                TeachingAssistant ta = (TeachingAssistant)selectedItem;
+                if (ev.getCode() == KeyCode.BACK_SPACE || ev.getCode() == KeyCode.DELETE){
+                    controller.handleDeleteTAfromTable(app.getDataComponent(), ta);
+                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());         // flag as file has been modified
+                    taTable.getSelectionModel().clearSelection();                           // clear selected item
+                    // Reset TA ComboBox in Recitation tab
+                    this.recWorkspace.getTa1Combo().setItems(app.getDataComponent().getTeachingAssistants());
+                    this.recWorkspace.getTa2Combo().setItems(app.getDataComponent().getTeachingAssistants());
+                } else if (ev.getCode() == KeyCode.UP || ev.getCode() == KeyCode.DOWN) {
+                    int indexOfOldTA = ((TAData)app.getDataComponent()).getTeachingAssistants().indexOf(ta);
+                    int indexOfNewTA;
+                    TeachingAssistant newSelectedTA = null;
+                    
+                    if (ev.getCode() == KeyCode.UP){
+                        if (indexOfOldTA != 0) {
+                            indexOfNewTA = indexOfOldTA - 1;
+                            newSelectedTA = (TeachingAssistant)((TAData)app.getDataComponent()).getTeachingAssistants().get(indexOfNewTA);
+                        }
+                    } else if (ev.getCode() == KeyCode.DOWN) {
+                        if (indexOfOldTA != ((TAData)app.getDataComponent()).getTeachingAssistants().size()-1) {
+                            indexOfNewTA = indexOfOldTA + 1;
+                            newSelectedTA = (TeachingAssistant)((TAData)app.getDataComponent()).getTeachingAssistants().get(indexOfNewTA);
+                        }
+                    }
+                    
+                    if (newSelectedTA != null) {
+                        nameTextField.setText(newSelectedTA.getName());                     // put text and email into textfield for editing
+                        emailTextField.setText(newSelectedTA.getEmail());
+                        addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
+                        clearButton.setDisable(false);
+                    }
+                }
+            }
+        });
+        
+        // HANDLE EDIT TA AT TEXTFIELD
+        taTable.setOnMouseClicked(e -> {
+            // IS A TA SELECTED IN THE TABLE?
+            Object selectedItem = taTable.getSelectionModel().getSelectedItem();
+            TeachingAssistant ta = (TeachingAssistant) selectedItem;
+            if (ta != null) {               // if TA selected
+                nameTextField.setText(ta.getName());                    // put text and email into textfield for editing
+                emailTextField.setText(ta.getEmail());
+                addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
+                clearButton.setDisable(false);
+            } 
+        });
+        
     }
     
     public BorderPane getWorkspace() {return workspace;}
@@ -958,58 +1023,7 @@ public class TAWorkspace {
         }
         
         // Handle Delete TA from table by pressing "Delete" Key
-        // Get the table
-        TAWorkspace workspace = (TAWorkspace)app.getWorkspaceComponent();
-        TableView taTable = workspace.getTATable();
         
-        taTable.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
-            // IS A TA SELECTED IN THE TABLE?
-            Object selectedItem = taTable.getSelectionModel().getSelectedItem();
-            if (selectedItem != null){
-                TeachingAssistant ta = (TeachingAssistant)selectedItem;
-                if (ev.getCode() == KeyCode.BACK_SPACE || ev.getCode() == KeyCode.DELETE){
-                    controller.handleDeleteTAfromTable(dataComponent, ta);
-                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());         // flag as file has been modified
-                    taTable.getSelectionModel().clearSelection();                           // clear selected item
-                } else if (ev.getCode() == KeyCode.UP || ev.getCode() == KeyCode.DOWN) {
-                    int indexOfOldTA = ((TAData)app.getDataComponent()).getTeachingAssistants().indexOf(ta);
-                    int indexOfNewTA;
-                    TeachingAssistant newSelectedTA = null;
-                    
-                    if (ev.getCode() == KeyCode.UP){
-                        if (indexOfOldTA != 0) {
-                            indexOfNewTA = indexOfOldTA - 1;
-                            newSelectedTA = (TeachingAssistant)((TAData)app.getDataComponent()).getTeachingAssistants().get(indexOfNewTA);
-                        }
-                    } else if (ev.getCode() == KeyCode.DOWN) {
-                        if (indexOfOldTA != ((TAData)app.getDataComponent()).getTeachingAssistants().size()-1) {
-                            indexOfNewTA = indexOfOldTA + 1;
-                            newSelectedTA = (TeachingAssistant)((TAData)app.getDataComponent()).getTeachingAssistants().get(indexOfNewTA);
-                        }
-                    }
-                    
-                    if (newSelectedTA != null) {
-                        nameTextField.setText(newSelectedTA.getName());                     // put text and email into textfield for editing
-                        emailTextField.setText(newSelectedTA.getEmail());
-                        addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
-                        clearButton.setDisable(false);
-                    }
-                }
-            }
-        });
-        
-        // HANDLE EDIT TA AT TEXTFIELD
-        taTable.setOnMouseClicked(e -> {
-            // IS A TA SELECTED IN THE TABLE?
-            Object selectedItem = taTable.getSelectionModel().getSelectedItem();
-            TeachingAssistant ta = (TeachingAssistant) selectedItem;
-            if (ta != null) {               // if TA selected
-                nameTextField.setText(ta.getName());                    // put text and email into textfield for editing
-                emailTextField.setText(ta.getEmail());
-                addButton.setText(props.getProperty(TAManagerProp.EDIT_BUTTON_TEXT.toString()));
-                clearButton.setDisable(false);
-            } 
-        });
         
         taTable.getSelectionModel().clearSelection();
         nameTextField.clear();
