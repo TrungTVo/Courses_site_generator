@@ -3,6 +3,7 @@ package pm.workspace;
 
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
+import djf.settings.AppPropertyType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -34,8 +35,8 @@ import pm.data.TeamData;
 import properties_manager.PropertiesManager;
 
 public class ProjectWorkspace {
-    
     ProjectManagerApp app;
+    ProjectController controller;
     ScrollPane scrollPane;
     VBox wrapVBox;
     Label projectTitle;
@@ -88,6 +89,19 @@ public class ProjectWorkspace {
     BorderPane workspace;
     boolean workspaceActivated;
     
+    public TextField getTeamTF() {return nameTF;}
+    public TextField getTeamLink() {return linkTF;}
+    public ColorPicker getTeamColor() {return colorCircle;}
+    public ColorPicker getTeamTextColor() {return textColorCircle;}
+    
+    public TextField getStudentFNameTF() {return firstNameTF;}
+    public TextField getStudentLNameTF() {return lastNameTF;}
+    public ComboBox getStudentTeamCombobox() {return teamCombo;}
+    public TextField getStudentRoleTF() {return roleTF;}
+    
+    public TableView getTeamTable() {return teamTable;}
+    public TableView getStudentTable() {return studentTable;}
+    
     public VBox getWrapVBox() {return wrapVBox;}
     public Label getProjectTitle() {return projectTitle;}
     public Label getTeamTitle() {return teamTitle;}
@@ -129,6 +143,42 @@ public class ProjectWorkspace {
         workspace.setCenter(scrollPane);
         wrapVBox.setStyle("-fx-background-color: #B0C4DE");
         
+        // init controller for event handling
+        controller = new ProjectController(app);
+        
+        clearTeamButton.setOnAction(e -> {
+            clearTeamFields();
+        });
+        
+        clearStudentButton.setOnAction(e -> {
+            clearStudentFields();
+        });
+        
+        addUpdateTeamButton.setOnAction(e -> {
+            String teamName = nameTF.getText();
+            String teamLink = linkTF.getText();
+            String color = null;
+            String textColor = null;
+            if (colorCircle.getValue() != null){
+                color = colorCircle.getValue().toString();
+            }
+            if (textColorCircle.getValue() != null){
+                textColor = textColorCircle.getValue().toString();
+            }
+            TeamData newTeam = new TeamData(teamName, color, textColor, teamLink);
+            
+            if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
+                controller.handleAddTeam(newTeam);
+            } else if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
+                controller.handleEditTeam(newTeam);
+            }
+        });
+        
+        deleteTeamButton.setOnAction(e -> {
+            controller.handleDeleteTeam();
+            clearTeamFields();
+        });
+        
         // handle when clicking on Team Table, parse Info into text fields
         teamTable.setOnMouseClicked((MouseEvent e) -> {
             Object selectedItem = teamTable.getSelectionModel().getSelectedItem();
@@ -138,6 +188,9 @@ public class ProjectWorkspace {
                 linkTF.setText(team.getLink());
                 colorCircle.setValue(Color.valueOf(team.getColor()));
                 textColorCircle.setValue(Color.valueOf(team.getTextColor()));
+                
+                // change button text to update
+                addUpdateTeamButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
             }
         });
         
@@ -146,7 +199,10 @@ public class ProjectWorkspace {
             Object selectedItem = teamTable.getSelectionModel().getSelectedItem();
             if (selectedItem != null){
                 TeamData team = (TeamData) selectedItem;
-                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
+                    controller.handleDeleteTeam();
+                    clearTeamFields();
+                } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().indexOf(team);
                     int indexOfNewTeam;
                     TeamData newTeam = null;
@@ -169,6 +225,9 @@ public class ProjectWorkspace {
                         linkTF.setText(newTeam.getLink());
                         colorCircle.setValue(Color.valueOf(newTeam.getColor()));
                         textColorCircle.setValue(Color.valueOf(newTeam.getTextColor()));
+                        
+                        // change button text to update
+                        addUpdateTeamButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
                     }
                 }
             }
@@ -183,6 +242,9 @@ public class ProjectWorkspace {
                 lastNameTF.setText(student.getLastName());
                 teamCombo.setValue(student.getTeam());
                 roleTF.setText(student.getRole());
+                
+                // change button text to update
+                addUpdateStudentButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
             }
         });
         
@@ -214,11 +276,38 @@ public class ProjectWorkspace {
                         lastNameTF.setText(newStudent.getLastName());
                         teamCombo.setValue(newStudent.getTeam());
                         roleTF.setText(newStudent.getRole());
+                        
+                        // change button text to update
+                        addUpdateStudentButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
                     }
                 }
             }
         });
         
+    }
+    
+    public void clearTeamFields() {
+        nameTF.clear();
+        colorCircle.setValue(null);
+        textColorCircle.setValue(null);
+        linkTF.clear();
+        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        // change add/update button text back to add
+        addUpdateTeamButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+        // clear selected item in table
+        teamTable.getSelectionModel().clearSelection();
+    }
+    
+    public void clearStudentFields() {
+        firstNameTF.clear();
+        lastNameTF.clear();
+        teamCombo.getSelectionModel().clearSelection();
+        roleTF.clear();
+        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        addUpdateStudentButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
+        studentTable.getSelectionModel().clearSelection();
     }
     
     public void activateWorkspace(BorderPane appPane) {
@@ -267,7 +356,7 @@ public class ProjectWorkspace {
          colorLabel = new Label(props.getProperty(ProjectManagerProp.COLOR_LABEL.toString()));
          textColorLabel = new Label(props.getProperty(ProjectManagerProp.TEXTCOLOR_LABEL.toString()));
          linkLabel = new Label(props.getProperty(ProjectManagerProp.LINK_LABEL.toString()));
-         addUpdateTeamButton = new Button(props.getProperty(ProjectManagerProp.PROJ_ADDUPDATE_BUTTON.toString()));
+         addUpdateTeamButton = new Button(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
          clearTeamButton = new Button(props.getProperty(ProjectManagerProp.PROJ_CLEAR_BUTTON.toString()));
          
          nameTF = new TextField();
@@ -351,7 +440,7 @@ public class ProjectWorkspace {
         lastNameLabel = new Label(props.getProperty(ProjectManagerProp.LASTNAME_LABEL.toString()));
         teamsLabel = new Label(props.getProperty(ProjectManagerProp.TEAM_LABEL.toString()));
         roleLabel = new Label(props.getProperty(ProjectManagerProp.ROLE_LABEL.toString()));
-        addUpdateStudentButton = new Button(props.getProperty(ProjectManagerProp.PROJ_ADDUPDATE_BUTTON.toString()));
+        addUpdateStudentButton = new Button(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
         clearStudentButton = new Button(props.getProperty(ProjectManagerProp.PROJ_CLEAR_BUTTON.toString()));
         
         firstNameTF = new TextField();

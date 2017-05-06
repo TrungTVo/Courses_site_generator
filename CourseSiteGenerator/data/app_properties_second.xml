@@ -227,6 +227,26 @@
         <property name="ROLE_LABEL"                 value="Vị Trí:"></property>
         <property name="DELETE_TOOLTIP"             value="Xoá phần chọn lựa"></property>
 
+        <property name="TEAM_NAME_MISS"         value="Thiếu tên đội"></property>
+        <property name="TEAM_NAME_MISS_MESS"    value="Vui lòng nhập tên đội!"></property>
+        <property name="TEAM_COLOR_MISS"        value="Thiếu màu Đội"></property>
+        <property name="TEAM_COLOR_MISS_MESS"   value="Vui lòng nhập màu Đội!"></property>
+        <property name="TEAM_TEXTCOLOR_MISS"    value="Thiếu màu chữ Đội"></property>
+        <property name="TEAM_TEXTCOLOR_MISS_MESS"   value="Vui lòng nhập màu chữ Đội!"></property>
+        <property name="TEAM_LINK_MISS"         value="Thiếu link"></property>
+        <property name="TEAM_LINK_MISS_MESS"    value="Vui lòng nhập link!"></property>
+        <property name="TEAM_UNIQUE"            value="Lỗi trùng lặp Đội"></property>
+        <property name="TEAM_UNIQUE_MESS"       value="Đội này đã tồn tại. Vui lòng nhập đội khác!"></property>
+
+        <property name="STUDENT_FIRSTNAME_MISS"     value="Thiếu tên"></property>
+        <property name="STUDENT_FIRSTNAME_MISS_MESS"    value="Vui lòng nhập tên!"></property>
+        <property name="STUDENT_LASTNAME_MISS"      value="Thiếu họ tên"></property>
+        <property name="STUDENT_LASTNAME_MISS_MESS" value="Vui lòng nhập họ tên!"></property>
+        <property name="STUDENT_TEAM_MISS"          value="Thiếu tên đội"></property>
+        <property name="STUDENT_TEAM_MISS_MESS"     value="Vui lòng nhập tên đội!"></property>
+        <property name="STUDENT_ROLE_MISS"          value="Thiếu vai trò"></property>
+        <property name="STUDENT_ROLE_MISS_MESS"     value="Vui lòng nhập vai trò cho học sinh!"></property>
+
     </property_list>
     <property_options_list>
         <property_options name="OFFICE_HOURS_TABLE_HEADERS">

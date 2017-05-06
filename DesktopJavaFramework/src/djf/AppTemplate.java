@@ -141,6 +141,7 @@ public abstract class AppTemplate extends Application {
 	    props.loadProperties(propertiesFileName, PROPERTIES_SCHEMA_FILE_NAME);
 	    return true;
 	} catch (InvalidXMLFileFormatException ixmlffe) {
+            ixmlffe.printStackTrace();
 	    // SOMETHING WENT WRONG INITIALIZING THE XML FILE
 	    AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
 	    dialog.show(props.getProperty(PROPERTIES_LOAD_ERROR_TITLE), props.getProperty(PROPERTIES_LOAD_ERROR_MESSAGE));

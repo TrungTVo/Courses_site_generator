@@ -228,6 +228,26 @@
         <property name="ROLE_LABEL"                 value="Role:"></property>
         <property name="DELETE_TOOLTIP"             value="Delete Selected Item"></property>
 
+        <property name="TEAM_NAME_MISS"         value="Missing Team Name"></property>
+        <property name="TEAM_NAME_MISS_MESS"    value="Please enter a Team Name!"></property>
+        <property name="TEAM_COLOR_MISS"        value="Missing Team Color"></property>
+        <property name="TEAM_COLOR_MISS_MESS"   value="Please enter a Team Color"></property>
+        <property name="TEAM_TEXTCOLOR_MISS"    value="Missing Team Text Color"></property>
+        <property name="TEAM_TEXTCOLOR_MISS_MESS"   value="Please enter a Team Text Color"></property>
+        <property name="TEAM_LINK_MISS"         value="Missing Team Link"></property>
+        <property name="TEAM_LINK_MISS_MESS"    value="Please enter a Team Link!"></property>
+        <property name="TEAM_UNIQUE"            value="Unique Team Error"></property>
+        <property name="TEAM_UNIQUE_MESS"       value="This team is already existed. Please enter a unique Team!"></property>
+
+        <property name="STUDENT_FIRSTNAME_MISS"     value="Missing First Name"></property>
+        <property name="STUDENT_FIRSTNAME_MISS_MESS"    value="Please enter First Name!"></property>
+        <property name="STUDENT_LASTNAME_MISS"      value="Missing Last Name"></property>
+        <property name="STUDENT_LASTNAME_MISS_MESS" value="Please enter Last Name!"></property>
+        <property name="STUDENT_TEAM_MISS"          value="Missing Team"></property>
+        <property name="STUDENT_TEAM_MISS_MESS"     value="Please enter a Team Name!"></property>
+        <property name="STUDENT_ROLE_MISS"          value="Missing Role"></property>
+        <property name="STUDENT_ROLE_MISS_MESS"     value="Please enter a Role!"></property>
+
     </property_list>
     <property_options_list>
         <property_options name="OFFICE_HOURS_TABLE_HEADERS">

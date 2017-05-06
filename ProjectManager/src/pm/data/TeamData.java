@@ -4,7 +4,7 @@ package pm.data;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TeamData {
+public class TeamData<E extends Comparable<E>> implements Comparable<E> {
     private final StringProperty name;
     private final StringProperty color;
     private final StringProperty textColor;
@@ -26,4 +26,9 @@ public class TeamData {
     public void setColor(String color) {this.color.set(color);}
     public void setTextColor(String textColor) {this.textColor.set(textColor);}
     public void setLink(String link) {this.link.set(link);}
+
+    @Override
+    public int compareTo(E team) {
+        return getName().compareTo(((TeamData)team).getName());
+    }
 }
