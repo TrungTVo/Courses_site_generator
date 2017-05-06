@@ -344,7 +344,7 @@ public class CourseWorkspace {
             File selectedFile = fc.showOpenDialog(csg.getWindow());
             if (selectedFile != null){
                 String imageString = selectedFile.toString();
-                bannerImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                bannerImage = new Image("file:"+imageString);
                 if (bannerImage != null){
                     styleGridPane.getChildren().remove(bannerImageView);
                     bannerImageView.setImage(bannerImage);
@@ -365,7 +365,7 @@ public class CourseWorkspace {
             File selectedFile = fc.showOpenDialog(csg.getWindow());
             if (selectedFile != null){
                 String imageString = selectedFile.toString();
-                leftImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                leftImage = new Image("file:"+imageString);
                 if (leftImage != null){
                     styleGridPane.getChildren().remove(leftImageView);
                     leftImageView.setImage(leftImage);
@@ -386,7 +386,7 @@ public class CourseWorkspace {
             File selectedFile = fc.showOpenDialog(csg.getWindow());
             if (selectedFile != null){
                 String imageString = selectedFile.toString();
-                rightImage = new Image("file:."+imageString.substring(imageString.indexOf("/images")));
+                rightImage = new Image("file:"+imageString);
                 if (rightImage != null){
                     styleGridPane.getChildren().remove(rightImageView);
                     rightImageView.setImage(rightImage);
