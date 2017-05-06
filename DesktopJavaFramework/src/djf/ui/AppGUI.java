@@ -73,8 +73,6 @@ public class AppGUI {
     // THIS TITLE WILL GO IN THE TITLE BAR
     protected String appTitle;
     
-    protected boolean newed;
-    protected boolean loaded;
     
     /**
      * This constructor initializes the file toolbar for use.
@@ -101,23 +99,7 @@ public class AppGUI {
     }
     
     public Stage getPrimaryStage() {return primaryStage;}
-    
-    public boolean getNewed(){
-        return newed;
-    }
-    
-    public boolean getLoaded(){
-        return loaded;
-    }
-    
-    public void setNewed(boolean newed){
-        this.newed = newed;
-    }
-    
-    public void setLoaded(boolean loaded){
-        this.loaded = loaded;
-    }
-    
+        
     public AppFileController getAppFileController() { return fileController; }
     /**
      * Accessor method for getting the application pane, within which all
@@ -159,12 +141,8 @@ public class AppGUI {
         // ONCE EDITING THAT FIRST COURSE BEGINS
 	newButton.setDisable(false);
         loadButton.setDisable(false);
-        
-        if (newed || loaded)
-            exportButton.setDisable(false);
-        else
-            exportButton.setDisable(true);
-	exitButton.setDisable(false);
+	exportButton.setDisable(!saved);
+        exitButton.setDisable(false);
 
         // NOTE THAT THE NEW, LOAD, AND EXIT BUTTONS
         // ARE NEVER DISABLED SO WE NEVER HAVE TO TOUCH THEM
@@ -186,12 +164,9 @@ public class AppGUI {
         // START AS ENABLED (false), WHILE OTHERS DISABLED (true)
         newButton = initChildButton(fileToolbarPane,	NEW_ICON.toString(),	    NEW_TOOLTIP.toString(),	false, null);
         loadButton = initChildButton(fileToolbarPane,	LOAD_ICON.toString(),	    LOAD_TOOLTIP.toString(),	false, null);
-        saveButton = initChildButton(fileToolbarPane,	SAVE_ICON.toString(),	    SAVE_TOOLTIP.toString(),	true, null);
-        saveAsButton = initChildButton(fileToolbarPane, SAVE_AS_ICON.toString(),    SAVE_AS_TOOLTIP.toString(), true, null);
-        if (newed || loaded)
-            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	false, null);
-        else
-            exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	true, null);
+        saveButton = initChildButton(fileToolbarPane,	SAVE_ICON.toString(),	    SAVE_TOOLTIP.toString(),	false, null);
+        saveAsButton = initChildButton(fileToolbarPane, SAVE_AS_ICON.toString(),    SAVE_AS_TOOLTIP.toString(), false, null);
+        exportButton = initChildButton(fileToolbarPane,	EXPORT_ICON.toString(),	    EXPORT_TOOLTIP.toString(),	true, null);
         exitButton = initChildButton(fileToolbarPane,	EXIT_ICON.toString(),	    EXIT_TOOLTIP.toString(),	false, null);
         
         // Now make layout for right portion of toolbar

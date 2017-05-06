@@ -61,7 +61,7 @@ public class AppFileController {
      */
     public AppFileController(AppTemplate initApp) {
         // NOTHING YET
-        saved = true;
+        saved = false;
         app = initApp;
         csg = new CourseSiteGenerator();
     }
@@ -119,16 +119,11 @@ public class AppFileController {
 		//csg.getTA().getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
                 
 		// WORK IS NOT SAVED
-                saved = false;
+                markAsEdited(app.getGUI());
 		currentWorkFile = null;
 
                 // TELL THE USER NEW WORK IS UNDERWAY
 		dialog.show(props.getProperty(NEW_COMPLETED_TITLE), props.getProperty(NEW_COMPLETED_MESSAGE));
-                
-                // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
-                // THE APPROPRIATE CONTROLS
-                app.getGUI().setNewed(true);
-                app.getGUI().updateToolbarControls(saved);
             }
         } catch (IOException ioe) {
             // SOMETHING WENT WRONG, PROVIDE FEEDBACK
@@ -155,7 +150,7 @@ public class AppFileController {
             if (continueToOpen) {
                 // GO AHEAD AND PROCEED LOADING A Course
                 promptToOpen();
-                app.getGUI().setLoaded(true);
+                saved = true;
                 app.getGUI().updateToolbarControls(saved);
             }
         } catch (IOException ioe) {

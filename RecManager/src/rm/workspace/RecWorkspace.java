@@ -5,6 +5,7 @@
  */
 package rm.workspace;
 
+import csg.CourseSiteGenerator;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import djf.settings.AppPropertyType;
@@ -42,6 +43,7 @@ import tam.data.TeachingAssistant;
  * @author trungvo
  */
 public class RecWorkspace {
+    CourseSiteGenerator csg;
     RecManagerApp app;
     TAManagerApp taApp;
     RecController recController;
@@ -96,9 +98,10 @@ public class RecWorkspace {
     
     public BorderPane getWorkspace() {return workspace;}
     
-    public RecWorkspace(RecManagerApp initApp, TAManagerApp taApp) {
+    public RecWorkspace(RecManagerApp initApp, TAManagerApp taApp, CourseSiteGenerator csg) {
         app = initApp;
         this.taApp = taApp;
+        this.csg = csg;
         
         // WE'LL NEED THIS TO GET LANGUAGE PROPERTIES FOR OUR UI
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -122,6 +125,8 @@ public class RecWorkspace {
         deleteButton.setOnAction(e -> {
             recController.handleDeleteRec();
             clearFields();
+            // mark as edited, update toolbar
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
         });
         
         // handle Add/Update Button
@@ -140,10 +145,15 @@ public class RecWorkspace {
             }
             RecData newRec = new RecData(newSection, newInstructor, newDayTimeTF, newLocation, newTA1, newTA2);
             
+            boolean changed = false;
             if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))){
-                recController.handleAddRec(newRec);
+                changed = recController.handleAddRec(newRec);
             } else if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
-                recController.handleUpdateRec(newRec);
+                changed = recController.handleUpdateRec(newRec);
+            }
+            if (changed){
+                // mark as edited, update toolbar
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
             }
         });
         
@@ -177,6 +187,8 @@ public class RecWorkspace {
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
                     recController.handleDeleteRec();
                     clearFields();
+                    // mark as edited, update toolbar
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldRec = ((RecRecord)app.getDataComponent()).getRecRecord().indexOf(rec);
                     int indexOfNewRec;

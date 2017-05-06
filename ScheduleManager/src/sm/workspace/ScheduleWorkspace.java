@@ -1,6 +1,7 @@
 
 package sm.workspace;
 
+import csg.CourseSiteGenerator;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import djf.settings.AppPropertyType;
@@ -40,6 +41,7 @@ import sm.data.ScheduleTopic;
 public class ScheduleWorkspace {
     ScheduleManagerApp app;
     ScheduleController scheController;
+    CourseSiteGenerator csg;
     VBox wrapVBox;
     Label scheTitle;
     
@@ -114,8 +116,9 @@ public class ScheduleWorkspace {
         endPicker.setValue(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
     }
     
-    public ScheduleWorkspace(ScheduleManagerApp app) {
+    public ScheduleWorkspace(ScheduleManagerApp app, CourseSiteGenerator csg) {
         this.app = app;
+        this.csg = csg;
         
         // WE'LL NEED THIS TO GET LANGUAGE PROPERTIES FOR OUR UI
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -145,6 +148,8 @@ public class ScheduleWorkspace {
         deleteScheduleButton.setOnAction(e -> {
             scheController.handleDeleteSchedule(scheduleTable.getSelectionModel().getSelectedItem());
             clearFields();
+            // mark as edited, update toolbar
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
         });
         
         addUpdateButton.setOnAction(e -> {
@@ -164,11 +169,18 @@ public class ScheduleWorkspace {
             String criteria = criteriaTF.getText();
             
             ScheduleTopic newTopic = new ScheduleTopic(type, date, time, title, topic, link, criteria);
+            boolean changed = false;
             if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
-                scheController.handleAddSchedule(newTopic);
+                changed = scheController.handleAddSchedule(newTopic);
+                if (changed){
+                    // mark as edited, update toolbar
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+                }
             } else if (addUpdateButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
                 ScheduleTopic selectedTopic = scheduleTable.getSelectionModel().getSelectedItem();
                 scheController.handleUpdateSchedule(selectedTopic, newTopic);
+                // mark as edited, update toolbar
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
             }
         });
         
@@ -198,6 +210,8 @@ public class ScheduleWorkspace {
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
                     scheController.handleDeleteSchedule(sche);
                     clearFields();
+                    // mark as edited, update toolbar
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
                 }
                 if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldSche = ((ScheduleData)app.getDataComponent()).getScheduleList().indexOf(sche);

@@ -2,6 +2,7 @@
 package rm;
 
 import cm.CourseManagerApp;
+import csg.CourseSiteGenerator;
 import djf.AppTemplate;
 import rm.data.RecRecord;
 import rm.file.RecFiles;
@@ -19,11 +20,14 @@ public class RecManagerApp {
     RecWorkspace workspaceComponent;
     RecStyle styleComponent;
     RecFiles fileComponent;
+    
     CourseManagerApp courseManagerApp;
     TAManagerApp taManagerApp;
+    CourseSiteGenerator csg;
     
-    public RecManagerApp(CourseManagerApp courseManagerApp){
+    public RecManagerApp(CourseManagerApp courseManagerApp, CourseSiteGenerator csg){
         this.courseManagerApp = courseManagerApp;
+        this.csg = csg;
     }
     
     public void setTaManagerApp(TAManagerApp taManagerApp) {
@@ -38,7 +42,7 @@ public class RecManagerApp {
     
     public void buildAppComponentsHook() {
         dataComponent = new RecRecord(this);
-        workspaceComponent = new RecWorkspace(this, taManagerApp);
+        workspaceComponent = new RecWorkspace(this, taManagerApp, csg);
         styleComponent = new RecStyle(this);
         fileComponent = new RecFiles(this);
     }

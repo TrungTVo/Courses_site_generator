@@ -6,6 +6,7 @@
 package pm;
 
 import cm.CourseManagerApp;
+import csg.CourseSiteGenerator;
 import djf.AppTemplate;
 import pm.data.ProjectRecord;
 import pm.file.ProjectFiles;
@@ -22,10 +23,13 @@ public class ProjectManagerApp {
     ProjectStyle styleComponent;
     ProjectWorkspace workspaceComponent;
     ProjectFiles fileComponent;
-    CourseManagerApp courseManagerApp;
     
-    public ProjectManagerApp(CourseManagerApp courseManagerApp){
+    CourseManagerApp courseManagerApp;
+    CourseSiteGenerator csg;
+    
+    public ProjectManagerApp(CourseManagerApp courseManagerApp, CourseSiteGenerator csg){
         this.courseManagerApp = courseManagerApp;
+        this.csg = csg;
     }
     
     public ProjectRecord getDataComponent() {return dataComponent;}
@@ -36,7 +40,7 @@ public class ProjectManagerApp {
     
     public void buildAppComponentsHook() {
         dataComponent = new ProjectRecord(this);
-        workspaceComponent = new ProjectWorkspace(this);
+        workspaceComponent = new ProjectWorkspace(this, csg);
         styleComponent = new ProjectStyle(this);
         fileComponent = new ProjectFiles(this);
     }

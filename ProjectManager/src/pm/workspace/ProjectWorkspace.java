@@ -1,6 +1,7 @@
 
 package pm.workspace;
 
+import csg.CourseSiteGenerator;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import djf.settings.AppPropertyType;
@@ -37,6 +38,7 @@ import properties_manager.PropertiesManager;
 public class ProjectWorkspace {
     ProjectManagerApp app;
     ProjectController controller;
+    CourseSiteGenerator csg;
     ScrollPane scrollPane;
     VBox wrapVBox;
     Label projectTitle;
@@ -118,8 +120,9 @@ public class ProjectWorkspace {
     
     public BorderPane getWorkspace() {return workspace;}
     
-    public ProjectWorkspace(ProjectManagerApp app) {
+    public ProjectWorkspace(ProjectManagerApp app, CourseSiteGenerator csg) {
         this.app = app;
+        this.csg = csg;
         
         // WE'LL NEED THIS TO GET LANGUAGE PROPERTIES FOR OUR UI
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -167,12 +170,17 @@ public class ProjectWorkspace {
             }
             TeamData newTeam = new TeamData(teamName, color, textColor, teamLink);
             
+            boolean changed = false;
             if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
-                controller.handleAddTeam(newTeam);
+                changed = controller.handleAddTeam(newTeam);
             } else if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
-                controller.handleEditTeam(newTeam);
+                changed = controller.handleEditTeam(newTeam);
             }
             teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
+            if (changed){
+                // mark as edited, update tool bar
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+            }
         });
         
         addUpdateStudentButton.setOnAction(e -> {
@@ -185,10 +193,15 @@ public class ProjectWorkspace {
             }
             StudentData newStudent = new StudentData(fName, lName, team, role);
             
+            boolean changed = false;
             if (addUpdateStudentButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
-                controller.handleAddStudent(newStudent);
+                changed = controller.handleAddStudent(newStudent);
             } else if (addUpdateStudentButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
-                controller.handleEditStudent(newStudent);
+                changed = controller.handleEditStudent(newStudent);
+            }
+            if (changed){
+                // mark as edited, update tool bar
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
             }
         });
         
@@ -196,11 +209,15 @@ public class ProjectWorkspace {
             controller.handleDeleteTeam();
             clearTeamFields();
             teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
+            // mark as edited, update tool bar
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
         });
         
         deleteStudentButton.setOnAction(e -> {
             controller.handleDeleteStudent();
             clearStudentFields();
+            // mark as edited, update tool bar
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
         });
         
         // handle when clicking on Team Table, parse Info into text fields
@@ -227,6 +244,8 @@ public class ProjectWorkspace {
                     controller.handleDeleteTeam();
                     clearTeamFields();
                     teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
+                    // mark as edited, update tool bar
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().indexOf(team);
                     int indexOfNewTeam;
@@ -281,6 +300,8 @@ public class ProjectWorkspace {
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE) {
                     controller.handleDeleteStudent();
                     clearStudentFields();
+                    // mark as edited, update tool bar
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldStudent = ((ProjectRecord)app.getDataComponent()).getStudentList().indexOf(student);
                     int indexOfNewStudent;
