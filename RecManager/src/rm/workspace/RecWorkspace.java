@@ -116,8 +116,7 @@ public class RecWorkspace {
         
         // Handle Delete Rec
         deleteButton.setOnAction(e -> {
-            RecData selectedRec = recTable.getSelectionModel().getSelectedItem();
-            recController.handleDeleteRec(selectedRec);
+            recController.handleDeleteRec();
             clearFields();
         });
         
@@ -172,7 +171,7 @@ public class RecWorkspace {
             if (selectedItem != null){
                 RecData rec = (RecData) selectedItem;
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
-                    recController.handleDeleteRec(rec);
+                    recController.handleDeleteRec();
                     clearFields();
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldRec = ((RecRecord)app.getDataComponent()).getRecRecord().indexOf(rec);

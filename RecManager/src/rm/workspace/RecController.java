@@ -160,7 +160,7 @@ public class RecController {
         return null;
     }
     
-    public void handleDeleteRec(RecData rec) {
+    public void handleDeleteRec() {
         // GET WORKSPACE
         RecWorkspace recWorkspace = recManager.getWorkspaceComponent();
         
