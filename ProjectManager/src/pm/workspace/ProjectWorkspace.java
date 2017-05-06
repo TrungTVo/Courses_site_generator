@@ -172,6 +172,7 @@ public class ProjectWorkspace {
             } else if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
                 controller.handleEditTeam(newTeam);
             }
+            teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
         });
         
         addUpdateStudentButton.setOnAction(e -> {
@@ -194,6 +195,7 @@ public class ProjectWorkspace {
         deleteTeamButton.setOnAction(e -> {
             controller.handleDeleteTeam();
             clearTeamFields();
+            teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
         });
         
         deleteStudentButton.setOnAction(e -> {
@@ -224,6 +226,7 @@ public class ProjectWorkspace {
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
                     controller.handleDeleteTeam();
                     clearTeamFields();
+                    teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldTeam = ((ProjectRecord)app.getDataComponent()).getTeamList().indexOf(team);
                     int indexOfNewTeam;
@@ -333,6 +336,14 @@ public class ProjectWorkspace {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         addUpdateStudentButton.setText(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()));
         studentTable.getSelectionModel().clearSelection();
+    }
+    
+    public ObservableList<String> getTeamList(ObservableList<TeamData> teamList) {
+        ObservableList<String> res = FXCollections.observableArrayList();
+        for (TeamData team:teamList){
+            res.add(team.getName());
+        }
+        return res;
     }
     
     public void activateWorkspace(BorderPane appPane) {
@@ -475,8 +486,10 @@ public class ProjectWorkspace {
         lastNameTF.setPromptText(props.getProperty(ProjectManagerProp.LASTNAME_TABLECOLUMN.toString()));
         roleTF.setPromptText(props.getProperty(ProjectManagerProp.ROLE_TABLECOLUMN.toString()));
         
-        String[] teamList = {"A","B","C"};
-        teamCombo = new ComboBox(generateComboBoxText(teamList));
+        //String[] teamList = {"A","B","C"};
+        //teamCombo = new ComboBox(generateComboBoxText(teamList));
+        teamCombo = new ComboBox();
+        teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
         
         // grid
         addEditStudentGrid = new GridPane();
