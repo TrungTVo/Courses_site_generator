@@ -104,6 +104,9 @@ public class CSGFiles {
             );
             csg.getRec().getDataComponent().getRecRecord().add(rec);
         }
+        // parse TA List into Rec TA ComboBox 
+        csg.getRec().getWorkspaceComponent().getTa1Combo().setItems(csg.getRec().getWorkspaceComponent().getTAList(csg.getTA().getDataComponent().getTeachingAssistants()));
+        csg.getRec().getWorkspaceComponent().getTa2Combo().setItems(csg.getRec().getWorkspaceComponent().getTAList(csg.getTA().getDataComponent().getTeachingAssistants()));
         
         // Schedule Data
         JsonObject scheDataJson = jsonObject.getJsonObject("Schedule_Data");
@@ -154,7 +157,8 @@ public class CSGFiles {
             );
             csg.getProject().getDataComponent().getStudentList().add(studentData);
         }
-        
+        // parse Team list into team ComboBox in Student Section
+        csg.getProject().getWorkspaceComponent().getStudentTeamCombobox().setItems(csg.getProject().getWorkspaceComponent().getTeamList(csg.getProject().getDataComponent().getTeamList()));
     }
     
     public static JsonObject loadJSONFile(String jsonFilePath) throws IOException {
