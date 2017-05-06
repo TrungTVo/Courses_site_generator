@@ -174,9 +174,31 @@ public class ProjectWorkspace {
             }
         });
         
+        addUpdateStudentButton.setOnAction(e -> {
+            String fName = firstNameTF.getText();
+            String lName = lastNameTF.getText();
+            String team = null;
+            String role = roleTF.getText();
+            if (teamCombo.getSelectionModel().getSelectedItem() != null) {
+                team = teamCombo.getSelectionModel().getSelectedItem().toString();
+            }
+            StudentData newStudent = new StudentData(fName, lName, team, role);
+            
+            if (addUpdateStudentButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
+                controller.handleAddStudent(newStudent);
+            } else if (addUpdateStudentButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
+                controller.handleEditStudent(newStudent);
+            }
+        });
+        
         deleteTeamButton.setOnAction(e -> {
             controller.handleDeleteTeam();
             clearTeamFields();
+        });
+        
+        deleteStudentButton.setOnAction(e -> {
+            controller.handleDeleteStudent();
+            clearStudentFields();
         });
         
         // handle when clicking on Team Table, parse Info into text fields
@@ -253,7 +275,10 @@ public class ProjectWorkspace {
             Object selectedItem = studentTable.getSelectionModel().getSelectedItem();
             if (selectedItem != null){
                 StudentData student = (StudentData) selectedItem;
-                if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
+                if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE) {
+                    controller.handleDeleteStudent();
+                    clearStudentFields();
+                } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){
                     int indexOfOldStudent = ((ProjectRecord)app.getDataComponent()).getStudentList().indexOf(student);
                     int indexOfNewStudent;
                     StudentData newStudent = null;

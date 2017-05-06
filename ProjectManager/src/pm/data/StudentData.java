@@ -4,7 +4,7 @@ package pm.data;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class StudentData {
+public class StudentData<E extends Comparable<E>> implements Comparable<E> {
     private final StringProperty firstName;
     private final StringProperty lastName;
     private final StringProperty team;
@@ -26,4 +26,9 @@ public class StudentData {
     public void setLastName(String lastName) {this.lastName.set(lastName);}
     public void setTeam(String team) {this.team.set(team);}
     public void setRole(String role) {this.role.set(role);}
+
+    @Override
+    public int compareTo(E student) {
+        return getFirstName().compareTo(((StudentData)student).getFirstName());
+    }
 }

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pm.ProjectManagerApp;
 import pm.data.ProjectRecord;
+import pm.data.StudentData;
 import pm.data.TeamData;
 import properties_manager.PropertiesManager;
 
@@ -55,10 +56,55 @@ public class ProjectController {
         return false;
     }
     
+    public boolean handleAddStudent(StudentData newStudent) {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        // GET DATA
+        ProjectRecord projectRecord = projectManager.getDataComponent();
+        
+        // GET WORKSPACE
+        ProjectWorkspace projectWorkspace = projectManager.getWorkspaceComponent();
+        
+        if (newStudent.getFirstName() == null || newStudent.getFirstName().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_FIRSTNAME_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_FIRSTNAME_MISS_MESS.toString()));
+        } else if (newStudent.getLastName() == null || newStudent.getLastName().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_LASTNAME_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_LASTNAME_MISS_MESS.toString()));
+        } else if (newStudent.getTeam() == null || newStudent.getTeam().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_TEAM_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_TEAM_MISS_MESS.toString()));
+        } else if (newStudent.getRole() == null || newStudent.getRole().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_ROLE_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_ROLE_MISS_MESS.toString()));
+        } else if (isContainStudent(projectRecord.getStudentList(), newStudent.getFirstName(), newStudent.getLastName())) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_UNIQUE.toString()), props.getProperty(AppPropertyType.STUDENT_UNIQUE_MESS.toString()));
+        } else {
+            projectRecord.getStudentList().add(newStudent);
+            projectWorkspace.getStudentFNameTF().clear();
+            projectWorkspace.getStudentLNameTF().clear();
+            projectWorkspace.getStudentTeamCombobox().getSelectionModel().clearSelection();
+            projectWorkspace.getStudentRoleTF().clear();
+            Collections.sort(projectRecord.getStudentList());
+            return true;
+        }
+        return false;
+    }
+    
     public boolean isContainTeam(ObservableList<TeamData> teamList, String teamName) {
         for (TeamData team:teamList){
             if (team.getName().equals(teamName))
                 return true;
+        }
+        return false;
+    }
+    
+    public boolean isContainStudent(ObservableList<StudentData> studentList, String firstName, String lastName) {
+        for (StudentData student:studentList) {
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
+                return true;
+            }
         }
         return false;
     }
@@ -90,7 +136,7 @@ public class ProjectController {
             int indexOfSelectedTeam = projectRecord.getTeamList().indexOf(selectedTeam);
             
             // get clone team list 
-            ObservableList<TeamData> teamList = cloneTeamList(projectRecord.getTeamList());
+            ObservableList<TeamData> teamList = cloneList(projectRecord.getTeamList());
             List<TeamData> checkList = teamList.subList(0, indexOfSelectedTeam);
             checkList.addAll(teamList.subList(indexOfSelectedTeam+1, teamList.size()));
             
@@ -119,10 +165,63 @@ public class ProjectController {
         return false;
     }
     
-    public ObservableList<TeamData> cloneTeamList(ObservableList<TeamData> list) {
-        ObservableList<TeamData> res = FXCollections.observableArrayList();
-        for (TeamData team:list){
-           res.add(team);
+    public boolean handleEditStudent(StudentData newStudent) {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        // GET DATA
+        ProjectRecord projectRecord = projectManager.getDataComponent();
+        
+        // GET WORKSPACE
+        ProjectWorkspace projectWorkspace = projectManager.getWorkspaceComponent();
+        
+        if (newStudent.getFirstName() == null || newStudent.getFirstName().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_FIRSTNAME_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_FIRSTNAME_MISS_MESS.toString()));
+        } else if (newStudent.getLastName() == null || newStudent.getLastName().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_LASTNAME_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_LASTNAME_MISS_MESS.toString()));
+        } else if (newStudent.getTeam() == null || newStudent.getTeam().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_TEAM_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_TEAM_MISS_MESS.toString()));
+        } else if (newStudent.getRole() == null || newStudent.getRole().isEmpty()) {
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            dialog.show(props.getProperty(AppPropertyType.STUDENT_ROLE_MISS.toString()), props.getProperty(AppPropertyType.STUDENT_ROLE_MISS_MESS.toString()));
+        } else {
+            // get current selected Rec in table
+            StudentData selectedStudent = (StudentData) projectWorkspace.getStudentTable().getSelectionModel().getSelectedItem();
+            int indexOfSelectedStudent = projectManager.getDataComponent().getStudentList().indexOf(selectedStudent);
+            
+            ObservableList<StudentData> studentList = cloneList(projectRecord.getStudentList());
+            List<StudentData> checkList = studentList.subList(0, indexOfSelectedStudent);
+            checkList.addAll(studentList.subList(indexOfSelectedStudent+1, studentList.size()));
+            ObservableList<StudentData> tempList = FXCollections.observableArrayList();
+            tempList.addAll(checkList);
+            
+            if (isContainStudent(tempList, newStudent.getFirstName(), newStudent.getLastName())) {
+                AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+                dialog.show(props.getProperty(AppPropertyType.STUDENT_UNIQUE.toString()), props.getProperty(AppPropertyType.STUDENT_UNIQUE_MESS.toString()));
+            } else {
+                projectRecord.getStudentList().remove(indexOfSelectedStudent);
+                selectedStudent.setFirstName(newStudent.getFirstName());
+                selectedStudent.setLastName(newStudent.getLastName());
+                selectedStudent.setTeam(newStudent.getTeam());
+                selectedStudent.setRole(newStudent.getRole());
+                projectRecord.getStudentList().add(newStudent);
+                Collections.sort(projectRecord.getStudentList());
+                
+                // refresh table
+                projectWorkspace.getStudentTable().refresh();
+                projectWorkspace.clearStudentFields();
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public <E> ObservableList<E> cloneList(ObservableList<E> list) {
+        ObservableList<E> res = FXCollections.observableArrayList();
+        for (E i:list){
+           res.add(i);
         }
         return res;
     }
@@ -140,5 +239,20 @@ public class ProjectController {
         
         // refresh table
         projectWorkspace.getTeamTable().refresh();
+    }
+    
+    public void handleDeleteStudent() {
+        // GET WORKSPACE
+        ProjectWorkspace projectWorkspace = projectManager.getWorkspaceComponent();
+        
+        // get current selected Rec in table
+        StudentData selectedStudent = (StudentData) projectWorkspace.getStudentTable().getSelectionModel().getSelectedItem();
+        int indexOfSelectedStudent = projectManager.getDataComponent().getStudentList().indexOf(selectedStudent);
+        
+        // remove selected team
+        projectManager.getDataComponent().getStudentList().remove(indexOfSelectedStudent);
+        
+        // refresh table
+        projectWorkspace.getStudentTable().refresh();
     }
 }

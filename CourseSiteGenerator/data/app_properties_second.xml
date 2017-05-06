@@ -246,6 +246,8 @@
         <property name="STUDENT_TEAM_MISS_MESS"     value="Vui lòng nhập tên đội!"></property>
         <property name="STUDENT_ROLE_MISS"          value="Thiếu vai trò"></property>
         <property name="STUDENT_ROLE_MISS_MESS"     value="Vui lòng nhập vai trò cho học sinh!"></property>
+        <property name="STUDENT_UNIQUE"             value="Lỗi trùng lặp học sinh"></property>
+        <property name="STUDENT_UNIQUE_MESS"        value="Học sinh này đã tồn tại. Vui lòng nhập học sinh khác!"></property>
 
     </property_list>
     <property_options_list>
