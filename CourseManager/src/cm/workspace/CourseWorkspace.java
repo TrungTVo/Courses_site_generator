@@ -16,6 +16,8 @@ import djf.components.AppWorkspaceComponent;
 import static djf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static djf.settings.AppStartupConstants.PATH_IMAGES;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -295,6 +297,7 @@ public class CourseWorkspace {
         explainText = new Label(props.getProperty(CourseManagerProp.EXPLAIN_TEXT.toString()));
         templateDir = new Label();
         templateDirButton = new Button(props.getProperty(CourseManagerProp.TEMPLATE_DIR_BUTTON.toString()));
+        
         siteTitle = new Label(props.getProperty(CourseManagerProp.SITE_TABLE_TITLE.toString()));
         siteTable = new TableView();
         CourseData courseData = (CourseData) app.getDataComponent();
@@ -304,7 +307,9 @@ public class CourseWorkspace {
         // columns
         useCol = new TableColumn(props.getProperty(CourseManagerProp.USE_COLUMN_TEXT.toString()));
         navBarTitleCol = new TableColumn(props.getProperty(CourseManagerProp.NAVBAR_COLUMN_TEXT.toString()));
+        navBarTitleCol.setStyle("-fx-alignment: CENTER-LEFT");
         fileCol = new TableColumn(props.getProperty(CourseManagerProp.FILENAME_COLUMN_TEXT.toString()));
+        fileCol.setStyle("-fx-alignment: CENTER-LEFT");
         scriptCol = new TableColumn(props.getProperty(CourseManagerProp.SCRIPT_COLUMN_TEXT.toString()));
         useCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.1));
         navBarTitleCol.prefWidthProperty().bind(siteTable.widthProperty().multiply(0.3));
@@ -337,10 +342,59 @@ public class CourseWorkspace {
         // combine
         temPlatePane = new VBox();
         temPlatePane.getChildren().addAll(templateTitle, explainText, templateDir, templateDirButton, siteTitle, siteTable);
-        siteTable.maxWidthProperty().bind(temPlatePane.widthProperty().multiply(0.5));
+        siteTable.maxWidthProperty().bind(temPlatePane.widthProperty().multiply(0.7));
         
         temPlatePane.setAlignment(Pos.CENTER);
         
+        
+        templateDirButton.setOnAction(e -> {
+            DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Choose template");
+            File defaultDirectory = new File("./work/templates/");
+            chooser.setInitialDirectory(defaultDirectory);
+            File selectedDirectory = chooser.showDialog(csg.getGUI().getWindow());
+            if (selectedDirectory != null) {
+                if(selectedDirectory.isDirectory()){
+                    File[] filesList = selectedDirectory.listFiles();
+                    List<String> htmlList = new ArrayList<>();
+                    List<String> scriptList = new ArrayList<>();
+                    for (File file:filesList){
+                        String fileName = file.toString().substring(file.toString().lastIndexOf("/")+1);
+                        if (fileName.substring(fileName.length()-2).equals("ml")) {
+                            htmlList.add(fileName);
+                        } else if (fileName.substring(fileName.length()-2).equals("js")) {
+                            scriptList.add(fileName);
+                        }
+                    }
+                    SitePage site = null;
+                    for (String html:htmlList) {
+                        if (html.contains("index")){
+                            site = new SitePage(true, "Home", html, findJSFile(scriptList, "Home"));
+                        } else if (html.contains("syllabus")) {
+                            site = new SitePage(true, "Syllabus", html, findJSFile(scriptList, "Office")+"\n"+findJSFile(scriptList, "Recitation"));
+                        } else if (html.contains("schedule")) {
+                            site = new SitePage(true, "Schedule", html, findJSFile(scriptList, "Schedule"));
+                        } else if (html.contains("hw")) {
+                            site = new SitePage(true, "HWs", html, findJSFile(scriptList, "HW"));
+                        } else if (html.contains("project")) {
+                            site = new SitePage(true, "Projects", html, findJSFile(scriptList, "Project"));
+                        }
+                        if (site != null){
+                            app.getDataComponent().getTemplates().add(site);
+                        }
+                    }
+                }
+            }
+        });
+        
+    }
+    
+    public String findJSFile(List<String> files, String pattern) {
+        for (String file:files){
+            if (file.contains(pattern))
+                return file;
+        }
+        return null;
     }
     
     private void buildPageStyleSection(PropertiesManager props) {
