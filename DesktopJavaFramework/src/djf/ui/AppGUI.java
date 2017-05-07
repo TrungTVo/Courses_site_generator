@@ -99,6 +99,7 @@ public class AppGUI {
     }
     
     public Stage getPrimaryStage() {return primaryStage;}
+    public Button getExportButton() {return exportButton;}
         
     public AppFileController getAppFileController() { return fileController; }
     /**

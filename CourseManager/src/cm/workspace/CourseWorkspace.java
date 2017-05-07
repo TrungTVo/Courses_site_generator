@@ -39,6 +39,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -240,8 +241,22 @@ public class CourseWorkspace {
         exportDirLabel = new Label(props.getProperty(CourseManagerProp.EXPORT_DIR_LABEL.toString()));
         dirLabel = new Label();
         courseExportDirChangeButton = new Button(props.getProperty(CourseManagerProp.CHANGE_BUTTON.toString()));
+        
+        courseExportDirChangeButton.setOnAction(e -> {
+            DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Export");
+            File defaultDirectory = new File("/Users/");
+            chooser.setInitialDirectory(defaultDirectory);
+            File selectedDirectory = chooser.showDialog(csg.getGUI().getWindow());
+            if (selectedDirectory != null) {
+                String path = selectedDirectory.getPath();
+                dirLabel.setText(path);
+                csg.getGUI().getExportButton().setDisable(false);
+            }
+        });
+        
         dirBox = new BorderPane();
-        dirBox.setLeft(dirLabel);
+        dirBox.setCenter(dirLabel);
         dirBox.setRight(courseExportDirChangeButton);
         
         // combine to grid
