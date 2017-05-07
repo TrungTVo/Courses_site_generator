@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import pm.jtps.jTPS_project;
 import properties_manager.PropertiesManager;
 import rm.jtps.jTPS_rec;
 import sm.jtps.jTPS_sche;
@@ -97,6 +98,7 @@ public class CSGWorkspace {
             // get jtps for each tab
             jTPS_rec jtpsRec = csg.getRec().getWorkspaceComponent().getRecController().getJtpsRec();
             jTPS_sche jtpsSche = csg.getSchedule().getWorkspaceComponent().getScheController().getJtpsSche();
+            jTPS_project jtpsProject = csg.getProject().getWorkspaceComponent().getProjectController().getJtpsProject();
             
             // get selected tab
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -118,7 +120,11 @@ public class CSGWorkspace {
                     jtpsSche.doTransaction();
                 }
             } else if (selectedTab.getText().equals(props.getProperty(AppPropertyType.PROJECT_TAB_TEXT.toString()))) {
-                
+                if (undo.match(e)){
+                    jtpsProject.undoTransaction();
+                } else if (redo.match(e)){
+                    jtpsProject.doTransaction();
+                }
             }
         });
     }

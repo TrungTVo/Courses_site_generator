@@ -119,6 +119,7 @@ public class ProjectWorkspace {
     public VBox getStudentVBox() {return studentVBox;}
     
     public BorderPane getWorkspace() {return workspace;}
+    public ProjectController getProjectController() {return controller;}
     
     public ProjectWorkspace(ProjectManagerApp app, CourseSiteGenerator csg) {
         this.app = app;
@@ -158,7 +159,6 @@ public class ProjectWorkspace {
         });
         
         addUpdateTeamButton.setOnAction(e -> {
-            String oldSelectedTeam = teamTable.getSelectionModel().getSelectedItem().getName();
                     
             String teamName = nameTF.getText();
             String teamLink = linkTF.getText();
@@ -176,6 +176,7 @@ public class ProjectWorkspace {
             if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.ADD_BUTTON_TEXT.toString()))) {
                 changed = controller.handleAddTeam(newTeam);
             } else if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
+                String oldSelectedTeam = teamTable.getSelectionModel().getSelectedItem().getName();
                 changed = controller.handleEditTeam(newTeam);
                 if (changed && !oldSelectedTeam.equals(newTeam.getName())){
                     handleUpdateStudentTable(oldSelectedTeam, newTeam.getName());

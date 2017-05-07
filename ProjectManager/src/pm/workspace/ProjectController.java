@@ -11,6 +11,9 @@ import pm.ProjectManagerApp;
 import pm.data.ProjectRecord;
 import pm.data.StudentData;
 import pm.data.TeamData;
+import pm.jtps.AddTeam_transaction;
+import pm.jtps.jTPS_project;
+import pm.jtps.jTPS_project_transaction;
 import properties_manager.PropertiesManager;
 
 /**
@@ -19,10 +22,14 @@ import properties_manager.PropertiesManager;
  */
 public class ProjectController {
     ProjectManagerApp projectManager;
+    jTPS_project jtpsProject;
     
     public ProjectController(ProjectManagerApp projectManager) {
         this.projectManager = projectManager;
+        jtpsProject = new jTPS_project();
     }
+    
+    public jTPS_project getJtpsProject() {return jtpsProject;}
     
     public boolean handleAddTeam(TeamData newTeam) {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -44,12 +51,14 @@ public class ProjectController {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(AppPropertyType.TEAM_UNIQUE.toString()), props.getProperty(AppPropertyType.TEAM_UNIQUE_MESS.toString()));
             } else {
-                projectRecord.getTeamList().add(newTeam);
+                /*projectRecord.getTeamList().add(newTeam);
                 projectWorkspace.getTeamTF().clear();
                 projectWorkspace.getTeamColor().setValue(null);
                 projectWorkspace.getTeamTextColor().setValue(null);
                 projectWorkspace.getTeamLink().clear();
-                Collections.sort(projectRecord.getTeamList());
+                Collections.sort(projectRecord.getTeamList());*/
+                jTPS_project_transaction transation = (jTPS_project_transaction) new AddTeam_transaction(projectManager, newTeam);
+                jtpsProject.addTransaction(transation);
                 return true;
             }
         }
