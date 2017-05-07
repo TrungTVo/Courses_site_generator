@@ -9,6 +9,7 @@ import sm.ScheduleManagerApp;
 import sm.data.ScheduleData;
 import sm.data.ScheduleTopic;
 import sm.jtps.AddSche_transaction;
+import sm.jtps.DeleteSche_transaction;
 import sm.jtps.jTPS_sche;
 import sm.jtps.jTPS_sche_Transaction;
 
@@ -76,10 +77,8 @@ public class ScheduleController {
         
         // get current selected
         ScheduleTopic selectedSche = (ScheduleTopic) scheWorkspace.getScheTable().getSelectionModel().getSelectedItem();
-        int indexOfSelected = scheduleManager.getDataComponent().getScheduleList().indexOf(selectedSche);
-        
-        // remove selected at specified index
-        scheduleManager.getDataComponent().getScheduleList().remove(indexOfSelected);
+        jTPS_sche_Transaction transaction = (jTPS_sche_Transaction) new DeleteSche_transaction(scheduleManager, selectedSche);
+        jtpsSche.addTransaction(transaction);
         
         // refresh table
         scheWorkspace.getScheTable().refresh();

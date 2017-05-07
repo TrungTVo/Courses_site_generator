@@ -348,7 +348,7 @@ public class ScheduleWorkspace {
         linkLabel = new Label(props.getProperty(ScheduleManagerProp.LINK_LABEL.toString()));
         criteriaLabel = new Label(props.getProperty(ScheduleManagerProp.CRITERIA_LABEL.toString()));
         
-        String[] typeList = {"Holiday", "Snow Day", "Reading Day", "Spring Break", "Winter Break"};
+        String[] typeList = {"Lectures","Holiday", "Snow Day", "Reading Day", "Spring Break", "Winter Break"};
         typeCombo = new ComboBox(generateComboBoxText(typeList));
         datePicker = new DatePicker();
         
