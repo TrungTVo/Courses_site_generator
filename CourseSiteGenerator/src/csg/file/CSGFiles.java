@@ -172,6 +172,9 @@ public class CSGFiles {
         }
         // parse Team list into team ComboBox in Student Section
         csg.getProject().getWorkspaceComponent().getStudentTeamCombobox().setItems(csg.getProject().getWorkspaceComponent().getTeamList(csg.getProject().getDataComponent().getTeamList()));
+        
+        // reset jtps of all tabs
+        csg.getRec().getWorkspaceComponent().getRecController().getJtpsRec().reset();
     }
     
     public static JsonObject loadJSONFile(String jsonFilePath) throws IOException {

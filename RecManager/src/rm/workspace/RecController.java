@@ -21,6 +21,7 @@ import rm.data.RecData;
 import rm.data.RecRecord;
 import rm.jtps.AddRec_Transaction;
 import rm.jtps.DeleteRec_Transaction;
+import rm.jtps.UpdateRec_Transaction;
 import rm.jtps.jTPS_rec;
 import rm.jtps.jTPS_rec_Transaction;
 
@@ -132,15 +133,9 @@ public class RecController {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(REC_SECTION_UNIQUE), props.getProperty(REC_SECTION_UNIQUE_MESS));
             } else {
-                recRecord.getRecRecord().remove(indexOfCurrentRec);
-                selectedRec.setSection(newRec.getSection());
-                selectedRec.setInstructor(newRec.getInstructor());
-                selectedRec.setDayTime(newRec.getDayTime());
-                selectedRec.setLocation(newRec.getLocation());
-                selectedRec.setTa1(newRec.getTa1());
-                selectedRec.setTa2(newRec.getTa2());
-                recRecord.getRecRecord().add(indexOfCurrentRec, selectedRec);
-                Collections.sort(recRecord.getRecRecord());
+                RecData oldRec = new RecData(selectedRec.getSection(), selectedRec.getInstructor(), selectedRec.getDayTime(), selectedRec.getLocation(), selectedRec.getTa1(), selectedRec.getTa2());
+                jTPS_rec_Transaction transaction = (jTPS_rec_Transaction) new UpdateRec_Transaction(recManager, selectedRec, newRec, oldRec);
+                jtpsRec.addTransaction(transaction);
                 
                 // refresh table
                 recWorkspace.getRecTable().refresh();
