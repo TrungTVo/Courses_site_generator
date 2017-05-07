@@ -1,5 +1,6 @@
 package tam.workspace;
 
+import csg.CourseSiteGenerator;
 import djf.components.AppDataComponent;
 import djf.components.AppWorkspaceComponent;
 import djf.ui.AppMessageDialogSingleton;
@@ -63,6 +64,8 @@ public class TAWorkspace {
     // For updating  TA ComboBox in Rec tab
     RecWorkspace recWorkspace;
     
+    CourseSiteGenerator csg;
+    
     // jTPS Object
     jTPS jtps;
     
@@ -122,10 +125,11 @@ public class TAWorkspace {
      * the full office hours grid, since it doesn't yet know what
      * the hours will be until a file is loaded or a new one is created.
      */
-    public TAWorkspace(TAManagerApp initApp, RecWorkspace recWorkspace) {
+    public TAWorkspace(TAManagerApp initApp, RecWorkspace recWorkspace, CourseSiteGenerator csg) {
         // KEEP THIS FOR LATER
         app = initApp;
         this.recWorkspace = recWorkspace;
+        this.csg = csg;
         
         jtps = new jTPS();
         
@@ -307,7 +311,7 @@ public class TAWorkspace {
             }
             
             if (added || edited){
-                //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file as been modified
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());         // flag as file as been modified
                 clearButton.setDisable(true);
             }
         });
@@ -349,7 +353,7 @@ public class TAWorkspace {
             }
             
             if (updated){
-                //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as office hours grid has been modified
+                csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());      // flag as office hours grid has been modified
             }
             startBox.getSelectionModel().clearSelection();
             endBox.getSelectionModel().clearSelection();
@@ -363,7 +367,7 @@ public class TAWorkspace {
                 TeachingAssistant ta = (TeachingAssistant)selectedItem;
                 if (ev.getCode() == KeyCode.BACK_SPACE || ev.getCode() == KeyCode.DELETE){
                     controller.handleDeleteTAfromTable(app.getDataComponent(), ta);
-                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());         // flag as file has been modified
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());          // flag as file has been modified
                     taTable.getSelectionModel().clearSelection();                           // clear selected item
                     // Reset TA ComboBox in Recitation tab
                     this.recWorkspace.getTa1Combo().setItems(app.getDataComponent().getTeachingAssistants());
@@ -1013,7 +1017,7 @@ public class TAWorkspace {
                 boolean toggled = false;
                 toggled = controller.handleCellToggle((Pane) e.getSource());
                 if (toggled){
-                    //app.getGUI().getAppFileController().markAsEdited(app.getGUI());     // flag as file has been modified
+                    csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());      // flag as file has been modified
                 }
             });
         }

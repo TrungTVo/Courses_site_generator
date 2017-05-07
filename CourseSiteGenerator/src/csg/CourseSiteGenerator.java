@@ -69,7 +69,7 @@ public class CourseSiteGenerator extends AppTemplate {
         
         // Recitation Data component
         recComponent = new RecManagerApp(courseComponent, this);
-        taComponent = new TAManagerApp(recComponent.getWorkspaceComponent());
+        taComponent = new TAManagerApp(recComponent.getWorkspaceComponent(), this);
         // reset TAComponent for RecComponent (this ensures TA List updated in TAComboBox of Rec Tab
         recComponent.setTaManagerApp(taComponent);
         recComponent.buildAppComponentsHook();

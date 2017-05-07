@@ -1,5 +1,6 @@
 package tam;
 
+import csg.CourseSiteGenerator;
 import java.util.Locale;
 import tam.data.TAData;
 import tam.file.TAFiles;
@@ -26,7 +27,9 @@ public class TAManagerApp {
     TAWorkspace workspaceComponent;
     TAFiles fileComponent;
     TAStyle styleComponent;
+    
     RecWorkspace recWorkspace;
+    CourseSiteGenerator csg;
     
     public TAData getDataComponent() {return dataComponent;}
     public TAWorkspace getWorkspaceComponent() {return workspaceComponent;}
@@ -35,8 +38,9 @@ public class TAManagerApp {
     
     public void setRecWorkspace(RecWorkspace recWorkspace) {this.recWorkspace = recWorkspace;}
     
-    public TAManagerApp(RecWorkspace recWorkspace) {
+    public TAManagerApp(RecWorkspace recWorkspace, CourseSiteGenerator csg) {
         this.recWorkspace = recWorkspace;
+        this.csg = csg;
     }
     
     public void buildAppComponents() {
@@ -44,7 +48,7 @@ public class TAManagerApp {
         // THE WORKSPACE NEEDS THE DATA COMPONENT TO EXIST ALREADY
         // WHEN IT IS CONSTRUCTED, SO BE CAREFUL OF THE ORDER
         dataComponent = new TAData(this);
-        workspaceComponent = new TAWorkspace(this, recWorkspace);
+        workspaceComponent = new TAWorkspace(this, recWorkspace, csg);
         fileComponent = new TAFiles(this);
         styleComponent = new TAStyle(this);
     }

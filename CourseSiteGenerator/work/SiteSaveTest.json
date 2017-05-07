@@ -46,7 +46,7 @@
         "EndHour":"7",
         "Tas":[
             {
-                "Name":"Aiko Chu",
+                "Name":"Hong Phuong",
                 "Email":"hong.phuong@gmail.com",
                 "Undergrad":"yes"
             },
@@ -58,9 +58,24 @@
         ],
         "OfficeHours":[
             {
+                "Day":"MONDAY",
+                "Time":"3_30am",
+                "Name":"Hong Phuong"
+            },
+            {
                 "Day":"WEDNESDAY",
                 "Time":"3_30am",
-                "Name":"Aiko Chu"
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"MONDAY",
+                "Time":"4_00am",
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"MONDAY",
+                "Time":"4_30am",
+                "Name":"Hong Phuong"
             },
             {
                 "Day":"TUESDAY",
@@ -70,17 +85,17 @@
             {
                 "Day":"WEDNESDAY",
                 "Time":"4_30am",
-                "Name":"Aiko Chu"
+                "Name":"Hong Phuong"
             },
             {
                 "Day":"FRIDAY",
                 "Time":"4_30am",
-                "Name":"Aiko Chu"
+                "Name":"Hong Phuong"
             },
             {
                 "Day":"WEDNESDAY",
                 "Time":"5_00am",
-                "Name":"Aiko Chu"
+                "Name":"Hong Phuong"
             }
         ]
     },
