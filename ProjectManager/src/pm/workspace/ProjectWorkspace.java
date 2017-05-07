@@ -158,6 +158,8 @@ public class ProjectWorkspace {
         });
         
         addUpdateTeamButton.setOnAction(e -> {
+            String oldSelectedTeam = teamTable.getSelectionModel().getSelectedItem().getName();
+                    
             String teamName = nameTF.getText();
             String teamLink = linkTF.getText();
             String color = null;
@@ -175,6 +177,11 @@ public class ProjectWorkspace {
                 changed = controller.handleAddTeam(newTeam);
             } else if (addUpdateTeamButton.getText().equals(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()))) {
                 changed = controller.handleEditTeam(newTeam);
+                if (changed && !oldSelectedTeam.equals(newTeam.getName())){
+                    handleUpdateStudentTable(oldSelectedTeam, newTeam.getName());
+                    // refresh student table
+                    studentTable.refresh();
+                }
             }
             teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
             if (changed){
@@ -372,6 +379,14 @@ public class ProjectWorkspace {
             // PUT THE WORKSPACE IN THE GUI
             appPane.setCenter(workspace);
             workspaceActivated = true;
+        }
+    }
+    
+    public void handleUpdateStudentTable(String oldTeamName, String updatedTeamName) {
+        for (StudentData student:app.getDataComponent().getStudentList()){
+            if (student.getTeam().equals(oldTeamName)){
+                student.setTeam(updatedTeamName);
+            }
         }
     }
     
