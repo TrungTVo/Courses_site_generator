@@ -171,8 +171,8 @@ public class RecWorkspace {
                 instructorTF.setText(rec.getInstructor());
                 dayTimeTF.setText(rec.getDayTime());
                 locationTF.setText(rec.getLocation());
-                ta1Combo.setValue(rec.getTa1());
-                ta2Combo.setValue(rec.getTa2());
+                ta1Combo.getSelectionModel().select(getTAIndex(ta1Combo.getItems(), rec.getTa1()));
+                ta2Combo.getSelectionModel().select(getTAIndex(ta2Combo.getItems(), rec.getTa2()));
                 
                 // Change button text to Edit
                 addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
@@ -212,8 +212,8 @@ public class RecWorkspace {
                         instructorTF.setText(newRec.getInstructor());
                         dayTimeTF.setText(newRec.getDayTime());
                         locationTF.setText(newRec.getLocation());
-                        ta1Combo.setValue(newRec.getTa1());
-                        ta2Combo.setValue(newRec.getTa2());
+                        ta1Combo.getSelectionModel().select(getTAIndex(ta1Combo.getItems(), newRec.getTa1()));
+                        ta2Combo.getSelectionModel().select(getTAIndex(ta2Combo.getItems(), newRec.getTa2()));
                         
                         // Change button text to Edit
                         addUpdateButton.setText(props.getProperty(AppPropertyType.UPDATE_BUTTON.toString()));
@@ -221,6 +221,15 @@ public class RecWorkspace {
                 }
             }
         });
+    }
+    
+    public int getTAIndex(ObservableList<String> taList, String taName) {
+        for (int i=0; i<taList.size(); i++){
+            if (taList.get(i).equals(taName)) {
+                return i;
+            }
+        }
+        return -1;
     }
     
     public void clearFields() {

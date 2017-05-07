@@ -45,6 +45,8 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Callback;
+import rm.data.RecData;
+import rm.data.RecRecord;
 import rm.workspace.RecWorkspace;
 import tam.file.TAFiles;
 import tam.jtps.TimeFrameChange_Transaction;
@@ -302,12 +304,17 @@ public class TAWorkspace {
                     ta.setEmail(emailTextField.getText());
                     edited = false;
                     edited = controller.handleEditTA(ta,oldName,oldEmail);
+                    
+                    // update Recitation table that TA involves
+                    if (edited){
+                        handleUpdateRecTable(oldName, ta.getName());
+                    }
                 }
             }
             // Reset TA ComboBox in Recitation tab
             if (app.getDataComponent() != null && recWorkspace != null) {
-                this.recWorkspace.getTa1Combo().setItems(app.getDataComponent().getTeachingAssistants());
-                this.recWorkspace.getTa2Combo().setItems(app.getDataComponent().getTeachingAssistants());
+                this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
+                this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
             }
             
             if (added || edited){
@@ -415,6 +422,23 @@ public class TAWorkspace {
     }
     
     public BorderPane getWorkspace() {return workspace;}
+    
+    public void handleUpdateRecTable(String oldTAName, String updatedTAName) {
+        // get Rec data
+        RecRecord recRecord = csg.getRec().getDataComponent();
+        
+        for (RecData rec:recRecord.getRecRecord()) {
+            if (rec.getTa1().equals(oldTAName)) {
+                rec.setTa1(updatedTAName);
+            } 
+            if (rec.getTa2().equals(oldTAName)) {
+                rec.setTa2(updatedTAName);
+            }
+        }
+        
+        // refresh table
+        recWorkspace.getRecTable().refresh();
+    }
     
     public void handleBothStartEnd(TAData taData){
         // CONVERT NEW START TIME TO 0-24 HOUR UNIT

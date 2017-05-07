@@ -362,11 +362,11 @@ public class CSGFiles {
                                     .add("ScheduleList", scheArray).build();
             return scheJson;
         } else {
-            if (csg.getSchedule().getWorkspaceComponent().getStartPicker().getValue() != null) {
+            if (csg.getSchedule().getWorkspaceComponent().getStartPicker().getValue() == null) {
                 PropertiesManager props = PropertiesManager.getPropertiesManager();
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(AppPropertyType.SCHEDULE_START_MISS), props.getProperty(AppPropertyType.SCHEDULE_START_MISS_MESS));
-            } else if (csg.getSchedule().getWorkspaceComponent().getEndPicker().getValue() != null) {
+            } else if (csg.getSchedule().getWorkspaceComponent().getEndPicker().getValue() == null) {
                 PropertiesManager props = PropertiesManager.getPropertiesManager();
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(AppPropertyType.SCHEDULE_END_MISS), props.getProperty(AppPropertyType.SCHEDULE_END_MISS_MESS));
