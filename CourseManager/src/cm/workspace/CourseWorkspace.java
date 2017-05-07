@@ -35,6 +35,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -282,6 +283,35 @@ public class CourseWorkspace {
         instructorHomeTF.minWidthProperty().bind(infoBox.widthProperty().multiply(0.4));
         infoBox.getChildren().addAll(infoTitle, infoGridPane);
         infoBox.setAlignment(Pos.CENTER);
+        
+        subjectCombo.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        semesterCombo.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        numberCombo.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        yearCombo.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        titleTF.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        instructorNameTF.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        instructorHomeTF.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
     }
     
     public ObservableList<String> generateComboBoxText(String[] list) {
