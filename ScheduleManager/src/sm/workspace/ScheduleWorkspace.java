@@ -110,6 +110,7 @@ public class ScheduleWorkspace {
     public GridPane getAddEditGrid() {return addEditGrid;}
     
     public BorderPane getWorkspace() {return workspace;}
+    public ScheduleController getScheController() {return scheController;}
     
     public void parseDate(String startDate, String endDate){
         if (!startDate.isEmpty() && startDate != null)

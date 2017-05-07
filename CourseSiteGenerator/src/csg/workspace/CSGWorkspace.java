@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import properties_manager.PropertiesManager;
 import rm.jtps.jTPS_rec;
+import sm.jtps.jTPS_sche;
 
 public class CSGWorkspace {
     CourseSiteGenerator csg;
@@ -91,9 +92,11 @@ public class CSGWorkspace {
         KeyCombination undo = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
         KeyCombination redo = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
         
+        // PERFORM UNDO/REDO AT CURRENT SELECTED TAB
         csg.getGUI().getAppPane().setOnKeyReleased(e -> {
             // get jtps for each tab
             jTPS_rec jtpsRec = csg.getRec().getWorkspaceComponent().getRecController().getJtpsRec();
+            jTPS_sche jtpsSche = csg.getSchedule().getWorkspaceComponent().getScheController().getJtpsSche();
             
             // get selected tab
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -109,7 +112,11 @@ public class CSGWorkspace {
                     jtpsRec.doTransaction();
                 }
             } else if (selectedTab.getText().equals(props.getProperty(AppPropertyType.SCHEDULE_TAB_TEXT.toString()))) {
-                
+                if (undo.match(e)){
+                    jtpsSche.undoTransaction();
+                } else if (redo.match(e)){
+                    jtpsSche.doTransaction();
+                }
             } else if (selectedTab.getText().equals(props.getProperty(AppPropertyType.PROJECT_TAB_TEXT.toString()))) {
                 
             }
