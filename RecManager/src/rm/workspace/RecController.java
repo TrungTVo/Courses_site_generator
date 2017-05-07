@@ -20,6 +20,7 @@ import rm.RecManagerApp;
 import rm.data.RecData;
 import rm.data.RecRecord;
 import rm.jtps.AddRec_Transaction;
+import rm.jtps.DeleteRec_Transaction;
 import rm.jtps.jTPS_rec;
 import rm.jtps.jTPS_rec_Transaction;
 
@@ -177,10 +178,9 @@ public class RecController {
         
         // get current selected Rec in table
         RecData selectedRec = (RecData)recWorkspace.getRecTable().getSelectionModel().getSelectedItem();
-        int indexOfCurrentRec = recManager.getDataComponent().getRecRecord().indexOf(selectedRec);
         
-        // REMOVE SELECTED REC
-        recManager.getDataComponent().getRecRecord().remove(indexOfCurrentRec);
+        jTPS_rec_Transaction transaction = (jTPS_rec_Transaction) new DeleteRec_Transaction(recManager, selectedRec);
+        jtpsRec.addTransaction(transaction);
         
         // UDPATE TABLE
         recWorkspace.getRecTable().refresh();
