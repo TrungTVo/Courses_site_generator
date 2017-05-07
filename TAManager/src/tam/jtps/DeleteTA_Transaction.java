@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import tam.jtps.jTPS_Transaction;
 import tam.data.TAData;
 import tam.data.TeachingAssistant;
 

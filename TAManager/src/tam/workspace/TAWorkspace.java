@@ -52,6 +52,7 @@ import tam.file.TAFiles;
 import tam.jtps.TimeFrameChange_Transaction;
 import tam.jtps.jTPS;
 import tam.jtps.jTPS_Transaction;
+
 /**
  * This class serves as the workspace component for the TA Manager
  * application. It provides all the user interface controls in 
@@ -527,7 +528,7 @@ public class TAWorkspace {
             jtps.setMostRecentTransaction(jtps.getMostRecentTransaction()-1);
             
             // push transaction to stack
-            jTPS_Transaction transaction = new TimeFrameChange_Transaction(oldOfficeHours,newOfficeHours,finalStartHour,finalStartMin,finalEndHour,finalEndMin,oldStartHour,oldStartMin,oldEndHour,oldEndMin, taData, this);
+            jTPS_Transaction transaction = (jTPS_Transaction) new TimeFrameChange_Transaction(oldOfficeHours,newOfficeHours,finalStartHour,finalStartMin,finalEndHour,finalEndMin,oldStartHour,oldStartMin,oldEndHour,oldEndMin, taData, this);
             jtps.addTransaction(transaction);
         }
     }
@@ -625,7 +626,7 @@ public class TAWorkspace {
         }
         
         // put transaction into stack
-        jTPS_Transaction transaction = new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
+        jTPS_Transaction transaction = (jTPS_Transaction) new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
         jtps.addTransaction(transaction);
         
         // REBUILD THE GRID
@@ -660,7 +661,7 @@ public class TAWorkspace {
         }
         
         // put transaction into stack
-        jTPS_Transaction transaction = new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
+        jTPS_Transaction transaction = (jTPS_Transaction) new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
         jtps.addTransaction(transaction);
         
         // REBUILD THE GRID
@@ -716,7 +717,7 @@ public class TAWorkspace {
         }
         
         // put transaction into stack
-        jTPS_Transaction transaction = new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
+        jTPS_Transaction transaction = (jTPS_Transaction) new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
         jtps.addTransaction(transaction);
         
         // REBUILD THE GRID
@@ -758,7 +759,7 @@ public class TAWorkspace {
         }
         
         // put transaction into stack
-        jTPS_Transaction transaction = new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
+        jTPS_Transaction transaction = (jTPS_Transaction) new TimeFrameChange_Transaction(clonedOfficeHours, cloneOfficeHours(taData.getOfficeHours()), taData.getStartHour(), taData.getStartMin(), taData.getEndHour(), taData.getEndMin(),  oldStartHour, oldStartMin, oldEndHour, oldEndMin, taData, this);
         jtps.addTransaction(transaction);
         
         // REBUILD THE GRID

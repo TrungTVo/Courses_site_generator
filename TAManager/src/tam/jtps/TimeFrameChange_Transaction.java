@@ -9,6 +9,7 @@ package tam.jtps;
 
 import java.util.HashMap;
 import javafx.beans.property.StringProperty;
+import tam.jtps.jTPS_Transaction;
 import tam.data.TAData;
 import tam.workspace.TAWorkspace;
 

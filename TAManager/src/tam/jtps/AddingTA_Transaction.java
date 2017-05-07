@@ -9,6 +9,7 @@ package tam.jtps;
 
 import java.util.Collections;
 import javafx.collections.ObservableList;
+import tam.jtps.jTPS_Transaction;
 import tam.data.TeachingAssistant;
 
 public class AddingTA_Transaction implements jTPS_Transaction {
