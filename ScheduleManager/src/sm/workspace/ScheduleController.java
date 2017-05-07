@@ -10,6 +10,7 @@ import sm.data.ScheduleData;
 import sm.data.ScheduleTopic;
 import sm.jtps.AddSche_transaction;
 import sm.jtps.DeleteSche_transaction;
+import sm.jtps.UpdateSche_transaction;
 import sm.jtps.jTPS_sche;
 import sm.jtps.jTPS_sche_Transaction;
 
@@ -57,17 +58,16 @@ public class ScheduleController {
     }
     
     public void handleUpdateSchedule(ScheduleTopic selectedTopic, ScheduleTopic editTopic) {
-        selectedTopic.setType(editTopic.getType());
-        selectedTopic.setDate(editTopic.getDate());
-        selectedTopic.setTime(editTopic.getTime());
-        selectedTopic.setTitle(editTopic.getTitle());
-        selectedTopic.setTopic(editTopic.getTopic());
-        selectedTopic.setLink(editTopic.getLink());
-        selectedTopic.setCriteria(editTopic.getCriteria());
+        ScheduleTopic oldTopic = new ScheduleTopic(selectedTopic.getType(),
+                                                    selectedTopic.getDate(),
+                                                    selectedTopic.getTime(),
+                                                    selectedTopic.getTitle(),
+                                                    selectedTopic.getTopic(),
+                                                    selectedTopic.getLink(), selectedTopic.getCriteria());
+        jTPS_sche_Transaction transaction = (jTPS_sche_Transaction) new UpdateSche_transaction(scheduleManager, selectedTopic, oldTopic, editTopic);
+        jtpsSche.addTransaction(transaction);
         
-        Collections.sort(scheduleManager.getDataComponent().getScheduleList());
         ScheduleWorkspace scheWorkspace = scheduleManager.getWorkspaceComponent();
-        scheWorkspace.getScheTable().refresh();
         scheWorkspace.clearFields();
     }
     
