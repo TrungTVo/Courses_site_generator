@@ -112,8 +112,10 @@ public class ScheduleWorkspace {
     public BorderPane getWorkspace() {return workspace;}
     
     public void parseDate(String startDate, String endDate){
-        startPicker.setValue(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-        endPicker.setValue(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        if (!startDate.isEmpty() && startDate != null)
+            startPicker.setValue(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        if (!endDate.isEmpty() && endDate != null)
+            endPicker.setValue(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")));
     }
     
     public ScheduleWorkspace(ScheduleManagerApp app, CourseSiteGenerator csg) {
@@ -281,6 +283,16 @@ public class ScheduleWorkspace {
         endFriLabel = new Label(props.getProperty(ScheduleManagerProp.END_FRI_LABEL.toString()));
         startPicker = new DatePicker();
         endPicker = new DatePicker();
+        
+        // if start date clicked, flag edited
+        startPicker.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
+        
+        // if end date is clicked, flag edited
+        endPicker.setOnAction(e -> {
+            csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+        });
         
         calendarHBox.getChildren().addAll(startMonLabel, startPicker, endFriLabel, endPicker);
         calendarWrapBox.getChildren().addAll(calendarTitle, calendarHBox);

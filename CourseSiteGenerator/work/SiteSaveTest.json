@@ -2,139 +2,135 @@
 {
     "Course_Data":{
         "Subject":"CSE",
-        "Number":"219",
-        "Semester":"Fall",
-        "Year":"2017",
-        "Title":"Computer Science III",
-        "Instructor_Name":"Richard McKenna",
-        "Instructor_Home":"http://www3.cs.stonybrook.edu/~richard/",
+        "Number":"308",
+        "Semester":"Spring",
+        "Year":"2016",
+        "Title":"Software Engineering",
+        "Instructor_Name":"McKenna",
+        "Instructor_Home":"Link",
         "Site_Templates":[
             {
-                "Use":"no",
-                "NavBar_Title":"navBar 1",
-                "File_Name":"file 1",
-                "Script":"script 1"
+                "Use":"yes",
+                "NavBar_Title":"HWs",
+                "File_Name":"hws.html",
+                "Script":"HWsBuilder.js"
             },
             {
                 "Use":"yes",
-                "NavBar_Title":"navBar 2",
-                "File_Name":"file 2",
-                "Script":"script 2"
+                "NavBar_Title":"Home",
+                "File_Name":"index.html",
+                "Script":"HomeBuilder.js"
             },
             {
                 "Use":"yes",
-                "NavBar_Title":"navBar 3",
-                "File_Name":"file 3",
-                "Script":"script 3"
+                "NavBar_Title":"Projects",
+                "File_Name":"projects.html",
+                "Script":"ProjectsBuilder.js"
+            },
+            {
+                "Use":"yes",
+                "NavBar_Title":"Schedule",
+                "File_Name":"schedule.html",
+                "Script":"ScheduleBuilder.js"
+            },
+            {
+                "Use":"yes",
+                "NavBar_Title":"Syllabus",
+                "File_Name":"syllabus.html",
+                "Script":"OfficeHoursGridBuilder.js\nRecitationsBuilder.js"
             }
         ]
     },
     "TA_Data":{
-        "StartHour":"0",
-        "EndHour":"23",
+        "StartHour":"3",
+        "EndHour":"7",
         "Tas":[
             {
-                "Name":"TA 1",
-                "Email":"Email TA 1",
+                "Name":"Hong Phuong",
+                "Email":"hong.phuong@gmail.com",
                 "Undergrad":"yes"
             },
             {
-                "Name":"TA 2",
-                "Email":"Email TA 2",
-                "Undergrad":"no"
-            },
-            {
-                "Name":"TA 3",
-                "Email":"Email TA 3",
+                "Name":"Trung Vo",
+                "Email":"trung.vo@sbu.edu",
                 "Undergrad":"yes"
             }
         ],
         "OfficeHours":[
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 1"
+                "Day":"WEDNESDAY",
+                "Time":"3_30am",
+                "Name":"Hong Phuong"
             },
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 2"
+                "Day":"TUESDAY",
+                "Time":"4_30am",
+                "Name":"Trung Vo"
             },
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 3"
+                "Day":"WEDNESDAY",
+                "Time":"4_30am",
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"FRIDAY",
+                "Time":"4_30am",
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"WEDNESDAY",
+                "Time":"5_00am",
+                "Name":"Hong Phuong"
             }
         ]
     },
     "Recitation_Data":[
         {
             "Section":"R01",
-            "Instructor":"Instructor 1",
-            "Day/Time":"DayTime 1",
-            "Location":"Location 1",
+            "Instructor":"Bender",
+            "Day/Time":"Thur",
+            "Location":"Old CS",
             "Ta1":"Trung Vo",
-            "Ta2":"Hong Phuong"
+            "Ta2":"Trung Vo"
         },
         {
             "Section":"R02",
-            "Instructor":"Instructor 2",
-            "Day/Time":"DayTime 2",
-            "Location":"Location 2",
-            "Ta1":"Trung Vo",
-            "Ta2":"Hong Phuong"
+            "Instructor":"McKenna",
+            "Day/Time":"Friday",
+            "Location":"New CS",
+            "Ta1":"Hong Phuong",
+            "Ta2":"Trung Vo"
         }
     ],
     "Schedule_Data":{
-        "Start":"03/22/2012",
-        "End":"04/20/2013",
+        "Start":"05/14/2017",
+        "End":"06/03/2017",
         "ScheduleList":[
             {
-                "Type":"Holiday",
-                "Date":"03/25/2012",
-                "Time":"Time 1",
-                "Title":"Title 1",
-                "Topic":"Topic 1",
-                "Link":"Link 1",
-                "Criteria":"Criteria 1"
-            },
-            {
-                "Type":"Holiday",
-                "Date":"03/25/2012",
-                "Time":"Time 2",
-                "Title":"Title 2",
-                "Topic":"Topic 2",
-                "Link":"Link 2",
-                "Criteria":"Criteria 2"
+                "Type":"Snow Day",
+                "Date":"05/17/2017",
+                "Time":"3:00pm",
+                "Title":"Holiday - No Classes",
+                "Topic":"No Classes",
+                "Link":"link",
+                "Criteria":"criteria"
             }
         ]
     },
     "Team_Data":[
         {
-            "Name":"A",
-            "Color":"b31a1a",
-            "TextColor":"334db3",
-            "Link":"Link 1"
-        },
-        {
-            "Name":"A",
-            "Color":"b31a1a",
-            "TextColor":"334db3",
-            "Link":"Link 2"
+            "Name":"Game",
+            "Color":"0xcccc33ff",
+            "TextColor":"0xb399ffff",
+            "Link":"link"
         }
     ],
     "Student_Data":[
         {
-            "First_Name":"fName 1",
-            "Last_Name":"lName 1",
-            "Team":"B",
-            "Role":"Role 1"
-        },
-        {
-            "First_Name":"fName 2",
-            "Last_Name":"lName 2",
-            "Team":"B",
-            "Role":"Role 2"
+            "First_Name":"Tung ",
+            "Last_Name":"MTP",
+            "Team":"Game",
+            "Role":"Singer"
         }
     ]
 }

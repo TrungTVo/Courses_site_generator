@@ -1,140 +1,143 @@
 
 {
-    "Course Data":{
+    "Course_Data":{
         "Subject":"CSE",
-        "Number":"219",
+        "Number":"380",
         "Semester":"Fall",
-        "Year":"2017",
-        "Title":"Computer Science III",
-        "Instructor Name":"Richard McKenna",
-        "Instructor Home":"http://www3.cs.stonybrook.edu/~richard/",
-        "Site Templates":[
+        "Year":"2016",
+        "Title":"Game Programming",
+        "Instructor_Name":"McKenna",
+        "Instructor_Home":"Link",
+        "Site_Templates":[
             {
-                "Use":"no",
-                "NavBar Title":"navBar 1",
-                "File Name":"file 1",
-                "Script":"script 1"
+                "Use":"yes",
+                "NavBar_Title":"HWs",
+                "File_Name":"hws.html",
+                "Script":"HWsBuilder.js"
             },
             {
                 "Use":"yes",
-                "NavBar Title":"navBar 2",
-                "File Name":"file 2",
-                "Script":"script 2"
+                "NavBar_Title":"Home",
+                "File_Name":"index.html",
+                "Script":"HomeBuilder.js"
             },
             {
                 "Use":"yes",
-                "NavBar Title":"navBar 3",
-                "File Name":"file 3",
-                "Script":"script 3"
+                "NavBar_Title":"Projects",
+                "File_Name":"projects.html",
+                "Script":"ProjectsBuilder.js"
+            },
+            {
+                "Use":"yes",
+                "NavBar_Title":"Schedule",
+                "File_Name":"schedule.html",
+                "Script":"ScheduleBuilder.js"
+            },
+            {
+                "Use":"yes",
+                "NavBar_Title":"Syllabus",
+                "File_Name":"syllabus.html",
+                "Script":"OfficeHoursGridBuilder.js\nRecitationsBuilder.js"
             }
         ]
     },
-    "TA Data":{
-        "StartHour":"0",
-        "EndHour":"23",
+    "TA_Data":{
+        "StartHour":"3",
+        "EndHour":"7",
         "Tas":[
             {
-                "Name":"TA 1",
-                "Email":"Email TA 1",
+                "Name":"Hong Phuong",
+                "Email":"phuong@gmail.com",
                 "Undergrad":"yes"
             },
             {
-                "Name":"TA 2",
-                "Email":"Email TA 2",
-                "Undergrad":"no"
-            },
-            {
-                "Name":"TA 3",
-                "Email":"Email TA 3",
+                "Name":"Trung Vo",
+                "Email":"trung@gmail.com",
                 "Undergrad":"yes"
             }
         ],
         "OfficeHours":[
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 1"
+                "Day":"TUESDAY",
+                "Time":"3_30am",
+                "Name":"Hong Phuong"
             },
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 2"
+                "Day":"FRIDAY",
+                "Time":"3_30am",
+                "Name":"Hong Phuong"
             },
             {
-                "Day":"MONDAY",
-                "Time":"8_00am",
-                "Name":"TA 3"
+                "Day":"TUESDAY",
+                "Time":"4_00am",
+                "Name":"Trung Vo"
+            },
+            {
+                "Day":"TUESDAY",
+                "Time":"5_00am",
+                "Name":"Trung Vo"
+            },
+            {
+                "Day":"TUESDAY",
+                "Time":"5_00am",
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"WEDNESDAY",
+                "Time":"5_00am",
+                "Name":"Trung Vo"
+            },
+            {
+                "Day":"WEDNESDAY",
+                "Time":"5_00am",
+                "Name":"Hong Phuong"
+            },
+            {
+                "Day":"THURSDAY",
+                "Time":"5_30am",
+                "Name":"Hong Phuong"
             }
         ]
     },
-    "Recitation Data":[
+    "Recitation_Data":[
         {
             "Section":"R01",
-            "Instructor":"Instructor 1",
-            "Day/Time":"DayTime 1",
-            "Location":"Location 1",
+            "Instructor":"McKenna",
+            "Day/Time":"Friday",
+            "Location":"Old CS",
             "Ta1":"Trung Vo",
-            "Ta2":"Hong Phuong"
-        },
-        {
-            "Section":"R02",
-            "Instructor":"Instructor 2",
-            "Day/Time":"DayTime 2",
-            "Location":"Location 2",
-            "Ta1":"Trung Vo",
-            "Ta2":"Hong Phuong"
+            "Ta2":"Trung Vo"
         }
     ],
-    "Schedule Data":{
-        "Start":"03/22/2012",
-        "End":"04/20/2013",
+    "Schedule_Data":{
+        "Start":"05/07/2017",
+        "End":"05/27/2017",
         "ScheduleList":[
             {
                 "Type":"Holiday",
-                "Date":"03/25/2012",
-                "Time":"Time 1",
-                "Title":"Title 1",
-                "Topic":"Topic 1",
-                "Link":"Link 1",
-                "Criteria":"Criteria 1"
-            },
-            {
-                "Type":"Holiday",
-                "Date":"03/25/2012",
-                "Time":"Time 2",
-                "Title":"Title 2",
-                "Topic":"Topic 2",
-                "Link":"Link 2",
-                "Criteria":"Criteria 2"
+                "Date":"05/10/2017",
+                "Time":"Frid",
+                "Title":"Test Driven",
+                "Topic":"Dont know",
+                "Link":"",
+                "Criteria":""
             }
         ]
     },
-    "Team Data":[
+    "Team_Data":[
         {
-            "Name":"A",
-            "Color":"b31a1a",
-            "TextColor":"334db3",
-            "Link":"Link 1"
-        },
-        {
-            "Name":"A",
-            "Color":"b31a1a",
-            "TextColor":"334db3",
-            "Link":"Link 2"
+            "Name":"caksa",
+            "Color":"0xffb380ff",
+            "TextColor":"0x334db3ff",
+            "Link":"Link"
         }
     ],
-    "Student Data":[
+    "Student_Data":[
         {
-            "First Name":"fName 1",
-            "Last Name":"lName 1",
-            "Team":"B",
-            "Role":"Role 1"
-        },
-        {
-            "First Name":"fName 2",
-            "Last Name":"lName 2",
-            "Team":"B",
-            "Role":"Role 2"
+            "First_Name":"Aiko",
+            "Last_Name":"Phuong",
+            "Team":"caksa",
+            "Role":"Designer"
         }
     ]
 }

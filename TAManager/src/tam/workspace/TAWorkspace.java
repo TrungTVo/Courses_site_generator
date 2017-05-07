@@ -966,9 +966,7 @@ public class TAWorkspace {
         // THEN THE TIME AND TA CELLS
         // clone OfficeHours first
         HashMap<String, StringProperty> clonedOfficeHours = new HashMap<>();
-        if (updatingTime){
-            clonedOfficeHours = cloneOfficeHours(dataComponent.getOfficeHours());
-        }
+        clonedOfficeHours = cloneOfficeHours(dataComponent.getOfficeHours());
         
         int row = 1;
         for (int i = dataComponent.getStartHour(); i < dataComponent.getEndHour(); i++) {
@@ -992,13 +990,11 @@ public class TAWorkspace {
             while (col < 7) {
                 addCellToGrid(dataComponent, officeHoursGridTACellPanes, officeHoursGridTACellLabels, col, row);
                 addCellToGrid(dataComponent, officeHoursGridTACellPanes, officeHoursGridTACellLabels, col, row+1);
-                if (updatingTime){
-                    if (clonedOfficeHours.containsKey(String.valueOf(col) + "_" + String.valueOf(row))) {
-                        dataComponent.getCellTextProperty(col, row).setValue(clonedOfficeHours.get(String.valueOf(col) + "_" + String.valueOf(row)).getValue());
-                    }
-                    if (clonedOfficeHours.containsKey(String.valueOf(col) + "_" + String.valueOf(row + 1))){
-                        dataComponent.getCellTextProperty(col, row + 1).setValue(clonedOfficeHours.get(String.valueOf(col) + "_" + String.valueOf(row + 1)).getValue());
-                    }
+                if (clonedOfficeHours.containsKey(String.valueOf(col) + "_" + String.valueOf(row))) {
+                    dataComponent.getCellTextProperty(col, row).setValue(clonedOfficeHours.get(String.valueOf(col) + "_" + String.valueOf(row)).getValue());
+                }
+                if (clonedOfficeHours.containsKey(String.valueOf(col) + "_" + String.valueOf(row + 1))){
+                    dataComponent.getCellTextProperty(col, row + 1).setValue(clonedOfficeHours.get(String.valueOf(col) + "_" + String.valueOf(row + 1)).getValue());
                 }
                 col++;
             }

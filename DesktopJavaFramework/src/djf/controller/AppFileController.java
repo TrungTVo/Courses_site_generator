@@ -227,20 +227,19 @@ public class AppFileController {
 	//TestSave.saveData(csg, selectedFile.getPath());
         
         // SAVE
-        csg.getCSGFiles().saveData(csg, selectedFile.getPath());
-  
-	// MARK IT AS SAVED
-	currentWorkFile = selectedFile;
-	saved = true;
-	
-	// TELL THE USER THE FILE HAS BEEN SAVED
-	AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
-	PropertiesManager props = PropertiesManager.getPropertiesManager();
-        dialog.show(props.getProperty(SAVE_COMPLETED_TITLE),props.getProperty(SAVE_COMPLETED_MESSAGE));
-		    
-	// AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
-	// THE APPROPRIATE CONTROLS
-	app.getGUI().updateToolbarControls(saved);	
+        saved = csg.getCSGFiles().saveData(csg, selectedFile.getPath());
+        
+	if (saved){
+            currentWorkFile = selectedFile;
+            // TELL THE USER THE FILE HAS BEEN SAVED
+            AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            dialog.show(props.getProperty(SAVE_COMPLETED_TITLE),props.getProperty(SAVE_COMPLETED_MESSAGE));
+
+            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
+            // THE APPROPRIATE CONTROLS
+            app.getGUI().updateToolbarControls(saved);
+        }	
     }
     
     /**
@@ -381,10 +380,12 @@ public class AppFileController {
                 
                 csg.getCSGWorkspace().resetWorkspace();
                 csg.getTA().getWorkspaceComponent().reloadWorkspace(csg.getTA().getDataComponent());
+                csg.getTA().getWorkspaceComponent().resetWorkspace();
                 
                 // LOAD THE FILE INTO THE DATA
                 //app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
                 csg.getCSGFiles().loadData(csg, selectedFile.getAbsolutePath());
+                csg.getTA().getWorkspaceComponent().reloadWorkspace(csg.getTA().getDataComponent());
                 
 		// MAKE SURE THE WORKSPACE IS ACTIVATED
 		//app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
@@ -395,6 +396,7 @@ public class AppFileController {
                 currentWorkFile = selectedFile;
                 app.getGUI().updateToolbarControls(saved);
             } catch (Exception e) {
+                e.printStackTrace();
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(LOAD_ERROR_TITLE), props.getProperty(LOAD_ERROR_MESSAGE));
             }

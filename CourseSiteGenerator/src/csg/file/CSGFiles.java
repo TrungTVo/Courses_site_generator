@@ -4,18 +4,31 @@ package csg.file;
 import cm.data.CourseData;
 import cm.data.SitePage;
 import csg.CourseSiteGenerator;
+import djf.settings.AppPropertyType;
+import djf.ui.AppMessageDialogSingleton;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.ObservableList;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonWriter;
+import javax.json.JsonWriterFactory;
+import javax.json.stream.JsonGenerator;
 import pm.data.StudentData;
 import pm.data.TeamData;
+import properties_manager.PropertiesManager;
 import rm.data.RecData;
 import sm.data.ScheduleTopic;
 import tam.data.TeachingAssistant;
@@ -170,7 +183,7 @@ public class CSGFiles {
 	return json;
     }
     
-    public void saveData(CourseSiteGenerator csg, String filePath) throws IOException {
+    public boolean saveData(CourseSiteGenerator csg, String filePath) throws IOException {
         JsonObject courseJson = null;
         JsonObject taJson = null;
         JsonArray recJsonArray = null;
@@ -178,25 +191,46 @@ public class CSGFiles {
         JsonArray teamJsonArray = null;
         JsonArray studentJsonArray = null;
         
-        saveCourse(courseJson);
-        saveTA(taJson);
-        saveRec(recJsonArray);
-        saveSche(scheJson);
-        saveTeam(teamJsonArray);
-        saveStudent(studentJsonArray);
+        courseJson = saveCourse(courseJson);
+        taJson = saveTA(taJson);
+        recJsonArray = saveRec(recJsonArray);
+        scheJson = saveSche(scheJson);
+        teamJsonArray = saveTeam(teamJsonArray);
+        studentJsonArray = saveStudent(studentJsonArray);
         
-        // PUT EVERYTHING INTO A SINGLE JSON OBJECT
-        JsonObject dataJson = Json.createObjectBuilder()
-                                .add("Course_Data", courseJson)
-                                .add("TA_Data", taJson)
-                                .add("Recitation_Data", recJsonArray)
-                                .add("Schedule_Data", scheJson)
-                                .add("Team_Data", teamJsonArray)
-                                .add("Student_Data", studentJsonArray).build();
-        
+        if (courseJson != null && taJson != null && recJsonArray != null && scheJson != null && teamJsonArray != null && studentJsonArray != null) {
+            // PUT EVERYTHING INTO A SINGLE JSON OBJECT
+            JsonObject dataJson = Json.createObjectBuilder()
+                                    .add("Course_Data", courseJson)
+                                    .add("TA_Data", taJson)
+                                    .add("Recitation_Data", recJsonArray)
+                                    .add("Schedule_Data", scheJson)
+                                    .add("Team_Data", teamJsonArray)
+                                    .add("Student_Data", studentJsonArray).build();
+
+            // AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
+            Map<String, Object> properties = new HashMap<>(1);
+            properties.put(JsonGenerator.PRETTY_PRINTING, true);
+            JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+            StringWriter sw = new StringWriter();
+            JsonWriter jsonWriter = writerFactory.createWriter(sw);
+            jsonWriter.writeObject(dataJson);
+            jsonWriter.close();
+
+            // INIT THE WRITER
+            OutputStream os = new FileOutputStream(filePath);
+            JsonWriter jsonFileWriter = Json.createWriter(os);
+            jsonFileWriter.writeObject(dataJson);
+            String prettyPrinted = sw.toString();
+            PrintWriter pw = new PrintWriter(filePath);
+            pw.write(prettyPrinted);
+            pw.close();
+            return true;
+        }
+        return false;
     }
     
-    public void saveCourse(JsonObject courseJson) {
+    public JsonObject saveCourse(JsonObject courseJson) {
         // SAVE DATA FOR COURSE TAB
         csg.getCourse().getDataComponent().setSubject(csg.getCourse().getWorkspaceComponent().getSubjectCombo().getSelectionModel().getSelectedItem().toString());
         csg.getCourse().getDataComponent().setNumber(csg.getCourse().getWorkspaceComponent().getNumberCombo().getSelectionModel().getSelectedItem().toString());
@@ -237,9 +271,10 @@ public class CSGFiles {
                                 .add("Instructor_Home", courseData.getInstructorHome())
                                 .add("Site_Templates", siteTemplatesArray)
                                 .build();
+        return courseJson;
     }
     
-    public void saveTA(JsonObject taJsonObject) {
+    public JsonObject saveTA(JsonObject taJsonObject) {
         JsonArrayBuilder taArrayBuilder = Json.createArrayBuilder();
 	ObservableList<TeachingAssistant> tas = csg.getTA().getDataComponent().getTeachingAssistants();
 	for (TeachingAssistant ta : tas) {
@@ -273,44 +308,74 @@ public class CSGFiles {
                 .add("Tas", undergradTAsArray)
                 .add("OfficeHours", timeSlotsArray)
 		.build();
+        return taJsonObject;
     }
     
-    public void saveRec(JsonArray recArray) {
+    public JsonArray saveRec(JsonArray recArray) {
         JsonArrayBuilder recArrayBuilder = Json.createArrayBuilder();
         for (RecData rec:csg.getRec().getDataComponent().getRecRecord()) {
+            String ta1 = (rec.getTa1() != null)? rec.getTa1():"";
+            String ta2 = (rec.getTa2() != null)? rec.getTa2():"";
+            String instructor = (rec.getInstructor() != null)? rec.getInstructor():"";
             JsonObject recJson = Json.createObjectBuilder()
                                     .add("Section", rec.getSection())
-                                    .add("Instructor", rec.getInstructor())
+                                    .add("Instructor", instructor)
                                     .add("Day/Time", rec.getDayTime())
                                     .add("Location", rec.getLocation())
-                                    .add("Ta1", rec.getTa1())
-                                    .add("Ta2", rec.getTa2()).build();
+                                    .add("Ta1", ta1)
+                                    .add("Ta2", ta2).build();
             recArrayBuilder.add(recJson);
         }
         recArray = recArrayBuilder.build();
+        return recArray;
     }
     
-    public void saveSche(JsonObject scheJson){
+    public JsonObject saveSche(JsonObject scheJson){
         JsonArrayBuilder scheArrayBuilder = Json.createArrayBuilder();
         for (ScheduleTopic topic:csg.getSchedule().getDataComponent().getScheduleList()){
+            String time = (topic.getTime() != null)? topic.getTime():"none";
+            String title = (topic.getTitle() != null)? topic.getTitle():"none";
+            String topicField = (topic.getTopic() != null)? topic.getTopic():"none";
+            String link = (topic.getLink() != null)? topic.getLink():"none";
+            String criteria = (topic.getCriteria() != null)? topic.getCriteria():"none";
             JsonObject topicJson = Json.createObjectBuilder()
                                     .add("Type", topic.getType())
                                     .add("Date", topic.getDate())
-                                    .add("Time", topic.getTime())
-                                    .add("Title", topic.getTitle())
-                                    .add("Topic", topic.getTopic())
-                                    .add("Link", topic.getLink())
-                                    .add("Criteria", topic.getCriteria()).build();
+                                    .add("Time", time)
+                                    .add("Title", title)
+                                    .add("Topic", topicField)
+                                    .add("Link", link)
+                                    .add("Criteria", criteria).build();
             scheArrayBuilder.add(topicJson);
         }
         JsonArray scheArray = scheArrayBuilder.build();
-        scheJson = Json.createObjectBuilder()
-                                .add("Start", csg.getSchedule().getDataComponent().getStart())
-                                .add("End", csg.getSchedule().getDataComponent().getEnd())
-                                .add("ScheduleList", scheArray).build();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        
+        // check if start Mon and end Fri is chosen or not
+        if (csg.getSchedule().getWorkspaceComponent().getStartPicker().getValue() != null && csg.getSchedule().getWorkspaceComponent().getEndPicker().getValue() != null){
+            csg.getSchedule().getDataComponent().setStart(formatter.format(csg.getSchedule().getWorkspaceComponent().getStartPicker().getValue()));
+            csg.getSchedule().getDataComponent().setEnd(formatter.format(csg.getSchedule().getWorkspaceComponent().getEndPicker().getValue()));
+            scheJson = Json.createObjectBuilder()
+                                    .add("Start", csg.getSchedule().getDataComponent().getStart())
+                                    .add("End", csg.getSchedule().getDataComponent().getEnd())
+                                    .add("ScheduleList", scheArray).build();
+            return scheJson;
+        } else {
+            if (csg.getSchedule().getWorkspaceComponent().getStartPicker().getValue() != null) {
+                PropertiesManager props = PropertiesManager.getPropertiesManager();
+                AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+                dialog.show(props.getProperty(AppPropertyType.SCHEDULE_START_MISS), props.getProperty(AppPropertyType.SCHEDULE_START_MISS_MESS));
+            } else if (csg.getSchedule().getWorkspaceComponent().getEndPicker().getValue() != null) {
+                PropertiesManager props = PropertiesManager.getPropertiesManager();
+                AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
+                dialog.show(props.getProperty(AppPropertyType.SCHEDULE_END_MISS), props.getProperty(AppPropertyType.SCHEDULE_END_MISS_MESS));
+            }
+            return null;
+        }
     }
     
-    public void saveTeam(JsonArray teamJsonArray) {
+    public JsonArray saveTeam(JsonArray teamJsonArray) {
         JsonArrayBuilder teamArrayBuilder = Json.createArrayBuilder();
         for (TeamData team:csg.getProject().getDataComponent().getTeamList()){
             JsonObject teamJson = Json.createObjectBuilder()
@@ -321,9 +386,10 @@ public class CSGFiles {
             teamArrayBuilder.add(teamJson);
         }
         teamJsonArray = teamArrayBuilder.build();
+        return teamJsonArray;
     }
     
-    public void saveStudent(JsonArray studentJsonArray) {
+    public JsonArray saveStudent(JsonArray studentJsonArray) {
         JsonArrayBuilder studentArrayBuilder = Json.createArrayBuilder();
         for (StudentData student:csg.getProject().getDataComponent().getStudentList()){
             JsonObject studentJson = Json.createObjectBuilder()
@@ -334,6 +400,7 @@ public class CSGFiles {
             studentArrayBuilder.add(studentJson);
         }
         studentJsonArray = studentArrayBuilder.build();
+        return studentJsonArray;
     }
     
     public void saveDataForExport(CourseSiteGenerator csg) throws IOException {
