@@ -19,6 +19,9 @@ import properties_manager.PropertiesManager;
 import rm.RecManagerApp;
 import rm.data.RecData;
 import rm.data.RecRecord;
+import rm.jtps.AddRec_Transaction;
+import rm.jtps.jTPS_rec;
+import rm.jtps.jTPS_rec_Transaction;
 
 /**
  *
@@ -26,10 +29,14 @@ import rm.data.RecRecord;
  */
 public class RecController {
     RecManagerApp recManager;
+    jTPS_rec jtpsRec;
     
     public RecController(RecManagerApp recManager){
         this.recManager = recManager;
+        jtpsRec = new jTPS_rec();
     }
+    
+    public jTPS_rec getJtpsRec() {return jtpsRec;}
     
     public boolean handleAddRec(RecData newRec){
         // WE'LL NEED THIS IN CASE WE NEED TO DISPLAY ANY ERROR MESSAGES
@@ -52,6 +59,7 @@ public class RecController {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(REC_SECTION_UNIQUE), props.getProperty(REC_SECTION_UNIQUE_MESS));
             } else {
+                /*
                 recRecord.getRecRecord().add(newRec);
                 RecWorkspace workspace = recManager.getWorkspaceComponent();
                 workspace.getSectionTF().clear();
@@ -61,7 +69,10 @@ public class RecController {
                 workspace.getTa1Combo().getSelectionModel().clearSelection();
                 workspace.getTa2Combo().getSelectionModel().clearSelection();
                 
-                Collections.sort(recRecord.getRecRecord());
+                Collections.sort(recRecord.getRecRecord()); */
+                jTPS_rec_Transaction transaction = (jTPS_rec_Transaction) new AddRec_Transaction(recManager, newRec);
+                jtpsRec.addTransaction(transaction);
+                
                 return true;
             }
         }

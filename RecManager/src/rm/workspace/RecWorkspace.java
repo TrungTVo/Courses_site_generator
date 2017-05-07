@@ -99,6 +99,7 @@ public class RecWorkspace {
     public TableView getRecTable() {return recTable;}
     
     public BorderPane getWorkspace() {return workspace;}
+    public RecController getRecController() {return recController;}
     
     public RecWorkspace(RecManagerApp initApp, TAManagerApp taApp, CourseSiteGenerator csg) {
         app = initApp;
@@ -224,13 +225,6 @@ public class RecWorkspace {
             }
         });
         
-        // UNDO/REDO
-        KeyCombination undo = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
-        KeyCombination redo = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
-        
-        csg.getGUI().getAppPane().setOnKeyReleased(e -> {
-            
-        });
     }
     
     public int getTAIndex(ObservableList<String> taList, String taName) {
