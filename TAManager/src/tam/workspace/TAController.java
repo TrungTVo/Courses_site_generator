@@ -144,7 +144,7 @@ public class TAController {
             // push current state into stack before transaction
             //TeachingAssistant newEditTA = ((AddingTA_Transaction)((TAWorkspace)app.getWorkspaceComponent()).getJTPS().getTransactions().get(((TAWorkspace)app.getWorkspaceComponent()).getJTPS().getMostRecentTransaction())).getTA();           // get the new TA that just has been edited (added) from the AddingTA_Transaction 
             
-            jTPS_Transaction transaction = (jTPS_Transaction) new EditTA_Transaction(workspace, data, oldName, oldEmail, nameToUpdate, emailToUpdate, edited);
+            jTPS_Transaction transaction = (jTPS_Transaction) new EditTA_Transaction(workspace, data, oldName, oldEmail, nameToUpdate, emailToUpdate, edited, app, app.getWorkspaceComponent().getRecWorkspace());
             ((TAWorkspace)app.getWorkspaceComponent()).getJTPS().addTransaction(transaction);
             /*
             StringBuilder cellTextStr;
@@ -200,7 +200,7 @@ public class TAController {
     public void handleDeleteTAfromTable(TAData data, TeachingAssistant ta) {
         
         // push current state into stack before transaction
-        jTPS_Transaction transaction = (jTPS_Transaction) new DeleteTA_Transaction(ta.getName(), ta.getEmail(), data.getOfficeHours(), data);
+        jTPS_Transaction transaction = (jTPS_Transaction) new DeleteTA_Transaction(ta.getName(), ta.getEmail(), data.getOfficeHours(), data, app, app.getWorkspaceComponent().getRecWorkspace());
         ((TAWorkspace)app.getWorkspaceComponent()).getJTPS().addTransaction(transaction);
         
         /*

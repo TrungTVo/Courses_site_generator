@@ -290,7 +290,7 @@ public class TAData {
         // ADD THE TA
         if (!containsTA(initName, teachingAssistants)) {
             // push current state into stack before transaction
-            jTPS_Transaction transaction = (jTPS_Transaction) new AddingTA_Transaction(ta.getName(), ta.getEmail(), teachingAssistants);
+            jTPS_Transaction transaction = (jTPS_Transaction) new AddingTA_Transaction(ta.getName(), ta.getEmail(), teachingAssistants, app, app.getWorkspaceComponent().getRecWorkspace());
             ((TAWorkspace)app.getWorkspaceComponent()).getJTPS().addTransaction(transaction);
             //teachingAssistants.add(ta);
         }

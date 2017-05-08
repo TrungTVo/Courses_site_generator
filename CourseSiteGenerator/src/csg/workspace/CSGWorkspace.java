@@ -21,6 +21,7 @@ import pm.jtps.jTPS_project;
 import properties_manager.PropertiesManager;
 import rm.jtps.jTPS_rec;
 import sm.jtps.jTPS_sche;
+import tam.jtps.jTPS;
 
 public class CSGWorkspace {
     CourseSiteGenerator csg;
@@ -99,14 +100,19 @@ public class CSGWorkspace {
             jTPS_rec jtpsRec = csg.getRec().getWorkspaceComponent().getRecController().getJtpsRec();
             jTPS_sche jtpsSche = csg.getSchedule().getWorkspaceComponent().getScheController().getJtpsSche();
             jTPS_project jtpsProject = csg.getProject().getWorkspaceComponent().getProjectController().getJtpsProject();
+            jTPS jTPSTA = csg.getTA().getWorkspaceComponent().getJTPS();
             
             // get selected tab
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
             
             if (selectedTab.getText().equals(props.getProperty(AppPropertyType.COURSE_TAB_TEXT.toString()))) {
-                
+                // not serving
             } else if (selectedTab.getText().equals(props.getProperty(AppPropertyType.TA_TAB_TEXT.toString()))) {
-                
+                if (undo.match(e)){
+                    jTPSTA.undoTransaction();
+                } else if (redo.match(e)){
+                    jTPSTA.doTransaction();
+                }
             } else if (selectedTab.getText().equals(props.getProperty(AppPropertyType.REC_TAB_TEXT.toString()))) {
                 if (undo.match(e)){
                     jtpsRec.undoTransaction();

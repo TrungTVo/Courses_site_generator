@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
+import rm.workspace.RecWorkspace;
+import tam.TAManagerApp;
 import tam.jtps.jTPS_Transaction;
 import tam.data.TAData;
 import tam.data.TeachingAssistant;
@@ -25,8 +27,10 @@ public class EditTA_Transaction implements jTPS_Transaction {
     private boolean edited;
     private HashMap<String, StringProperty> clonedOfficeHours = new HashMap<>();
     private TAWorkspace workspace;
+    RecWorkspace recWorkspace;
+    TAManagerApp taManager;
     
-    public EditTA_Transaction(TAWorkspace workspace, TAData taData, String oldName, String oldEmail, String nameToUpdate, String emailToUpdate, boolean edited){
+    public EditTA_Transaction(TAWorkspace workspace, TAData taData, String oldName, String oldEmail, String nameToUpdate, String emailToUpdate, boolean edited, TAManagerApp taManager, RecWorkspace recWorkspace){
         this.taData = taData;
         this.workspace = workspace;
         this.oldName = oldName;
@@ -35,6 +39,8 @@ public class EditTA_Transaction implements jTPS_Transaction {
         this.emailToUpdate = emailToUpdate;
         this.edited = edited;
         clonedOfficeHours = clone(taData.getOfficeHours());
+        this.taManager = taManager;
+        this.recWorkspace = recWorkspace;
     }
 
     @Override
@@ -70,6 +76,14 @@ public class EditTA_Transaction implements jTPS_Transaction {
         workspace.getEmailTextField().clear();
         workspace.getAddButton().setText("Add TA");
         workspace.getTATable().getSelectionModel().clearSelection();
+        
+        // update rec table
+        taManager.getWorkspaceComponent().handleUpdateRecTable(oldName, nameToUpdate);
+        recWorkspace.getRecTable().refresh();
+        
+        // Reset TA ComboBox in Recitation tab
+        this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
+        this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
     }
 
     @Override
@@ -103,6 +117,14 @@ public class EditTA_Transaction implements jTPS_Transaction {
         workspace.getEmailTextField().clear();
         workspace.getAddButton().setText("Add TA");
         workspace.getTATable().getSelectionModel().clearSelection();
+        
+        // update rec table
+        taManager.getWorkspaceComponent().handleUpdateRecTable(nameToUpdate, oldName);
+        recWorkspace.getRecTable().refresh();
+        
+        // Reset TA ComboBox in Recitation tab
+        this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
+        this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
     }
     
     public HashMap<String, StringProperty> clone(HashMap<String,StringProperty> officeHours){

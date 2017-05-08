@@ -128,6 +128,9 @@ public class TAWorkspace {
      * the full office hours grid, since it doesn't yet know what
      * the hours will be until a file is loaded or a new one is created.
      */
+    
+    public RecWorkspace getRecWorkspace() {return recWorkspace;}
+    
     public TAWorkspace(TAManagerApp initApp, RecWorkspace recWorkspace, CourseSiteGenerator csg) {
         // KEEP THIS FOR LATER
         app = initApp;
@@ -313,10 +316,10 @@ public class TAWorkspace {
                 }
             }
             // Reset TA ComboBox in Recitation tab
-            if (app.getDataComponent() != null && recWorkspace != null) {
-                this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
-                this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
-            }
+            /*if (app.getDataComponent() != null && recWorkspace != null) {
+            this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
+            this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
+            }*/
             
             if (added || edited){
                 csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());         // flag as file as been modified
@@ -377,9 +380,9 @@ public class TAWorkspace {
                     controller.handleDeleteTAfromTable(app.getDataComponent(), ta);
                     csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());          // flag as file has been modified
                     taTable.getSelectionModel().clearSelection();                           // clear selected item
-                    // Reset TA ComboBox in Recitation tab
-                    this.recWorkspace.getTa1Combo().setItems(app.getDataComponent().getTeachingAssistants());
-                    this.recWorkspace.getTa2Combo().setItems(app.getDataComponent().getTeachingAssistants());
+                    /*// Reset TA ComboBox in Recitation tab
+                    this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));
+                    this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(app.getDataComponent().getTeachingAssistants()));*/
                 } else if (ev.getCode() == KeyCode.UP || ev.getCode() == KeyCode.DOWN) {
                     int indexOfOldTA = ((TAData)app.getDataComponent()).getTeachingAssistants().indexOf(ta);
                     int indexOfNewTA;

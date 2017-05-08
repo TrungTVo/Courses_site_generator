@@ -9,18 +9,25 @@ package tam.jtps;
 
 import java.util.Collections;
 import javafx.collections.ObservableList;
+import rm.workspace.RecWorkspace;
+import tam.TAManagerApp;
 import tam.jtps.jTPS_Transaction;
 import tam.data.TeachingAssistant;
 
 public class AddingTA_Transaction implements jTPS_Transaction {
+    TAManagerApp taManager;
+    RecWorkspace recWorkspace;
     private String taName;
     private String taEmail;
     private ObservableList<TeachingAssistant> taList;
     
-    public AddingTA_Transaction(String taName, String taEmail, ObservableList<TeachingAssistant> taList){
+    
+    public AddingTA_Transaction(String taName, String taEmail, ObservableList<TeachingAssistant> taList, TAManagerApp taManager, RecWorkspace recWorkspace){
         this.taName = taName;
         this.taEmail = taEmail;
         this.taList = taList;
+        this.taManager = taManager;
+        this.recWorkspace = recWorkspace;
     }
     
     @Override
@@ -38,6 +45,11 @@ public class AddingTA_Transaction implements jTPS_Transaction {
         
         taList.add(new TeachingAssistant(taName, taEmail, true));
         Collections.sort(taList);
+        // Reset TA ComboBox in Recitation tab
+        if (taManager.getDataComponent() != null && recWorkspace != null) {
+            this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
+            this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
+        }
     }
 
     @Override
@@ -51,6 +63,11 @@ public class AddingTA_Transaction implements jTPS_Transaction {
         }
         if (indexOfOldTA != -1){
             taList.remove(indexOfOldTA);
+        }
+        // Reset TA ComboBox in Recitation tab
+        if (taManager.getDataComponent() != null && recWorkspace != null) {
+            this.recWorkspace.getTa1Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
+            this.recWorkspace.getTa2Combo().setItems(recWorkspace.getTAList(taManager.getDataComponent().getTeachingAssistants()));
         }
     }
        
