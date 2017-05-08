@@ -11,7 +11,9 @@ import pm.ProjectManagerApp;
 import pm.data.ProjectRecord;
 import pm.data.StudentData;
 import pm.data.TeamData;
+import pm.jtps.AddStudent_transaction;
 import pm.jtps.AddTeam_transaction;
+import pm.jtps.DeleteTeam_transaction;
 import pm.jtps.jTPS_project;
 import pm.jtps.jTPS_project_transaction;
 import properties_manager.PropertiesManager;
@@ -90,12 +92,14 @@ public class ProjectController {
             AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
             dialog.show(props.getProperty(AppPropertyType.STUDENT_UNIQUE.toString()), props.getProperty(AppPropertyType.STUDENT_UNIQUE_MESS.toString()));
         } else {
-            projectRecord.getStudentList().add(newStudent);
+            /*projectRecord.getStudentList().add(newStudent);
             projectWorkspace.getStudentFNameTF().clear();
             projectWorkspace.getStudentLNameTF().clear();
             projectWorkspace.getStudentTeamCombobox().getSelectionModel().clearSelection();
             projectWorkspace.getStudentRoleTF().clear();
-            Collections.sort(projectRecord.getStudentList());
+            Collections.sort(projectRecord.getStudentList());*/
+            jTPS_project_transaction transation = (jTPS_project_transaction) new AddStudent_transaction(projectManager, newStudent);
+            jtpsProject.addTransaction(transation);
             return true;
         }
         return false;
@@ -241,13 +245,24 @@ public class ProjectController {
         
         // get current selected Rec in table
         TeamData selectedTeam = (TeamData) projectWorkspace.getTeamTable().getSelectionModel().getSelectedItem();
-        int indexOfSelectedTeam = projectManager.getDataComponent().getTeamList().indexOf(selectedTeam);
         
-        // remove selected team
-        projectManager.getDataComponent().getTeamList().remove(indexOfSelectedTeam);
+        jTPS_project_transaction transation = (jTPS_project_transaction) new DeleteTeam_transaction(projectManager, selectedTeam);
+        jtpsProject.addTransaction(transation);
         
         // refresh table
         projectWorkspace.getTeamTable().refresh();
+        
+        // update student table 
+        //updateStudentTableWithTeamDeleted(projectManager.getDataComponent().getStudentList(), selectedTeam.getName(), "");
+        //projectManager.getWorkspaceComponent().getStudentTable().refresh();
+    }
+    
+    public void updateStudentTableWithTeamDeleted(ObservableList<StudentData> studentList, String check, String updated) {
+        for (StudentData student:studentList) {
+            if (student.getTeam().equals(check)){
+                student.setTeam(updated);
+            }
+        }
     }
     
     public void handleDeleteStudent() {

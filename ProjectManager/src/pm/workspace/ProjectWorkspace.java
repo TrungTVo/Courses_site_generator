@@ -184,7 +184,7 @@ public class ProjectWorkspace {
                     studentTable.refresh();
                 }
             }
-            teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
+            //teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
             if (changed){
                 // mark as edited, update tool bar
                 csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
@@ -251,7 +251,7 @@ public class ProjectWorkspace {
                 if (e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.DELETE){
                     controller.handleDeleteTeam();
                     clearTeamFields();
-                    teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
+                    //teamCombo.setItems(getTeamList(app.getDataComponent().getTeamList()));
                     // mark as edited, update tool bar
                     csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
                 } else if (e.getCode() == KeyCode.UP || e.getCode() == KeyCode.DOWN){

@@ -11,32 +11,27 @@ import pm.workspace.ProjectWorkspace;
  *
  * @author trungvo
  */
-public class AddTeam_transaction implements jTPS_project_transaction {
+public class DeleteTeam_transaction implements jTPS_project_transaction {
     ProjectManagerApp proManager;
-    TeamData newTeam;
+    TeamData selectedTeam;
     
-    public AddTeam_transaction(ProjectManagerApp proManager, TeamData newTeam) {
+    public DeleteTeam_transaction(ProjectManagerApp proManager, TeamData selectedTeam) {
         this.proManager = proManager;
-        this.newTeam = newTeam;
+        this.selectedTeam = selectedTeam;
     }
-
+    
     @Override
     public void doTransaction() {
-        // get data
-        ProjectRecord projectRecord = proManager.getDataComponent();
+        int indexOfSelectedTeam = proManager.getDataComponent().getTeamList().indexOf(selectedTeam);
         
-        // get workspace
-        ProjectWorkspace projectWorkspace = proManager.getWorkspaceComponent();
+        // remove selected team
+        proManager.getDataComponent().getTeamList().remove(indexOfSelectedTeam);
         
-        projectRecord.getTeamList().add(newTeam);
-        projectWorkspace.getTeamTF().clear();
-        projectWorkspace.getTeamColor().setValue(null);
-        projectWorkspace.getTeamTextColor().setValue(null);
-        projectWorkspace.getTeamLink().clear();
-        Collections.sort(projectRecord.getTeamList());
+        // refresh table
+        proManager.getWorkspaceComponent().getTeamTable().refresh();
         
-        // update back student table
-        proManager.getWorkspaceComponent().getProjectController().updateStudentTableWithTeamDeleted(projectRecord.getStudentList(), "", newTeam.getName());
+        // update student table 
+        proManager.getWorkspaceComponent().getProjectController().updateStudentTableWithTeamDeleted(proManager.getDataComponent().getStudentList(), selectedTeam.getName(), "");
         proManager.getWorkspaceComponent().getStudentTable().refresh();
         
         // update team ComboBox in Student section
@@ -49,18 +44,17 @@ public class AddTeam_transaction implements jTPS_project_transaction {
         // get data
         ProjectRecord projectRecord = proManager.getDataComponent();
         
-        projectRecord.getTeamList().remove(newTeam);
-        Collections.sort(projectRecord.getTeamList());
-        proManager.getWorkspaceComponent().getTeamTable().refresh();
+        projectRecord.getTeamList().add(selectedTeam);
         
-        // update student table 
-        proManager.getWorkspaceComponent().getProjectController().updateStudentTableWithTeamDeleted(proManager.getDataComponent().getStudentList(), newTeam.getName(), "");
+        Collections.sort(projectRecord.getTeamList());
+        
+        // update back student table
+        proManager.getWorkspaceComponent().getProjectController().updateStudentTableWithTeamDeleted(projectRecord.getStudentList(), "", selectedTeam.getName());
         proManager.getWorkspaceComponent().getStudentTable().refresh();
         
         // update team ComboBox in Student section
         ProjectWorkspace proWorkspace = proManager.getWorkspaceComponent();
         proManager.getWorkspaceComponent().getStudentTeamCombobox().setItems(proWorkspace.getTeamList(proManager.getDataComponent().getTeamList()));
     }
-    
     
 }
