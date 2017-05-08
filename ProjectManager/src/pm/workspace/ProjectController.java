@@ -15,6 +15,7 @@ import pm.jtps.AddStudent_transaction;
 import pm.jtps.AddTeam_transaction;
 import pm.jtps.DeleteStudent_transaction;
 import pm.jtps.DeleteTeam_transaction;
+import pm.jtps.UpdateStudent_transaction;
 import pm.jtps.jTPS_project;
 import pm.jtps.jTPS_project_transaction;
 import properties_manager.PropertiesManager;
@@ -215,13 +216,17 @@ public class ProjectController {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(AppPropertyType.STUDENT_UNIQUE.toString()), props.getProperty(AppPropertyType.STUDENT_UNIQUE_MESS.toString()));
             } else {
-                projectRecord.getStudentList().remove(indexOfSelectedStudent);
-                selectedStudent.setFirstName(newStudent.getFirstName());
+                //projectRecord.getStudentList().remove(indexOfSelectedStudent);
+                /*selectedStudent.setFirstName(newStudent.getFirstName());
                 selectedStudent.setLastName(newStudent.getLastName());
                 selectedStudent.setTeam(newStudent.getTeam());
-                selectedStudent.setRole(newStudent.getRole());
-                projectRecord.getStudentList().add(newStudent);
-                Collections.sort(projectRecord.getStudentList());
+                selectedStudent.setRole(newStudent.getRole());*/
+                //projectRecord.getStudentList().add(newStudent);
+                //Collections.sort(projectRecord.getStudentList());
+                
+                StudentData oldStudent = new StudentData(selectedStudent.getFirstName(), selectedStudent.getLastName(), selectedStudent.getTeam(), selectedStudent.getRole());
+                jTPS_project_transaction transation = (jTPS_project_transaction) new UpdateStudent_transaction(projectManager, selectedStudent, oldStudent, newStudent);
+                jtpsProject.addTransaction(transation);
                 
                 // refresh table
                 projectWorkspace.getStudentTable().refresh();
