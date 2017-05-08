@@ -16,6 +16,7 @@ import pm.jtps.AddTeam_transaction;
 import pm.jtps.DeleteStudent_transaction;
 import pm.jtps.DeleteTeam_transaction;
 import pm.jtps.UpdateStudent_transaction;
+import pm.jtps.UpdateTeam_transaction;
 import pm.jtps.jTPS_project;
 import pm.jtps.jTPS_project_transaction;
 import properties_manager.PropertiesManager;
@@ -163,12 +164,17 @@ public class ProjectController {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();
                 dialog.show(props.getProperty(AppPropertyType.TEAM_UNIQUE.toString()), props.getProperty(AppPropertyType.TEAM_UNIQUE_MESS.toString()));
             } else {
-                projectRecord.getTeamList().remove(indexOfSelectedTeam);
-                selectedTeam.setName(newTeam.getName());
+                //projectRecord.getTeamList().remove(indexOfSelectedTeam);
+                /*selectedTeam.setName(newTeam.getName());
                 selectedTeam.setColor(newTeam.getColor());
                 selectedTeam.setTextColor(newTeam.getTextColor());
-                selectedTeam.setLink(newTeam.getLink());
-                projectRecord.getTeamList().add(selectedTeam);
+                selectedTeam.setLink(newTeam.getLink());*/
+                //projectRecord.getTeamList().add(selectedTeam);
+                
+                TeamData oldTeam = new TeamData(selectedTeam.getName(), selectedTeam.getColor(), selectedTeam.getTextColor(), selectedTeam.getLink());
+                jTPS_project_transaction transation = (jTPS_project_transaction) new UpdateTeam_transaction(projectManager, selectedTeam, oldTeam, newTeam);
+                jtpsProject.addTransaction(transation);
+                
                 Collections.sort(projectRecord.getTeamList());
                 
                 // refresh table
