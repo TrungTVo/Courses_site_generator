@@ -13,6 +13,7 @@ import pm.data.StudentData;
 import pm.data.TeamData;
 import pm.jtps.AddStudent_transaction;
 import pm.jtps.AddTeam_transaction;
+import pm.jtps.DeleteStudent_transaction;
 import pm.jtps.DeleteTeam_transaction;
 import pm.jtps.jTPS_project;
 import pm.jtps.jTPS_project_transaction;
@@ -271,10 +272,9 @@ public class ProjectController {
         
         // get current selected Rec in table
         StudentData selectedStudent = (StudentData) projectWorkspace.getStudentTable().getSelectionModel().getSelectedItem();
-        int indexOfSelectedStudent = projectManager.getDataComponent().getStudentList().indexOf(selectedStudent);
         
-        // remove selected team
-        projectManager.getDataComponent().getStudentList().remove(indexOfSelectedStudent);
+        jTPS_project_transaction transation = (jTPS_project_transaction) new DeleteStudent_transaction(projectManager, selectedStudent);
+        jtpsProject.addTransaction(transation);
         
         // refresh table
         projectWorkspace.getStudentTable().refresh();
