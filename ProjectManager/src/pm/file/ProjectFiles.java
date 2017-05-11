@@ -109,9 +109,9 @@ public class ProjectFiles {
         for (TeamData team:teamList){
             JsonObject teamJson = Json.createObjectBuilder()
                                     .add(JSON_NAME, team.getName())
-                                    .add(JSON_RED, Integer.parseInt(team.getColor().substring(0,2),16))
-                                    .add(JSON_GREEN, Integer.parseInt(team.getColor().substring(2, 4), 16))
-                                    .add(JSON_BLUE, Integer.parseInt(team.getColor().substring(4, 6), 16))
+                                    .add(JSON_RED, Integer.parseInt(team.getColor().substring(2,4),16))
+                                    .add(JSON_GREEN, Integer.parseInt(team.getColor().substring(4, 6), 16))
+                                    .add(JSON_BLUE, Integer.parseInt(team.getColor().substring(6, 8), 16))
                                     .add(JSON_TEXTCOLOR, team.getTextColor()).build();
             teamsArrayBuilder.add(teamJson);
         }

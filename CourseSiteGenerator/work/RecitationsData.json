@@ -3,17 +3,17 @@
     "recitations":[
         {
             "section":"R01 (Richard McKenna)",
-            "day_time":"DayTime 1",
-            "location":"Location 1",
+            "day_time":"Thur 2:00pm - 4:30pm",
+            "location":"Old CS",
             "ta_1":"Trung Vo",
-            "ta_2":"Hong Phuong"
+            "ta_2":"Trung Vo"
         },
         {
             "section":"R02 (Richard McKenna)",
-            "day_time":"DayTime 2",
-            "location":"Location 2",
-            "ta_1":"Trung Vo",
-            "ta_2":"Hong Phuong"
+            "day_time":"Friday 8:00am - 9:30am",
+            "location":"New CS",
+            "ta_1":"Hong Phuong",
+            "ta_2":"Trung Vo"
         }
     ]
 }

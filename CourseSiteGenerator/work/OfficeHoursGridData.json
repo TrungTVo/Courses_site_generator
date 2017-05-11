@@ -1,69 +1,59 @@
 
 {
-    "startHour":"7",
-    "endHour":"9",
+    "startHour":"3",
+    "endHour":"7",
     "undergrad_tas":[
         {
-            "name":"Aiko Chu",
-            "email":"aiko@gmail.com",
-            "undergrad":"yes"
-        },
-        {
-            "name":"TA 1",
-            "email":"Email TA 1",
-            "undergrad":"yes"
-        },
-        {
-            "name":"TA 2",
-            "email":"Email TA 2",
+            "name":"Hong Phuong",
+            "email":"hong.phuong@gmail.com",
             "undergrad":"no"
         },
         {
-            "name":"TA 3",
-            "email":"Email TA 3",
-            "undergrad":"yes"
-        },
-        {
             "name":"Trung Vo",
-            "email":"trung@gmail.com",
+            "email":"trung.vo@sbu.edu",
             "undergrad":"yes"
         }
     ],
     "officeHours":[
         {
             "day":"MONDAY",
-            "time":"7_00am",
-            "name":"Trung Vo"
+            "time":"3_30am",
+            "name":"Hong Phuong"
+        },
+        {
+            "day":"WEDNESDAY",
+            "time":"3_30am",
+            "name":"Hong Phuong"
+        },
+        {
+            "day":"MONDAY",
+            "time":"4_00am",
+            "name":"Hong Phuong"
+        },
+        {
+            "day":"MONDAY",
+            "time":"4_30am",
+            "name":"Hong Phuong"
         },
         {
             "day":"TUESDAY",
-            "time":"7_00am",
+            "time":"4_30am",
             "name":"Trung Vo"
         },
         {
             "day":"WEDNESDAY",
-            "time":"7_00am",
-            "name":"Aiko Chu"
+            "time":"4_30am",
+            "name":"Hong Phuong"
         },
         {
-            "day":"THURSDAY",
-            "time":"7_00am",
-            "name":"Aiko Chu"
+            "day":"FRIDAY",
+            "time":"4_30am",
+            "name":"Hong Phuong"
         },
         {
-            "day":"MONDAY",
-            "time":"8_00am",
-            "name":"TA 1"
-        },
-        {
-            "day":"MONDAY",
-            "time":"8_00am",
-            "name":"TA 2"
-        },
-        {
-            "day":"MONDAY",
-            "time":"8_00am",
-            "name":"TA 3"
+            "day":"WEDNESDAY",
+            "time":"5_00am",
+            "name":"Hong Phuong"
         }
     ]
 }

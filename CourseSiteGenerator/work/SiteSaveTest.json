@@ -103,7 +103,7 @@
         {
             "Section":"R01",
             "Instructor":"Bender",
-            "Day/Time":"Thur",
+            "Day/Time":"Thur 2:00pm - 4:30pm",
             "Location":"Old CS",
             "Ta1":"Trung Vo",
             "Ta2":"Trung Vo"
@@ -111,7 +111,7 @@
         {
             "Section":"R02",
             "Instructor":"McKenna",
-            "Day/Time":"Friday",
+            "Day/Time":"Friday 8:00am - 9:30am",
             "Location":"New CS",
             "Ta1":"Hong Phuong",
             "Ta2":"Trung Vo"
@@ -122,13 +122,22 @@
         "End":"06/10/2017",
         "ScheduleList":[
             {
-                "Type":"Snow Day",
+                "Type":"Holiday",
                 "Date":"05/17/2017",
                 "Time":"3:00pm",
                 "Title":"Holiday - No Classes",
                 "Topic":"No Classes",
-                "Link":"link",
-                "Criteria":"criteria"
+                "Link":"",
+                "Criteria":""
+            },
+            {
+                "Type":"Lecture",
+                "Date":"05/16/2017",
+                "Time":"",
+                "Title":"Test Driven Development",
+                "Topic":"Test Driven Development",
+                "Link":"",
+                "Criteria":""
             }
         ]
     },
@@ -137,7 +146,7 @@
             "Name":"Game",
             "Color":"0xcccc33ff",
             "TextColor":"0xb399ffff",
-            "Link":"link"
+            "Link":"Link"
         }
     ],
     "Student_Data":[
