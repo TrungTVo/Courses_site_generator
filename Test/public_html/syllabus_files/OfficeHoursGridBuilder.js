@@ -19,6 +19,7 @@ function loadData(jsonFile, callback) {
 function loadOfficeHours(json) {
     initDays(json);
     addUndergradTAs(json);
+    addGradTAs(json);
     addOfficeHours(json);
 }
 
@@ -36,23 +37,44 @@ function initDays(data) {
     daysOfWeek[4] = "FRIDAY";    
 }
 
+function addGradTAs(data) {
+    var tas = $("#grad_tas");
+    var tasPerRow = 4;
+    var numTAs = data.undergrad_tas.length;
+    for (var i = 0; i < data.undergrad_tas.length; ) {
+        if (data.undergrad_tas[i] != null ) {
+            console.log(data.undergrad_tas[i]);
+            var text = "";
+            text = "<tr>";
+            for (var j = 0; j < tasPerRow; j++) {
+                text += buildTACell(i, numTAs, data.undergrad_tas[i], "no");
+                i++;
+            }
+            text += "</tr>";
+            tas.append(text);
+        }
+    }
+}
+
 function addUndergradTAs(data) {
     var tas = $("#undergrad_tas");
     var tasPerRow = 4;
     var numTAs = data.undergrad_tas.length;
     for (var i = 0; i < data.undergrad_tas.length; ) {
-        var text = "";
-        text = "<tr>";
-        for (var j = 0; j < tasPerRow; j++) {
-            text += buildTACell(i, numTAs, data.undergrad_tas[i]);
-            i++;
+        if (data.undergrad_tas[i] != null) {
+            var text = "";
+            text = "<tr>";
+            for (var j = 0; j < tasPerRow; j++) {
+                text += buildTACell(i, numTAs, data.undergrad_tas[i], "yes");
+                i++;
+            }
+            text += "</tr>";
+            tas.append(text);
         }
-        text += "</tr>";
-        tas.append(text);
     }
 }
-function buildTACell(counter, numTAs, ta) {
-    if (counter >= numTAs)
+function buildTACell(counter, numTAs, ta, isUndergrad) {
+    if (counter >= numTAs || ta.undergrad != isUndergrad)
         return "<td></td>";
 
     var name = ta.name;

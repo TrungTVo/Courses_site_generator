@@ -28,7 +28,7 @@
                 "Script":"ProjectsBuilder.js"
             },
             {
-                "Use":"yes",
+                "Use":"no",
                 "NavBar_Title":"Schedule",
                 "File_Name":"schedule.html",
                 "Script":"ScheduleBuilder.js"
@@ -53,7 +53,7 @@
             {
                 "Name":"Trung Vo",
                 "Email":"trung.vo@sbu.edu",
-                "Undergrad":"yes"
+                "Undergrad":"no"
             }
         ],
         "OfficeHours":[

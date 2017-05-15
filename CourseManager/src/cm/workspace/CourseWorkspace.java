@@ -364,7 +364,16 @@ public class CourseWorkspace {
         scriptCol.setCellValueFactory(
                 new PropertyValueFactory<SitePage, String>("script")
         );
-        useCol.setCellFactory(CheckBoxTableCell.forTableColumn(useCol));
+        useCol.setCellFactory(CheckBoxTableCell.forTableColumn(
+                new Callback<Integer, ObservableValue<Boolean>>(){
+                    @Override
+                    public ObservableValue<Boolean> call(Integer param) {
+                        csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+                        return ((SitePage)app.getDataComponent().getTemplates().get(param.intValue())).getIsUsedProp();
+                    }
+                    
+                }
+        ));
         siteTable.getColumns().addAll(useCol, navBarTitleCol, fileCol, scriptCol);
         siteTable.setEditable(true);
         useCol.setEditable(true);

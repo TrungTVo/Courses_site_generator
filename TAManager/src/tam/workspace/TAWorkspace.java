@@ -176,7 +176,16 @@ public class TAWorkspace {
                     }
                 }
         );
-        undergradColumn.setCellFactory(CheckBoxTableCell.forTableColumn(undergradColumn));
+        undergradColumn.setCellFactory(CheckBoxTableCell.forTableColumn(
+                new Callback<Integer, ObservableValue<Boolean>>(){
+                    @Override
+                    public ObservableValue<Boolean> call(Integer param) {
+                        csg.getGUI().getAppFileController().markAsEdited(csg.getGUI());
+                        return ((TeachingAssistant)app.getDataComponent().getTeachingAssistants().get(param.intValue())).getIsUnderGrad();
+                    } 
+                }
+        ));
+        
         taTable.getColumns().addAll(undergradColumn, nameColumn, emailColumn);
         undergradColumn.setEditable(true);
         taTable.setEditable(true);
